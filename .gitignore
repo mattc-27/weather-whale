@@ -10,4 +10,5 @@ Dockerfile
 .dockerignore
 .env
 # misc
+config.md
 .DS_Store
