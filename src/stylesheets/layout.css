@@ -1,0 +1,217 @@
+/* --- --- --- --- ---
+header
+--- --- --- --- --- --- */
+
+header {
+    height: auto;
+    width: 100%;
+    margin: 0;
+    background-color: #FFFFFF;
+}
+
+.header_wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: auto;
+    max-width: 98%;
+}
+
+.header_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: auto;
+    flex-grow: 1;
+    width: 100%;
+    max-width: 98%;
+
+}
+
+.header_title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    height: auto;
+    width: auto;
+    padding: 0.25rem;
+    width: 100%;
+    max-width: 98%;
+}
+
+.header_nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.25rem;
+    width: 100%;
+    max-width: 98%;
+}
+
+.nav_link {
+    font-weight: 400;
+    font-size: 0.95rem;
+    color: #454545;
+    text-decoration: none;
+    text-align: left;
+    flex-grow: 1;
+    font-family: var(--body-primary);
+    letter-spacing: -0.05rem;
+}
+
+.nav_link:hover {
+    color: #1d1a35;
+    font-weight: 500;
+}
+
+.header_title img {
+    height: 75px;
+    width: 75px;
+    align-self: flex-start;
+}
+
+.header_title h2 {
+    font-size: 1.35rem;
+    font-weight: 300;
+    height: auto;
+    width: 100%;
+    max-width: 98%;
+    text-align: left;
+    font-family: var(--heading-primary);
+    color: #454545;
+    /*       top: 1%;
+     position: absolute;*/
+}
+
+
+
+
+
+
+/* ----
+footer
+----------- */
+footer {
+    height: auto;
+    padding-top: 0.5rem;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFFFFF;
+}
+
+.footer_content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    margin: 0%;
+}
+
+.icon_row {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
+    height: auto;
+    width: auto;
+    margin: 1%;
+    line-height: 2;
+    height: auto;
+}
+
+.footer_logo img {
+    height: 75px;
+    width: 75px;
+    align-self: center;
+
+}
+
+.footer_content h2 {
+    font-family: "Gloria Hallelujah", cursive;
+    color: #2d2d2d;
+    font-weight: 300;
+    align-self: flex-start;
+    font-size: 1rem;
+    text-align: left;
+}
+
+.icon_row a {
+    font-size: 0.8em;
+    font-family: 'Open sans';
+    color: #2d2d2d;
+    font-weight: 300;
+    height: auto;
+    align-self: flex-end;
+    width: auto;
+    flex-grow: 1;
+    text-align: right;
+    text-decoration: none;
+}
+
+.footer_logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-left: 0.15rem;
+    width: auto;
+    max-width: 35%;
+    width: 100%;
+}
+
+.footer_logo img {
+    align-self: flex-start;
+    height: 60px;
+    width: 60px;
+}
+
+.footerIcon {
+    margin: 0.5%;
+    width: auto;
+    color: #2d2d2d;
+}
+
+/* -- -- -- -- -- -- --
+
+BREAKPOINTS 
+
+--- --- --- --- --- */
+@media only screen and (min-width: 740px) {
+
+    .header_wrapper {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .header_content {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        margin-left: 0.25rem;
+    }
+
+    .header_title h2 {
+        font-size: 1rem;
+    }
+
+    .header_nav {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0.25rem;
+        max-width: 50%;
+    }
+
+    .nav_link:hover {
+        color: #1d1a35;
+        font-weight: 500;
+    }
+
+}

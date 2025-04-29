@@ -1,0 +1,13 @@
+# dependencies
+/node_modules
+package-lock.json
+nginx.conf
+
+# production
+/dist
+key.json
+Dockerfile
+.dockerignore
+.env
+# misc
+.DS_Store
