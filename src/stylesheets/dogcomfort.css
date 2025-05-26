@@ -1,0 +1,304 @@
+.dog-weather-popover-wrapper {
+    position: absolute;
+    display: inline-block;
+
+    font-family: var(--body-primary);
+    top: 1%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    z-index: 9999999999999999;
+}
+
+/* Toggle Link */
+.dog-weather-toggle {
+    height: 2rem;
+    /**/
+    align-self: center;
+    margin: 0.5rem 0.25rem;
+    font-size: 0.9rem;
+    /**/
+    font-family: var(--heading-primary);
+    font-weight: 400;
+    color: #fff;
+    cursor: pointer;
+    /**/
+    background-color: #4357cb;
+    border: none;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 50%;
+}
+
+.dog-weather-toggle:hover {
+    background-color: #3b4db6;
+}
+
+.close_button {
+    cursor: pointer;
+    font-family: var(--body-primary);
+    font-weight: 400;
+    color: #2239ad;
+    background-color: transparent;
+    border: none;
+    text-decoration: underline;
+
+}
+
+.close_button:hover {
+    color: #333;
+}
+
+/* Popover Panel */
+.dog-weather-popover {
+    position: absolute;
+    left: -10vw;
+    top: 2.5rem;
+    transform: translateX(0);
+    width: 90vw;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    padding: 1rem;
+    background-color: var(--body-light);
+    color: var(--body-dark);
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 1rem;
+    z-index: 99999;
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(9.5px);
+    -webkit-backdrop-filter: blur(9.5px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+}
+
+/* Popover Text and Layout */
+.popover-heading {
+    font-family: var(--heading-primary);
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--title-dark);
+}
+
+.section-title {
+    font-size: 1.15rem;
+    font-weight: 400;
+}
+
+.popover-section {
+    margin-bottom: 1rem;
+}
+
+
+/* Table Styling */
+.comfort-table {
+    width: 100%;
+    border-top: 1px solid #ddd;
+    font-size: 0.8rem;
+    border-collapse: collapse;
+}
+
+.comfort-table th,
+.comfort-table td {
+    padding: 0.4rem 0.5rem;
+    text-align: left;
+}
+
+.comfort-table tr:not(:last-child) td {
+    border-bottom: 1px solid #eee;
+}
+
+.dog-weather-card {
+    background-color: var(--body-light);
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 1.25rem;
+    font-family: var(--body-primary);
+    color: var(--body-dark);
+    max-width: 440px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+    margin-top: 1rem;
+    position: relative;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: center;
+    height: auto;
+    max-width: 98%;
+    width: 100%;
+
+}
+
+.dog-weather-title {
+    font-family: var(--heading-primary);
+    font-size: 1.2rem;
+    color: var(--title-dark);
+    margin-bottom: 1rem;
+    flex-grow: 1;
+}
+
+.dog-weather-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    flex-grow: 1;
+}
+
+.dog-weather-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: 0.5% 0%;
+}
+
+.dog-weather-label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    font-family: var(--heading-primary);
+    color: var(--title-dark);
+    margin-bottom: 0.2rem;
+}
+
+.dog-weather-value {
+    font-family: var(--body-primary);
+    font-size: 0.9rem;
+    color: var(--body-dark);
+    line-height: 1.3;
+}
+
+.dog-weather-action {
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    flex-grow: 0.5;
+}
+
+.bone-button-wrapper {
+    position: relative;
+    width: 160px;
+    height: 60px;
+
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bone-button-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.bone-button-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--heading-primary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--title-dark);
+    pointer-events: none;
+}
+
+
+.section-list li {
+    font-size: 0.95rem;
+    list-style: circle;
+    margin: 0.25%;
+    margin-left: 2.5%;
+}
+
+
+/* Responsive Behavior */
+/* --- --- --- --- ---
+breakpoints
+--- --- --- --- --- --- */
+@media only screen and (min-width: 740px) {
+    .dog-weather-popover {
+        left: 0px;
+        top: 2.5rem;
+        transform: translateX(0);
+        max-width: 75vw;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(9.5px);
+        -webkit-backdrop-filter: blur(9.5px);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+
+    .dog-weather-card {
+        background-color: var(--body-light);
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 1.25rem;
+        font-family: var(--body-primary);
+        color: var(--body-dark);
+        max-width: 440px;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+        margin-top: 1rem;
+        position: relative;
+        display: flex;
+        justify-content: space-evenly;
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+        max-width: 90%;
+
+    }
+
+    .dog-weather-value {
+        font-family: var(--body-primary);
+        font-size: 0.9rem;
+        color: var(--body-dark);
+        line-height: 1.3;
+    }
+
+    .popover-heading {
+        font-size: 1rem;
+    }
+
+    .section-title {
+        font-size: 1.15rem;
+    }
+
+    .section-list {
+        font-size: 0.85rem;
+    }
+
+    .comfort-table {
+        font-size: 0.75rem;
+    }
+
+    .dog-weather-toggle {
+        height: 2rem;
+        /**/
+        align-self: center;
+        margin: 0.25rem;
+        font-size: 1.05rem;
+        /**/
+        font-family: var(--heading-primary);
+        font-weight: 400;
+        color: #fff;
+        cursor: pointer;
+        /**/
+        background-color: #4357cb;
+        border: none;
+        border-radius: 12px;
+        width: 100%;
+        max-width: 35%;
+    }
+}

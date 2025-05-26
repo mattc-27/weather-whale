@@ -18,6 +18,7 @@ const corsOptions = {
 const app = express();
 
 // 🔥 Add this middleware early (before routes)
+/*
 app.use((req, res, next) => {
     if (req.path.endsWith('.php') || req.path.includes('.php')) {
         console.log('path contains php')
@@ -25,6 +26,7 @@ app.use((req, res, next) => {
     }
     next();
 });
+*/
 
 // Implement middleware
 app.use(express.json());
@@ -42,6 +44,10 @@ app.get(/^\/(?!api).*/, (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
+/*
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '/dist/index.html'));
+});*/
 
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
 const IQAIR_API_KEY = process.env.IQAIR_API_KEY;
@@ -58,6 +64,8 @@ app.get(`/api/weather/:searchUrl`, async (req, res) => {
         console.error(error.message)
     }
 });
+
+
 
 app.get(`/api/air-quality`, async (req, res) => {
     const { lat, lon } = req.query;
@@ -97,7 +105,6 @@ app.get('/api/backend_test/', async (req, res) => {
         console.error(error.message);
     }
 });
-
 
 
 // Setup default port

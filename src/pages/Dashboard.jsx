@@ -16,6 +16,8 @@ import toast, { Toaster } from 'react-hot-toast';
 
 import { useMobile, useBreakpoint } from '../hooks/useMobile';
 
+import DogWeather from '../components/DogWeather';
+
 //  import { HourlyTable } from '../components/HourlyTable';
 // import { CardConditions } from '../components/Cards';
 const HourlyTable = lazy(() => import('../components/HourlyTable'))
@@ -97,6 +99,7 @@ export default function Dashboard() {
 
 
     useEffect(() => {
+        console.log('getting weather')
         if (query) {
             fetchData().catch(console.error);
         }
@@ -120,12 +123,21 @@ export default function Dashboard() {
                                     wrapperStyle={`row items_center location_title`}
                                     searchLocation={currentConditions.searchLocation}
                                 />
+                                <div style={{ display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '90%', position: 'relative' }}>
+                                    <DogWeather
+                                        dogWeather={currentConditions.dogComfort}
+                                    />
+                                </div>
+
                                 <IconContainer wrapperStyle={`current_icon`}
                                     icon={<currentConditions.formatIcon.IconComponent
                                         size={breakpoint === 'xsmall' ? 160 : 150}
                                         style={{ color: '#757575' }} />}
                                 />
                             </SectionLayoutLg>
+
+
+
                         </ConditionsSection>
                         {/* */}
                         <Suspense fallback={<div>Loading data...</div>}>
@@ -162,11 +174,24 @@ export default function Dashboard() {
                                         icon={<CiDroplet size={mobile ? 25 : 30} color={'#878787'} />}
                                     />
                                 </ConditionsSection>
-                                <ConditionsSection wrapperStyle={`row_flex content_even items_center full_width main_text`} >
-                                    <HourlyTable currentConditions={currentConditions} />
+                                <ConditionsSection wrapperStyle={`row_flex content_even items_center full_width main_text`}
+                                    style={{
+                                        position: 'relative',
+                                        'zIindex': 5000
+                                    }}>
+                                    <HourlyTable currentConditions={currentConditions} style={{
+                                        position: 'relative',
+                                        'zIindex': 5000
+                                    }} />
                                 </ConditionsSection>
+
                             </SectionLayoutMain>
-                            {/* */}
+
+                            {/*         <TimelineSection
+                                hourlyData={currentConditions.forecastday[0].hour}
+                                sunriseTime={currentConditions.forecastday[0].astro.sunrise}
+                                sunsetTime={currentConditions.forecastday[0].astro.sunset}
+                            />*/}
                         </Suspense>
                     </SectionLayoutMain>
                 </>

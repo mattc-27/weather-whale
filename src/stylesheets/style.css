@@ -139,6 +139,7 @@ global
     width: 100%;
     line-height: 1.5;
     flex-grow: 1;
+    position: relative;
 }
 
 /* ------------ 
@@ -305,7 +306,7 @@ text, links
     max-width: 90%;
     flex-grow: 0;
     position: relative;
-    z-index: 999999;
+    z-index: 8999;
     width: 100%;
 }
 
@@ -527,6 +528,8 @@ buttons
     margin-bottom: 0.25rem;
     background-color: #fdfcf720;
     backdrop-filter: blur(2px);
+    position: relative;
+    z-index: 8000;
     box-shadow: 0px 0px 5px 1px rgba(82, 82, 82, 0.23);
 }
 
@@ -593,6 +596,8 @@ hourly
     position: relative;
     z-index: 80000;*/
     color: #1d1c28;
+    position: relative;
+    z-index: 5000;
     background-color: #fdfcf720;
     backdrop-filter: blur(2px);
 }
@@ -605,6 +610,8 @@ hourly
     width: 100%;
     backdrop-filter: blur(10px);
     height: 20.5rem;
+    position: relative;
+    z-index: 5000;
     margin-bottom: 0.25rem;
     box-shadow: 0px 0px 5px 1px rgba(82, 82, 82, 0.23);
 }
@@ -882,7 +889,7 @@ breakpoints
 @media only screen and (max-width: 650px) {
 
     .section_content {
-        max-width: 98%;
+        max-width: 90%;
     }
 
     .location_title h2 {
@@ -1040,6 +1047,7 @@ breakpoints
         width: 100%;
         max-width: 90%;
         flex-grow: 0.5;
+
     }
 
     .row_flex {
@@ -1157,3 +1165,149 @@ global
 /* --- --- --- --- ---
 global
 --- --- --- --- --- --- */
+/* Base styles */
+.timeline-section {
+    position: relative;
+    width: 100vw;
+    min-height: 300vh;
+    overflow-x: hidden;
+    color: #fff;
+}
+
+.sun-tracker {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 100vw;
+    height: 0;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.sun {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, #ffd700, #facc15);
+    border-radius: 50%;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+    transform: translate(-50%, -50%);
+    will-change: transform;
+}
+
+/* Scroll container */
+.hour-scroll-container {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    height: 100vh;
+}
+
+.hour-card {
+    scroll-snap-align: start;
+    height: 100vh;
+    width: 100vw;
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    transition: background 1s ease;
+    text-align: center;
+}
+
+/* Gradient backgrounds by time block */
+.dawn {
+    background: linear-gradient(to bottom, #fde68a, #fcd34d);
+    color: #1e293b;
+}
+
+.early-day {
+    background: linear-gradient(to bottom, #fef9c3, #fef08a);
+    color: #1e293b;
+}
+
+.midday {
+    background: linear-gradient(to bottom, #bae6fd, #7dd3fc);
+    color: #0c4a6e;
+}
+
+.late-day {
+    background: linear-gradient(to bottom, #fbcfe8, #f472b6);
+    color: #3f3f46;
+}
+
+.sunset {
+    background: linear-gradient(to bottom, #fb923c, #1e3a8a);
+    color: #fef3c7;
+}
+
+.dusk {
+    background: linear-gradient(to bottom, #1e3a8a, #0f172a);
+    color: #cbd5e1;
+}
+
+.night {
+    background: linear-gradient(to bottom, #0f172a, #1e293b);
+    color: #e2e8f0;
+}
+
+/* Cloud layers */
+.cloud-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.cloud {
+    position: absolute;
+    width: 150px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    filter: blur(6px);
+    animation: floatClouds 60s linear infinite;
+}
+
+.cloud-0 {
+    top: 20%;
+    left: -10%;
+}
+
+.cloud-1 {
+    top: 40%;
+    left: 20%;
+}
+
+.cloud-2 {
+    top: 60%;
+    left: 60%;
+}
+
+@keyframes floatClouds {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(120vw);
+    }
+}
+
+/* Hour content */
+.icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    z-index: 2;
+}
+
+.temp {
+    font-size: 3rem;
+    margin: 0.5rem 0;
+    z-index: 2;
+}

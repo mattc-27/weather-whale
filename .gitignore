@@ -3,6 +3,8 @@
 package-lock.json
 nginx.conf
 
+/config.md
+/national_parks_with_temps.json
 # production
 /dist
 key.json

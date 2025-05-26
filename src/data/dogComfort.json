@@ -1,0 +1,51 @@
+[
+  {
+    "tempRangeF": "45-55",
+    "dogFeelsLikeF": "50-60",
+    "comfort": "Crisp & Energizing",
+    "conditionModifiers": ["cloudy", "windy"],
+    "advice": "Great for play and long walks. Some short-hairs may need a jacket."
+  },
+  {
+    "tempRangeF": "56-65",
+    "dogFeelsLikeF": "60-70",
+    "comfort": "Ideal",
+    "conditionModifiers": ["partly cloudy", "calm"],
+    "advice": "Perfect for fetch, hikes, and outdoor training sessions."
+  },
+  {
+    "tempRangeF": "66-74",
+    "dogFeelsLikeF": "70-80",
+    "comfort": "Warm but Manageable",
+    "conditionModifiers": ["cloudy"],
+    "advice": "Monitor for overheating in thick-coated dogs. Bring water."
+  },
+  {
+    "tempRangeF": "75-80",
+    "dogFeelsLikeF": "80-90",
+    "comfort": "Starting to Overheat",
+    "conditionModifiers": ["sunny"],
+    "advice": "Limit activity. Walk early morning or late evening. Test pavement temperature."
+  },
+  {
+    "tempRangeF": "81-85",
+    "dogFeelsLikeF": "90-95",
+    "comfort": "Too Hot",
+    "conditionModifiers": ["sunny", "low humidity"],
+    "advice": "Risk of dehydration and paw pad burns. Use grass routes only, stay in shade."
+  },
+  {
+    "tempRangeF": "86-90",
+    "dogFeelsLikeF": "95-100",
+    "comfort": "Danger Zone",
+    "conditionModifiers": ["sunny", "dry", "pavement"],
+    "advice": "Keep indoors except for potty breaks. Watch for heat stress signs."
+  },
+  {
+    "tempRangeF": "91-100+",
+    "dogFeelsLikeF": "100-110+",
+    "comfort": "Emergency",
+    "conditionModifiers": ["sunny", "pavement", "no wind"],
+    "advice": "Avoid outdoor activity. Heat stroke risk is high. Use AC, cooling mats, and fans."
+  }
+]

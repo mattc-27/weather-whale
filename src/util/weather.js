@@ -1,6 +1,8 @@
 
 import { WeatherIcons } from "../assets/WeatherIcons";
 import { WeatherIconsReformatted } from "../assets/WeatherIconsReformatted";
+import dogComfort from '../data/dogComfort.json';
+
 
 // Fetch IQAir data
 async function getAirQuality(lat, lon) {
@@ -61,8 +63,8 @@ export async function getWeatherMain(q) {
     let lat, lon;
 
     // Check if q contains coordinates
-    if (q.includes(',')) {
-        [lat, lon] = q.split(',').map(coord => coord.trim());
+    if (searchUrl.includes(',')) {
+        [lat, lon] = searchUrl.split(',').map(coord => coord.trim());
     } else {
         // If q is not coordinates, you might want to geocode it here
         // For now, we'll just use it as is for the weather API
@@ -71,13 +73,13 @@ export async function getWeatherMain(q) {
 
     try {
 
-        const weatherPromise = fetch(`/api/weather/${q}`);
+        const weatherPromise = fetch(`/api/weather/${searchUrl}`);
 
 
         const [weatherResponse] = await Promise.all([weatherPromise]);
 
         const weatherData = await weatherResponse.json();
-
+        console.log(weatherData)
         const weather = { data: weatherData };
 
         const formattedWeather = formatWeather(weather);
@@ -100,7 +102,7 @@ export async function getWeatherMain(q) {
 const formatWeather = (weather) => {
     const {
         location: { name, region, country, localtime },
-        current: { temp_f, condition, wind_mph, wind_dir, humidity, pressure_in, cloud, vis_miles, gust_mph, feelslike_f },
+        current: { temp_f, condition, wind_mph, wind_dir, humidity, pressure_in, cloud, vis_miles },
         forecast: { forecastday },
         alerts: { alert },
     } = weather.data
@@ -187,6 +189,9 @@ const formatWeather = (weather) => {
     }
 
 
+    const dogComfort = getDogComfort(temp_f, condition.text, cloud);
+
+
     return {
         searchLocation,
         name,
@@ -212,7 +217,8 @@ const formatWeather = (weather) => {
         hourlyTemp,
         hourlyData,
         airQuality,
-        allHours
+        allHours,
+        dogComfort
         //isDay,
         //formattedTime
     };
@@ -245,4 +251,39 @@ export async function fetchWeather(q) {
 export function getIcon(code) {
     const iconData = WeatherIconsReformatted.find(({ code: iconCode }) => iconCode === code);
     return iconData ? iconData.forecast : null;
+};
+
+const parseRange = (rangeStr) => {
+    // Handles "91–100+" as well
+    const [min, maxRaw] = rangeStr.replace("+", "").split("-").map(Number);
+    const max = rangeStr.includes("+") ? Infinity : maxRaw;
+    return { min, max };
+};
+const getDogComfort = (temp_f, conditionText, cloudCover) => {
+    const sunny = conditionText.toLowerCase().includes("sun") && cloudCover < 30;
+    const cloudy = cloudCover > 60;
+
+    let feelsLike = temp_f;
+
+    // Adjust based on simple condition modifiers
+    if (sunny) feelsLike += 7;
+    else if (cloudy) feelsLike += 0;
+    else feelsLike += 3;
+
+    const match = dogComfort.find(entry => {
+        const { min, max } = parseRange(entry.dogFeelsLikeF);
+        return feelsLike >= min && feelsLike <= max;
+    });
+
+    return match
+        ? {
+            comfort: match.comfort,
+            advice: match.advice,
+            adjustedFeelsLike: feelsLike.toFixed(1)
+        }
+        : {
+            comfort: "Unknown",
+            advice: "Not enough data to assess conditions.",
+            adjustedFeelsLike: feelsLike.toFixed(1)
+        };
 };
