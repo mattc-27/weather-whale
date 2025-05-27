@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import '../stylesheets/dogcomfort.css';
+import '../../stylesheets/dogcomfort.css';
 
 export default function DogComfortPupup({ handleClose }) {
 

@@ -21,7 +21,7 @@ Styles for search component
     justify-content: center;
     align-self: center;
     width: 100%;
-    max-width: 75;
+    max-width: 75%;
     margin: 0.15rem;
     border: 0.5px solid #d4d4d4;
 }
@@ -130,7 +130,7 @@ global
 
     .search_container {
         align-self: center;
-        flex-grow: 0.5;
+
         max-width: 35%;
         margin-right: 0.25rem;
     }

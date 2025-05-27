@@ -10,9 +10,9 @@ fonts
     --body-primary: "Work Sans", sans-serif;
     /* Font */
     --title-light: #fff;
-    --title-dark: #2d2d2d;
+    --title-dark: #454545;
     --body-light: #ffffff;
-    --body-dark: #2d2d2d;
+    --body-dark: #626a6a;
 }
 
 
@@ -225,6 +225,7 @@ titles, headings
     align-self: center;
     flex-grow: 0;
     max-width: 98%;
+
 }
 
 .title_main h1 {
@@ -311,7 +312,7 @@ text, links
 }
 
 .main_text p {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     color: var(--body-dark);
     font-weight: 400;
     text-align: left;
@@ -365,9 +366,9 @@ text, links
 .current_icon {
     position: absolute;
     z-index: 5000;
-    right: 15%;
+    right: 12.5%;
     width: auto;
-    top: 25%;
+    top: 15%;
 }
 
 /* --- --- --- --- ---
@@ -877,7 +878,7 @@ breakpoints
         position: absolute;
         z-index: 5000;
         right: 12%;
-        top: 25%;
+        top: 15%;
         width: auto;
         /* make sure it only sizes based on the icon itself */
         max-width: none;
@@ -911,8 +912,8 @@ breakpoints
     .current_icon {
         position: absolute;
         z-index: 5000;
-        right: 12%;
-        top: 25%;
+        left: 50%;
+        top: 9%;
         width: auto;
         /* make sure it only sizes based on the icon itself */
         max-width: none;
@@ -924,27 +925,28 @@ breakpoints
 @media only screen and (min-width: 740px) {
 
     .current_icon {
-        left: 60%;
-        top: 25%;
+        left: 50%;
+        top: 7.5%;
     }
 
     .location_title {
-        width: 100%;
-        max-width: 80%;
+        align-items: center;
+        justify-content: center;
+        align-self: center;
     }
 
     .location_title h2 {
-        font-size: 3rem;
-        width: 100%;
-        max-width: 98%;
+        font-size: 4rem;
+        align-self: center;
+        max-width: 60%;
         text-align: left;
     }
 
     .main_text p {
-        font-size: 5rem;
+        font-size: 3rem;
         text-align: left;
         width: 100%;
-        max-width: 98%;
+        max-width: 60%;
     }
 
     .body_text {
@@ -976,16 +978,16 @@ breakpoints
         max-width: 80%;
         font-weight: 500;
         line-height: 2;
-        text-align: center;
+        text-align: left;
+        width: auto;
     }
 
     .main_text p {
-        font-size: 1.75rem;
+        font-size: 3rem;
         color: var(--body-dark);
         font-weight: 400;
         text-align: left;
-        max-width: 90%;
-        width: 100%;
+        max-width: 60%;
         font-family: var(--body-primary);
     }
 
@@ -1045,9 +1047,10 @@ breakpoints
 
     .section_content {
         width: 100%;
-        max-width: 90%;
-        flex-grow: 0.5;
-
+        max-width: 80%;
+        flex-grow: 1;
+        align-items: center;
+        justify-content: center;
     }
 
     .row_flex {

@@ -16,7 +16,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 import { useMobile, useBreakpoint } from '../hooks/useMobile';
 
-import DogWeather from '../components/DogWeather';
+import DogWeather from '../components/dog-weather/DogWeather';
 
 //  import { HourlyTable } from '../components/HourlyTable';
 // import { CardConditions } from '../components/Cards';
@@ -123,17 +123,20 @@ export default function Dashboard() {
                                     wrapperStyle={`row items_center location_title`}
                                     searchLocation={currentConditions.searchLocation}
                                 />
-                                <div style={{ display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '90%', position: 'relative' }}>
+
+                            </SectionLayoutLg>
+                            <IconContainer wrapperStyle={`current_icon`}
+                                icon={<currentConditions.formatIcon.IconComponent
+                                    size={breakpoint === 'xsmall' ? 140 : 200}
+                                    style={{ color: '#a5c3e6' }} />}
+                            />
+
+                            <SectionLayoutLg wrapperStyle={`section_content`}>
+                                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'relative', flexGrow: '1' }}>
                                     <DogWeather
                                         dogWeather={currentConditions.dogComfort}
                                     />
                                 </div>
-
-                                <IconContainer wrapperStyle={`current_icon`}
-                                    icon={<currentConditions.formatIcon.IconComponent
-                                        size={breakpoint === 'xsmall' ? 160 : 150}
-                                        style={{ color: '#757575' }} />}
-                                />
                             </SectionLayoutLg>
 
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import DogComfortPupup from './DogComfortPupup';
-import '../stylesheets/dogcomfort.css';
+import '../../stylesheets/dogcomfort.css';
 
 export default function DogWeather({ dogWeather }) {
     const [open, setOpen] = useState(false);

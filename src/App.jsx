@@ -6,6 +6,7 @@ import Layout from './Layout';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import About from './pages/About';
+import ParkConditions from './components/national-parks/ParkConditions';
 
 
 import './stylesheets/layout.css';
@@ -35,6 +36,7 @@ export default function App() {
                     <Route index element={<Home />} />
                     <Route path="about" element={<About />} />
                     <Route path="search" element={<Dashboard />} />
+                    {/*  <Route path="parks" element={<ParkConditions />} />*/}
                 </Route>
             </Routes>
         </WeatherProvider>
