@@ -28,9 +28,9 @@ function Header() {
                         <Link className='nav_link' to={'/about'}>
                             About
                         </Link>
-                        {/*       <Link className='nav_link new' to={'/'}>
+                        <Link className='nav_link new' to={'/parks'}>
                             National Park Conditions (Coming Soon)
-                        </Link>*/}
+                        </Link>
                     </nav>
                 </div>
                 <SearchInput wrapperStyle={`search_container`} />

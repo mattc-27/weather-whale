@@ -18,6 +18,7 @@ import './stylesheets/style.css';
 ReactGA.initialize([
     {
         trackingId: ''
+
     }
 ]);
 
@@ -36,7 +37,7 @@ export default function App() {
                     <Route index element={<Home />} />
                     <Route path="about" element={<About />} />
                     <Route path="search" element={<Dashboard />} />
-                    {/*  <Route path="parks" element={<ParkConditions />} />*/}
+                    <Route path="parks" element={<ParkConditions />} />
                 </Route>
             </Routes>
         </WeatherProvider>

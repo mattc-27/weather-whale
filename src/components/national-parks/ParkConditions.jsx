@@ -5,14 +5,19 @@ function ParkConditions() {
     const [parks, setParks] = useState([]);
 
     useEffect(() => {
-        fetch('../../../public/national_parks_with_temps.json') // or `/api/parks` if served via Express
-            .then(res => res.json())
-            .then(setParks);
+        fetch('https://storage.googleapis.com/national-park-conditions/weather/latest.json')
+            .then(res => {
+                if (!res.ok) throw new Error('Network response was not ok');
+                return res.json();
+            })
+            .then(setParks)
+            .catch(err => console.error('Failed to fetch park data:', err));
     }, []);
 
     useEffect(() => {
-        console.log(parks)
-    }, [parks])
+        console.log(parks);
+    }, [parks]);
+
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', alignSelf: 'center', border: '0.5px solid red', minHeight: '100vh' }}>
