@@ -24,6 +24,10 @@ Styles for search component
     max-width: 75%;
     margin: 0.15rem;
     border: 0.5px solid #d4d4d4;
+
+    margin-top: 0.5rem;
+    width: 100%;
+    max-width: 100%;
 }
 
 .search_component {
@@ -133,6 +137,10 @@ global
 
         max-width: 35%;
         margin-right: 0.25rem;
+
+        flex-shrink: 0;
+        max-width: 300px;
+        width: 100%;
     }
 
 

@@ -29,7 +29,7 @@ function Header() {
                             About
                         </Link>
                         <Link className='nav_link new' to={'/parks'}>
-                            National Park Conditions (Coming Soon)
+                            National Park Conditions (New!)
                         </Link>
                     </nav>
                 </div>

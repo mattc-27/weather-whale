@@ -52,15 +52,15 @@ header {
 }
 
 .nav_link {
-    font-weight: 400;
-    font-size: 1rem;
+    font-weight: 300;
+    font-size: 0.9rem;
     color: #454545;
     text-decoration: none;
     text-align: center;
     flex-grow: 1;
     font-family: var(--body-primary);
     letter-spacing: -0.05rem;
-    padding: 0.15rem;
+    padding: 0.1rem;
 }
 
 .nav_link:hover {
@@ -69,7 +69,7 @@ header {
 }
 
 .new {
-    color: #148451;
+    color: #2b7ada;
 
 }
 
@@ -194,6 +194,8 @@ BREAKPOINTS
     .header_wrapper {
         display: flex;
         flex-direction: row;
+        /* */
+        
     }
 
     .header_content {
@@ -201,6 +203,7 @@ BREAKPOINTS
         align-items: center;
         justify-content: flex-start;
         margin-left: 0.25rem;
+        /* */
 
     }
 
@@ -223,7 +226,7 @@ BREAKPOINTS
 
     .nav_link:hover {
         color: #1d1a35;
-        font-weight: 500;
+        font-weight: 400;
     }
 
 }
