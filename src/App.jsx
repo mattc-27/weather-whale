@@ -17,7 +17,7 @@ import './stylesheets/style.css';
 // GA Tracking
 ReactGA.initialize([
     {
-        trackingId: '' 
+        trackingId: ''
 
     }
 ]);

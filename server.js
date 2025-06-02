@@ -89,7 +89,7 @@ app.get(`/api/list-park-history`, async (req, res) => {
                 };
             });
 
-        console.log(allItems);
+      //  console.log(allItems);
         res.json(allItems);
     } catch (error) {
         console.error('Error fetching park history:', error.message);
@@ -101,8 +101,6 @@ app.get(`/api/park-weather`, async (req, res) => {
     const path = req.query.path || 'weather/latest.json';
     const url = `https://storage.googleapis.com/national-park-conditions/${path}`;
     try {
-        const url = 'https://storage.googleapis.com/national-park-conditions/weather/latest.json';
-
         // HEAD request to get metadata
         const headResponse = await fetch(url, { method: 'HEAD' });
         const lastModifiedRaw = headResponse.headers.get('Last-Modified');

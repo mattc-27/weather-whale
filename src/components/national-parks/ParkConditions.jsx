@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ParkMap from './ParkMap';
 import { TitleContainer } from '../Containers';
+
 function ParkConditions() {
     const [parks, setParks] = useState([]);
     const [lastUpdated, setLastUpdated] = useState('');
@@ -42,6 +43,7 @@ function ParkConditions() {
         try {
             const res = await fetch(`/api/park-weather?path=${encodeURIComponent(path)}`);
             const data = await res.json();
+            console.log('Fetched parks:', data);
             setParks(data.data);
             setLastUpdated(data.lastUpdated);
         } catch (err) {
@@ -49,6 +51,9 @@ function ParkConditions() {
         }
     }
 
+    useEffect(() => {
+        console.log(selectedFile)
+    }, [selectedFile])
 
     return (
 
