@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import DogComfortPupup from './DogComfortPupup';
-import '../stylesheets/dogcomfort.css';
-
+import '../../stylesheets/dogcomfort.css';
+import '../../stylesheets/style.css';
 export default function DogWeather({ dogWeather }) {
     const [open, setOpen] = useState(false);
     const popoverRef = useRef();
@@ -23,8 +23,20 @@ export default function DogWeather({ dogWeather }) {
 
 
     return (
-        <div className="dog-weather-card">
-            <h3 className="dog-weather-title">🐾 Pawcast</h3>
+        <div className="category_card-dog"> {/* dog-weather-card*/}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                <h3 className="dog-weather-title">🐾 Pawcast</h3>
+                <div className="dog-weather-action">
+                    <button
+                        className="dog-weather-toggle"
+                        onClick={() => setOpen((prev) => !prev)}
+                        aria-haspopup="true"
+                        aria-expanded={open}
+                    >
+                        ?
+                    </button>
+                </div>
+            </div>
             <div className="dog-weather-info">
                 <div className="dog-weather-row">
                     <span className="dog-weather-label">Feels Like:</span>
@@ -40,16 +52,7 @@ export default function DogWeather({ dogWeather }) {
                     <span className="dog-weather-value">{dogWeather.advice}</span>
                 </div>
             </div>
-            <div className="dog-weather-action">
-                <button
-                    className="dog-weather-toggle"
-                    onClick={() => setOpen((prev) => !prev)}
-                    aria-haspopup="true"
-                    aria-expanded={open}
-                >
-                    More Info
-                </button>
-            </div>
+
             {open && (
                 <div ref={popoverRef} className="dog-weather-popover-wrapper">
 

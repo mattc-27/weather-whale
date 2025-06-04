@@ -65,6 +65,71 @@ app.get(`/api/weather/:searchUrl`, async (req, res) => {
     }
 });
 
+app.get(`/api/list-park-history`, async (req, res) => {
+
+    try {
+        const response = await fetch('https://storage.googleapis.com/storage/v1/b/national-park-conditions/o')
+        const data = await response.json();
+
+        // The relevant array is in data.items
+        const historyArr = data.items || [];
+
+        // Extract filenames or other metadata if needed
+        const allItems = historyArr
+            .filter(item => item.name.endsWith('.json') && !item.name.includes('cors'))
+            .map(item => {
+                const match = item.name.match(/\d{4}-\d{2}-\d{2}/);
+                const isLatest = item.name.includes('latest.json');
+
+                return {
+                    name: isLatest ? 'Current' : (match ? match[0] : item.name),
+                    fullPath: item.name,
+                    updated: item.updated,
+                    size: item.size
+                };
+            });
+
+      //  console.log(allItems);
+        res.json(allItems);
+    } catch (error) {
+        console.error('Error fetching park history:', error.message);
+        res.status(500).json({ error: 'Failed to fetch park history' });
+    }
+})
+
+app.get(`/api/park-weather`, async (req, res) => {
+    const path = req.query.path || 'weather/latest.json';
+    const url = `https://storage.googleapis.com/national-park-conditions/${path}`;
+    try {
+        // HEAD request to get metadata
+        const headResponse = await fetch(url, { method: 'HEAD' });
+        const lastModifiedRaw = headResponse.headers.get('Last-Modified');
+
+        // Format to Pacific Time
+        const lastModified = new Date(lastModifiedRaw).toLocaleString('en-US', {
+            timeZone: 'America/Los_Angeles',
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true
+        });
+        // GET request to fetch data
+        const dataResponse = await fetch(url);
+        const data = await dataResponse.json();
+
+        res.send({
+            lastUpdated: `${lastModified} PT`,
+            data: data
+        });
+    } catch (error) {
+        console.error(error.message)
+    }
+});
+
 
 
 app.get(`/api/air-quality`, async (req, res) => {

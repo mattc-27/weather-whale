@@ -172,8 +172,8 @@
 }
 
 .dog-weather-action {
-    width: 100%;
-    justify-content: flex-start;
+    width: auto;
+    justify-content: flex-end;
     align-items: center;
     display: flex;
     flex-grow: 1;
@@ -217,6 +217,12 @@
     margin-left: 2.5%;
 }
 
+.dog {
+    width: 100%;
+    max-width: 35%;
+    display: flex;
+    flex-direction: column;
+}
 
 /* Responsive Behavior */
 /* --- --- --- --- ---
@@ -224,10 +230,10 @@ breakpoints
 --- --- --- --- --- --- */
 @media only screen and (min-width: 740px) {
     .dog-weather-popover {
-        left: 0px;
-        top: 2.5rem;
+        right: 1%;
+        top: -1rem;
         transform: translateX(0);
-        max-width: 75vw;
+        max-width: 50vw;
         border-radius: 10px;
         font-size: 0.9rem;
         padding: 1rem;
@@ -297,8 +303,7 @@ breakpoints
         /**/
         background-color: #4357cb;
         border: none;
-        border-radius: 12px;
-        width: 100%;
-        max-width: 35%;
+        border-radius: 50px;
+        width: 35px;
     }
 }

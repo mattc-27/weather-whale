@@ -36,7 +36,7 @@ export default function About() {
     return (
 
         <PageLayout wrapperStyle={`page_content`} >
-            <SectionLayoutMain wrapperStyle={`weather_main`} style={{ height: 'auto', padding: '1rem 0rem' }}>
+            <SectionLayoutMain wrapperStyle={`about_main`} style={{ height: 'auto', padding: '1rem 0rem' }}>
                 <SectionLayoutLg wrapperStyle={`row content_even items_center body_text full_width`} style={{ flexGrow: '1', flexWrap: 'wrap', position: 'relative', zIndex: '999999' }}>
                     <TitleContainer title={`About Weather Whale`} wrapperStyle={`title_about`} />
                     <TextBlock wrapperStyle={`flex_col body_text`} style={{ position: 'relative', zIndex: '999999', maxWidth: mobile ? '98%' : '49%' }}>

@@ -75,5 +75,13 @@ function ConditionsSection({ children, wrapperStyle }) {
     )
 }
 
+function MainGrid({ children, wrapperStyle }) {
+    return (
+        <div className={wrapperStyle}>
+            {children}
+        </div>
+    )
+}
 
-export { ConditionsSection, Container, TitleContainer, SearchButtonInitial, TitleContainerLocation, BackgroundOverlay };
+
+export { MainGrid, ConditionsSection, Container, TitleContainer, SearchButtonInitial, TitleContainerLocation, BackgroundOverlay };

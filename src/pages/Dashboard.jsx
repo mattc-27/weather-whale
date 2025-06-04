@@ -16,7 +16,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 import { useMobile, useBreakpoint } from '../hooks/useMobile';
 
-import DogWeather from '../components/DogWeather';
+import DogWeather from '../components/dog-weather/DogWeather';
 
 //  import { HourlyTable } from '../components/HourlyTable';
 // import { CardConditions } from '../components/Cards';
@@ -112,87 +112,77 @@ export default function Dashboard() {
                 <>
                     <SectionLayoutMain wrapperStyle={`weather_main`} >
                         <ConditionsSection wrapperStyle={`weather_current`}>
-                            <SectionLayoutLg wrapperStyle={`section_content`}>
-                                <ConditionsContent
-                                    wrapperStyle={`col main_text`}
-                                    text={`${currentConditions.temp_f}°F`} />
-                                <ConditionsContent
-                                    wrapperStyle={`col main_text`}
-                                    text={currentConditions.condition.text} />
-                                <TitleContainerLocation
-                                    wrapperStyle={`row items_center location_title`}
-                                    searchLocation={currentConditions.searchLocation}
-                                />
-                                <div style={{ display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '90%', position: 'relative' }}>
-                                    <DogWeather
-                                        dogWeather={currentConditions.dogComfort}
-                                    />
-                                </div>
 
-                                <IconContainer wrapperStyle={`current_icon`}
-                                    icon={<currentConditions.formatIcon.IconComponent
-                                        size={breakpoint === 'xsmall' ? 160 : 150}
-                                        style={{ color: '#757575' }} />}
-                                />
-                            </SectionLayoutLg>
-
-
-
+                            <ConditionsContent
+                                wrapperStyle={`col main_text`}
+                                text={`${currentConditions.temp_f}°F`} />
+                            <ConditionsContent
+                                wrapperStyle={`col main_text`}
+                                text={currentConditions.condition.text} />
+                            <TitleContainerLocation
+                                wrapperStyle={`row items_center location_title`}
+                                searchLocation={currentConditions.searchLocation}
+                            />
+                            <IconContainer wrapperStyle={`current_icon`}
+                                icon={<currentConditions.formatIcon.IconComponent
+                                    size={breakpoint === 'xsmall' ? 140 : 200}
+                                    style={{ color: '#a5c3e6' }} />}
+                            />
                         </ConditionsSection>
+
+                        <ConditionsSection wrapperStyle={`conditions_current`} >
+                            <HourlyTable currentConditions={currentConditions} style={{
+                                position: 'relative',
+                                'zIindex': 5000
+                            }} />
+                            <DogWeather
+
+                                dogWeather={currentConditions.dogComfort}
+                            />
+                        </ConditionsSection>
+
+
                         {/* */}
-                        <Suspense fallback={<div>Loading data...</div>}>
-                            <SectionLayoutMain wrapperStyle={`row_flex content_even items_center full_width`} >
-                                <ConditionsSection wrapperStyle={`conditions_current`} >
-                                    <CardConditions
-                                        cardStyle={`category_card card_text sm`}
-                                        item={`${currentConditions.forecastday[0].day.maxtemp_f}°F`}
-                                        icon={<FaTemperatureArrowUp size={mobile ? 25 : 30} color={'#d56c6c'} />}
-                                    />
-                                    <CardConditions
-                                        cardStyle={`category_card card_text sm`}
-                                        item={`${currentConditions.forecastday[0].day.mintemp_f}°F`}
-                                        icon={<FaTemperatureArrowDown size={mobile ? 25 : 30} color={'#8098c9'} />}
-                                    />
-                                    <CardConditions
-                                        cardStyle={`category_card card_text`}
-                                        item={`${currentConditions.cloud}%`}
-                                        icon={<LiaCloudSunSolid size={mobile ? 30 : 30} color={'#878787'} />}
-                                    />
-                                    <CardConditions
-                                        cardStyle={`category_card card_text`}
-                                        item={`${currentConditions.wind_mph}` + "mph, " + `${currentConditions.wind_dir}`}
-                                        icon={<LiaWindSolid size={mobile ? 25 : 30} color={'#878787'} />}
-                                    />
-                                    <CardConditions
-                                        cardStyle={`category_card card_text`}
-                                        item={`${currentConditions.vis_miles}mi`}
-                                        icon={<WiFog size={mobile ? 30 : 30} color={'#878787'} />}
-                                    />
-                                    <CardConditions
-                                        cardStyle={`category_card card_text sm`}
-                                        item={`${currentConditions.humidity}%`}
-                                        icon={<CiDroplet size={mobile ? 25 : 30} color={'#878787'} />}
-                                    />
-                                </ConditionsSection>
-                                <ConditionsSection wrapperStyle={`row_flex content_even items_center full_width main_text`}
-                                    style={{
-                                        position: 'relative',
-                                        'zIindex': 5000
-                                    }}>
-                                    <HourlyTable currentConditions={currentConditions} style={{
-                                        position: 'relative',
-                                        'zIindex': 5000
-                                    }} />
-                                </ConditionsSection>
+                        <Suspense fallback={<div>Loading data...</div>}></Suspense>
+                    </SectionLayoutMain>
 
-                            </SectionLayoutMain>
 
-                            {/*         <TimelineSection
-                                hourlyData={currentConditions.forecastday[0].hour}
-                                sunriseTime={currentConditions.forecastday[0].astro.sunrise}
-                                sunsetTime={currentConditions.forecastday[0].astro.sunset}
-                            />*/}
-                        </Suspense>
+                    <SectionLayoutMain wrapperStyle={`weather_main`} >
+
+                        <ConditionsSection wrapperStyle={`conditions_main`} >
+                            <CardConditions
+                                cardStyle={`category_card card_text sm`}
+                                item={`${currentConditions.forecastday[0].day.maxtemp_f}°F`}
+                                icon={<FaTemperatureArrowUp size={mobile ? 25 : 30} color={'#d56c6c'} />}
+                            />
+                            <CardConditions
+                                cardStyle={`category_card card_text sm`}
+                                item={`${currentConditions.forecastday[0].day.mintemp_f}°F`}
+                                icon={<FaTemperatureArrowDown size={mobile ? 25 : 30} color={'#8098c9'} />}
+                            />
+                            <CardConditions
+                                cardStyle={`category_card card_text`}
+                                item={`${currentConditions.cloud}%`}
+                                icon={<LiaCloudSunSolid size={mobile ? 30 : 30} color={'#878787'} />}
+                            />
+                            <CardConditions
+                                cardStyle={`category_card card_text`}
+                                item={`${currentConditions.wind_mph}` + "mph, " + `${currentConditions.wind_dir}`}
+                                icon={<LiaWindSolid size={mobile ? 25 : 30} color={'#878787'} />}
+                            />
+                            <CardConditions
+                                cardStyle={`category_card card_text`}
+                                item={`${currentConditions.vis_miles}mi`}
+                                icon={<WiFog size={mobile ? 30 : 30} color={'#878787'} />}
+                            />
+                            <CardConditions
+                                cardStyle={`category_card card_text sm`}
+                                item={`${currentConditions.humidity}%`}
+                                icon={<CiDroplet size={mobile ? 25 : 30} color={'#878787'} />}
+                            />
+                        </ConditionsSection>
+
+
                     </SectionLayoutMain>
                 </>
             }
