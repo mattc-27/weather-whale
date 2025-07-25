@@ -6,19 +6,20 @@ import Layout from './Layout';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import About from './pages/About';
-import ParkConditions from './components/national-parks/ParkConditions';
 
+import ParksLayoutWrapper from './components/national-parks/ParksLayout';
 
 import './stylesheets/layout.css';
 import './stylesheets/search.css';
 import './stylesheets/style.css';
 
-
+import MapView from './components/national-parks/views/MapView';
+import ParkConditionsView from './components/national-parks/views/ParkConditionsView';
+import ParkComparisonView from './components/national-parks/views/ParkComparisonView';
 // GA Tracking
 ReactGA.initialize([
     {
         trackingId: ''
-
     }
 ]);
 
@@ -37,7 +38,12 @@ export default function App() {
                     <Route index element={<Home />} />
                     <Route path="about" element={<About />} />
                     <Route path="search" element={<Dashboard />} />
-                    <Route path="parks" element={<ParkConditions />} />
+                    <Route path="/parks" element={<ParksLayoutWrapper />}>
+                        <Route index element={<MapView />} />
+                        <Route path="details" element={<ParkConditionsView />} />
+                        <Route path="compare" element={<ParkComparisonView />} />
+                    </Route>
+
                 </Route>
             </Routes>
         </WeatherProvider>
