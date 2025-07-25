@@ -874,14 +874,13 @@ General
 }
 
 
-
-.park-page {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    max-height: 100dvh;
-    width: 100%;
-    overflow: hidden;
+.dashboard-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
 }
 
 .title-section {
@@ -911,70 +910,12 @@ General
     margin-top: 0.5rem;
 }
 
-.history-dropdown {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    background-color: #fff;
-    color: #333;
-    max-width: 280px;
-    width: 100%;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    appearance: none;
-    /* removes default dropdown arrow in some browsers */
-    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23999"><path d="M4 6l4 4 4-4z"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 0.75rem center;
-    background-size: 1rem;
-    font-family: var(--body-primary);
-    color: var(--body-dark);
-}
 
-/* Map container */
-.map-section {
-    flex-grow: 1;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
 
-.map-svg {
-    width: 100%;
-    height: auto;
-    display: block;
-}
 
-/* Tooltip */
-.park-tooltip {
-    position: absolute;
-    background: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 6px 10px;
-    font-size: 14px;
-    color: #222;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out;
-}
-
-/* Optional: State outline hover effect */
-.state-shadow:hover {
-    fill: #eee;
-    cursor: pointer;
-}
 
 @media (max-width: 740px) {
 
-    .history-dropdown {
-        width: 100%;
-        max-width: 100%;
-    }
 
     .title-section {
         max-height: 15vh;
@@ -1078,12 +1019,7 @@ breakpoints
 }
 
 @media only screen and (min-width: 740px) {
-    .parks-content {
-        flex-grow: 0;
-        justify-content: center;
-        align-items: center;
 
-    }
 
     .about_main {}
 
