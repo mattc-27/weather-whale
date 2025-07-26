@@ -254,8 +254,10 @@ export function ParksProvider({ children }) {
             return matchesSearch && withinTemp;
         });
 
-        dispatch({ type: 'UPDATE_FILTERED_PARKS', payload: filtered });
+        dispatch({ type: 'SET_FILTERED_PARKS', payload: filtered });
     }, [state.parks, state.searchTerm, state.tempRange]);
+
+
 
     // Dynamically adjust temp range
     useEffect(() => {
