@@ -252,12 +252,12 @@ titles, headings
 
 .title_main h1 {
     font-size: 4rem;
-    color: var(--title-light);
     font-weight: 400;
     max-width: 80%;
     text-align: center;
     line-height: 1.5;
-    font-family: var(--heading-primary);
+    color: var(--title-light);
+    /*   font-family: var(--heading-primary);*/
 }
 
 .body_text.md h3 {
@@ -271,24 +271,57 @@ titles, headings
     width: 100%;
     max-width: 98%;
     text-align: left;
-    color: var(--title-dark);
-    font-family: var(--body-primary);
     line-height: 2;
     font-size: 1.75rem;
     font-weight: 500;
+    color: var(--title-dark);
+    /*    
+    font-family: var(--body-primary);*/
+    font-family: var(--body-primary);
+    font-family: "Bitter", serif;
 }
 
+.body_text ul {
+    margin: 0.25rem;
+}
+
+.body_text ul li {
+    list-style-type: circle;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--title-dark);
+    line-height: 1.75;
+    font-family: "Noto Sans JP", sans-serif;
+}
+
+.body_text h3 {
+    font-size: 1.15rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+    color: var(--title-dark);
+    /*     
+    font-family: var(--heading-primary);*/
+
+    font-family: "Bitter", serif;
+}
 
 .body_text h2 {
     font-size: 1.5rem;
-    color: var(--title-dark);
+
     font-weight: 400;
     text-align: center;
     align-self: center;
     text-align: left;
     width: 100%;
-    font-family: var(--heading-primary);
     margin: 0.25rem 0;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--title-dark);
+    /*     
+    font-family: var(--heading-primary);*/
+
+    font-family: "Bitter", serif;
 }
 
 /* --- --- --- --- ---
@@ -373,13 +406,14 @@ text, links
 
 .body_text p {
     font-size: 1rem;
-    color: var(--body-dark);
     font-weight: 300;
     text-align: left;
-    font-family: var(--body-primary);
     line-height: 2.5;
     width: 100%;
     max-width: 98%;
+    font-family: var(--body-primary);
+    color: var(--body-dark);
+    font-family: "Noto Sans JP", sans-serif;
 }
 
 
@@ -439,6 +473,8 @@ about page
     justify-content: center;
     align-self: center;
     flex-grow: 1;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
     width: 100%;
 }
 
@@ -450,7 +486,12 @@ about page
     line-height: 1.5;
     width: 100%;
     max-width: 98%;
-    font-family: var(--heading-primary);
+    /*   font-family: var(--heading-primary);*/
+    font-family: 'Bitter';
+    border-bottom: 1px solid #e2e8f0;
+    /* light slate gray-blue */
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .title_about {
@@ -1090,21 +1131,23 @@ breakpoints
 
     .body_text p {
         font-size: 1.15rem;
-        color: var(--body-dark);
         font-weight: 300;
         text-align: left;
-        font-family: var(--body-primary);
         line-height: 2.5;
         width: 100%;
+        /*     color: var(--body-dark);
+          font-family: var(--body-primary);*/
     }
 
     .body_text h2 {
         font-size: 2rem;
-        color: var(--title-dark);
         font-weight: 400;
         text-align: left;
         line-height: 1.5;
+        /*
+          color: var(--title-dark);
         font-family: var(--heading-primary);
+        */
     }
 
     .title_main h1 {
@@ -1142,8 +1185,7 @@ breakpoints
         font-size: 4rem;
         font-weight: 400;
         line-height: 1.5;
-        color: var(--title-dark);
-        font-family: var(--heading-primary);
+
     }
 
 
