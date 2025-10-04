@@ -1079,3 +1079,104 @@
     background: #000;
     transform: translateY(-2px);
 }
+
+
+
+/* ---------- History View Enhancements ---------- */
+
+.history-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.history-nav {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.history-nav button,
+.zoom-buttons button {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: "Noto Sans JP", sans-serif;
+}
+
+.history-nav button:hover,
+.zoom-buttons button:hover {
+    background: #f5f5f5;
+}
+
+.zoom-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.zoom-buttons button.active {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+}
+
+.history-date-range {
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+}
+
+/* ---------- Chart Styling ---------- */
+
+.chart-section {
+    margin-top: 2rem;
+    padding: 1rem 1.25rem;
+    background: #fafafa;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+}
+
+.chart-section h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #222;
+    font-family: "Noto Sans JP", sans-serif;
+}
+
+/* D3 tooltip override */
+.chart-tooltip {
+    position: absolute;
+    background: rgba(20, 20, 20, 0.95);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    pointer-events: none;
+    z-index: 9999;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* Axis labels styling */
+.chart-axis-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    fill: #444;
+    font-family: "Noto Sans JP", sans-serif;
+}
+
+/* Toggle pills (History | Forecast) */
+.chart-toggle { display:flex; gap:.5rem; }
+.chart-toggle button {
+  padding:.45rem .9rem; border-radius:999px; border:1px solid #ccc; background:#fff;
+}
+.chart-toggle button.active { background:#111; color:#fff; border-color:#111; }
+
+/* Forecast daily mini-cards grid tweaks (if you want in CSS file instead of inline) */
+.forecast-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; }

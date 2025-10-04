@@ -1,38 +1,150 @@
+/* =========================================
+DOG WEATHER MODAL 
+========================================= */
+
 .dog-weather-popover-wrapper {
     position: absolute;
-    display: inline-block;
-
-    font-family: var(--body-primary);
-    top: 1%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: flex-start;
-    z-index: 9999999999999999;
+    top: -15rem;
+    right: -1rem;
+    z-index: 40;
+    padding: 5px;
+    width: 600px;
+    background-color: #fafafa;
 }
 
-/* Toggle Link */
-.dog-weather-toggle {
-    height: 2rem;
-    /**/
-    align-self: center;
-    margin: 0.5rem 0.25rem;
-    font-size: 0.9rem;
-    /**/
+
+/* ===== Modal overlay & shell ===== */
+.dog-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(3, 10, 24, 0.45);
+    /* dim backdrop */
+    backdrop-filter: blur(3px);
+    /* subtle glass on the bg */
+    -webkit-backdrop-filter: blur(3px);
+    display: grid;
+    place-items: center;
+    z-index: 999;
+    /* above cards */
+    animation: dogFadeIn 140ms ease-out both;
+}
+
+
+.dog-weather-popover {
     font-family: var(--heading-primary);
-    font-weight: 400;
-    color: #fff;
-    cursor: pointer;
-    /**/
-    background-color: #4357cb;
-    border: none;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 50%;
+    padding: 5px;
 }
 
-.dog-weather-toggle:hover {
-    background-color: #3b4db6;
+.dog-weather-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    background: #4357cb;
+    color: #fff;
+    font-weight: 600;
+    border: none;
+}
+
+/* Dialog panel */
+.dog-modal {
+    width: min(720px, 92vw);
+    max-height: min(82vh, 900px);
+    overflow: auto;
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .98), rgba(249, 251, 255, .98));
+    border: 1px solid rgba(13, 24, 46, 0.1);
+    box-shadow:
+        0 24px 40px rgba(3, 10, 24, 0.22),
+        0 2px 10px rgba(3, 10, 24, 0.12);
+    padding: clamp(14px, 2.2vw, 18px);
+    animation: dogScaleIn 160ms cubic-bezier(.2, .7, .2, 1) both;
+    font-family: var(--heading-primary);
+}
+
+/* Header row */
+.dog-modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    position: sticky;
+    top: -2px;
+    /* keeps shadow visible */
+    background: inherit;
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+    z-index: 1;
+    border-bottom: 1px solid rgba(13, 24, 46, 0.08);
+}
+
+
+/* Info button w/ tooltip (top-right of Pawcast card header) */
+.dog-info-btn {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 9999px;
+    border: 1px solid rgba(0, 0, 0, .08);
+    background: #3b82f6;
+    color: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .06);
+    cursor: pointer;
+}
+
+.dog-info-btn:hover {
+    background: #2563eb;
+}
+
+.dog-info-btn:focus-visible {
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
+}
+
+.dog-info-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Tooltip */
+.dog-info-btn .tooltip {
+    position: absolute;
+    top: -38px;
+    right: 0;
+    transform: translateY(6px);
+    padding: 6px 10px;
+    font: 500 12px/1.1 var(--heading-primary);
+    color: #0f172a;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, .08);
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, .08);
+    opacity: 0;
+    pointer-events: none;
+    transition: .14s ease;
+    white-space: nowrap;
+}
+
+.dog-info-btn:hover .tooltip {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dog-info-btn .tooltip::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    right: 10px;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-right: 1px solid rgba(0, 0, 0, .08);
+    border-bottom: 1px solid rgba(0, 0, 0, .08);
+    transform: rotate(45deg);
 }
 
 .close_button {
@@ -43,55 +155,141 @@
     background-color: transparent;
     border: none;
     text-decoration: underline;
-
 }
 
 .close_button:hover {
     color: #333;
 }
 
-/* Popover Panel */
-.dog-weather-popover {
-    position: absolute;
-    left: -10vw;
-    top: 2.5rem;
-    transform: translateX(0);
-    width: 90vw;
-    border-radius: 10px;
-    font-size: 0.9rem;
-    padding: 1rem;
-    background-color: var(--body-light);
-    color: var(--body-dark);
-    border: 1px solid #ccc;
-    border-radius: 12px;
-    padding: 1rem;
-    z-index: 99999;
-    background: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    backdrop-filter: blur(9.5px);
-    -webkit-backdrop-filter: blur(9.5px);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-
+.dog-weather-toggle:hover {
+    background-color: #3b4db6;
 }
+
+/* Icon close in modal header */
+.dog-close {
+    display: inline-grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 9999px;
+    border: 1px solid rgba(0, 0, 0, .08);
+    background: #f8fafc;
+    color: #0f172a;
+    cursor: pointer;
+}
+
+.dog-close:hover {
+    background: #eef2f7;
+}
+
+.dog-close:focus-visible {
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
+}
+
+.dog-close svg {
+    width: 18px;
+    height: 18px;
+}
+
+
+/* Modal content */
+.dog-weather-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    /* grow to fill */
+    align-self: stretch;
+    /* stretch to panel width */
+    width: 100%;
+    min-height: 0;
+}
+
+.dog-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 0;
+    padding: 2px;
+}
+
+.dog-weather-title {
+    color: var(--title-dark);
+    font-family: var(--heading-primary);
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.dog-weather-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 2px 3px;
+}
+
+.dog-weather-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: 0.5% 0%;
+    font-family: var(--heading-primary);
+    color: var(--title-dark);
+}
+
+.dog-weather-label {
+    letter-spacing: .02em;
+    font-size: 1rem;
+    text-align: left;
+    padding: 0.25rem;
+    align-self: flex-start;
+    flex-grow: 1;
+}
+
+.dog-weather-value {
+    line-height: 1.1;
+    font-weight: 400;
+    font-size: 1.15rem;
+    text-align: left;
+    align-self: flex-start;
+    padding: 0.25rem;
+    flex-grow: 2;
+}
+
 
 /* Popover Text and Layout */
 .popover-heading {
     font-family: var(--heading-primary);
-    font-size: 1.5rem;
-    margin-bottom: 0.75rem;
+    font-size: 1.75rem;
+    margin-bottom: 5px;
     color: var(--title-dark);
+}
+
+
+.popover-section {
+    margin-bottom: 1.25rem;
 }
 
 .section-title {
     font-size: 1.15rem;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--title-dark);
+}
+
+.section-list li {
+    font-size: 0.95rem;
+    list-style: circle;
+    margin: 0.25%;
+    margin-left: 2.5%;
+    font-size: 1rem;
     font-weight: 400;
+    line-height: 1.5;
+    color: var(--title-dark);
 }
-
-.popover-section {
-    margin-bottom: 1rem;
-}
-
 
 /* Table Styling */
 .comfort-table {
@@ -105,123 +303,49 @@
 .comfort-table td {
     padding: 0.4rem 0.5rem;
     text-align: left;
+    color: var(--title-dark);
+    font-family: var(--heading-primary);
+    font-size: 0.9rem;
+    font-weight: 400;
 }
 
 .comfort-table tr:not(:last-child) td {
     border-bottom: 1px solid #eee;
 }
 
-.dog-weather-card {
-    background-color: var(--body-light);
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 1.25rem;
-    font-family: var(--body-primary);
-    color: var(--body-dark);
-    max-width: 440px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-    margin-top: 1rem;
-    position: relative;
-    display: flex;
-    justify-content: space-evenly;
-    flex-direction: column;
-    align-items: flex-start;
-    align-self: center;
-    height: auto;
-    max-width: 98%;
-    width: 100%;
-
+/* Tighten default popover typography a bit inside modal */
+.popover-heading {
+    margin: 4px 0;
+    font-size: clamp(1.25rem, 2.2vw, 1.5rem);
 }
 
-.dog-weather-title {
-    font-family: var(--heading-primary);
-    font-size: 1.2rem;
-    color: var(--title-dark);
-    margin-bottom: 1rem;
-    flex-grow: 1;
+.section-title {
+    margin: 10px 0 4px;
 }
-
-.dog-weather-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: flex-start;
-    flex-grow: 1;
-}
-
-.dog-weather-row {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    margin: 0.5% 0%;
-}
-
-.dog-weather-label {
-    font-weight: 600;
-    font-size: 0.85rem;
-    font-family: var(--heading-primary);
-    color: var(--title-dark);
-    margin-bottom: 0.2rem;
-}
-
-.dog-weather-value {
-    font-family: var(--body-primary);
-    font-size: 0.9rem;
-    color: var(--body-dark);
-    line-height: 1.3;
-}
-
-.dog-weather-action {
-    width: auto;
-    justify-content: flex-end;
-    align-items: center;
-    display: flex;
-    flex-grow: 1;
-    flex-grow: 0.5;
-}
-
-.bone-button-wrapper {
-    position: relative;
-    width: 160px;
-    height: 60px;
-
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.bone-button-img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.bone-button-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: var(--heading-primary);
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--title-dark);
-    pointer-events: none;
-}
-
 
 .section-list li {
-    font-size: 0.95rem;
-    list-style: circle;
-    margin: 0.25%;
-    margin-left: 2.5%;
+    margin: 2px 0;
 }
 
-.dog {
+
+/* Table polish */
+.comfort-table {
     width: 100%;
-    max-width: 35%;
-    display: flex;
-    flex-direction: column;
+    border-top: 1px solid #e5e9f2;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 0 rgba(13, 24, 46, .04) inset;
+}
+
+.comfort-table th,
+.comfort-table td {
+    padding: .55rem .7rem;
+}
+
+.comfort-table tr:not(:last-child) td {
+    border-bottom: 1px solid #eef2f8;
 }
 
 /* Responsive Behavior */
@@ -229,52 +353,20 @@
 breakpoints
 --- --- --- --- --- --- */
 @media only screen and (min-width: 740px) {
-    .dog-weather-popover {
-        right: 1%;
-        top: -1rem;
-        transform: translateX(0);
-        max-width: 50vw;
-        border-radius: 10px;
-        font-size: 0.9rem;
-        padding: 1rem;
-        background: rgba(255, 255, 255, 0.3);
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-        backdrop-filter: blur(9.5px);
-        -webkit-backdrop-filter: blur(9.5px);
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-    }
-
-
-    .dog-weather-card {
-        background-color: var(--body-light);
-        border: 1px solid #ddd;
-        border-radius: 12px;
-        padding: 1.25rem;
-        font-family: var(--body-primary);
-        color: var(--body-dark);
-        max-width: 440px;
-        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-        margin-top: 1rem;
-        position: relative;
-        display: flex;
-        justify-content: space-evenly;
-        flex-direction: column;
-        align-items: flex-start;
-        height: auto;
-        max-width: 90%;
-
-    }
 
     .dog-weather-value {
-        font-family: var(--body-primary);
-        font-size: 0.9rem;
-        color: var(--body-dark);
-        line-height: 1.3;
+        line-height: 1.1;
+        font-weight: 400;
+        font-size: 1.15rem;
+        text-align: left;
+        align-self: flex-start;
+        padding: 0.25rem;
+        margin-left: 0.15rem;
+        flex-grow: 2;
     }
 
     .popover-heading {
-        font-size: 1rem;
+        font-size: 1.5rem;
     }
 
     .section-title {
@@ -306,4 +398,477 @@ breakpoints
         border-radius: 50px;
         width: 35px;
     }
+}
+
+
+
+
+/* Entrance animations */
+@keyframes dogFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes dogScaleIn {
+    from {
+        transform: translateY(6px) scale(.985);
+        opacity: .96;
+    }
+
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Small screens: full-bleed style */
+@media (max-width: 560px) {
+    .dog-modal {
+        width: min(680px, 96vw);
+        max-height: 88vh;
+        border-radius: 14px;
+        padding: 12px;
+    }
+}
+
+/* Remove the old absolute popover wrapper if still present */
+.dog-weather-popover-wrapper {
+    display: none !important;
+}
+
+
+/* ----- Iconic section headers ----- */
+.section_title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0 6px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+/* ----- Icon lists (no bullets) ----- */
+.icon_list {
+    list-style: none;
+    margin: 6px 0 14px;
+    padding: 0;
+}
+
+.icon_list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 6px 0;
+    color: #0f172a;
+}
+
+.icon_list li span {
+    line-height: 1.5;
+}
+
+/* ----- Icons ----- */
+.i {
+    width: 18px;
+    height: 18px;
+    color: #334155;
+    flex: 0 0 18px;
+    margin-top: 2px;
+}
+
+.i-lg {
+    width: 22px;
+    height: 22px;
+    color: #334155;
+}
+
+/* Slightly bolder strongs for quick scan */
+strong {
+    font-weight: 700;
+}
+
+
+/* ----- Resources list ----- */
+
+/* Smaller, calmer, tighter list */
+.resource_links {
+    list-style: none;
+    margin: 6px 0 6px;
+    padding: 0;
+    display: grid;
+    gap: 4px;
+}
+
+.resource_links li a {
+    /* grid lets text wrap while the icon stays vertically centered */
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    column-gap: 8px;
+
+    font-size: 14px;
+    /* smaller so it doesn’t compete with content above */
+    line-height: 1.4;
+    font-weight: 500;
+    /* was bold; lighter for less visual pull */
+    color: #334155;
+    /* slate instead of bright blue */
+    text-decoration: none;
+    padding: 4px 2px;
+    border-radius: 6px;
+
+    /* nicer multi-line wrap */
+    text-wrap: pretty;
+}
+
+.resource_links li a:hover {
+    color: #1d4ed8;
+    /* turn blue on hover */
+    text-decoration: underline;
+    background: transparent;
+    /* keep it clean */
+}
+
+.resource_links li a:focus-visible {
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
+}
+
+/* Icon stays the same size and vertically centered next to wrapped text */
+.resource_links .i {
+    width: 16px;
+    height: 16px;
+    flex: none;
+    /* don’t let it stretch/shrink */
+    align-self: center;
+    /* vertical centering even when text wraps */
+    color: currentColor;
+    /* match link color */
+}
+
+/* Lighter disclaimer */
+.resource_disclaimer {
+    margin: 6px 0 0;
+    font-size: 12px;
+    color: #64748b;
+    /* softer */
+}
+
+
+/* ===== Modal size + padding (slightly larger) ===== */
+.dog-modal {
+    width: min(840px, 94vw);
+    /* was ~720px */
+    max-height: min(86vh, 980px);
+    /* a bit taller */
+    padding: clamp(18px, 2.4vw, 22px);
+    /* more breathing room */
+}
+
+/* Section rhythm */
+.modal_section_title {
+    margin: 12px 0 6px;
+    font-size: clamp(1rem, 1.2vw + .8rem, 1.1rem);
+    font-weight: 700;
+    color: #0f172a;
+}
+
+/* subtle dividers between big blocks */
+.dog-modal .divider {
+    height: 1px;
+    background: #e9edf6;
+    margin: 12px 0;
+}
+
+/* ===== Compact “key points” list (temp compare) ===== */
+.key_points {
+    list-style: none;
+    margin: 4px 0 10px;
+    padding: 0;
+    display: grid;
+    gap: 6px;
+    color: #273142;
+}
+
+.key_points .range {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 999px;
+    background: #eef2ff;
+    color: #1f2a56;
+    font-weight: 600;
+    font-size: 0.92em;
+}
+
+/* ===== Factors list (no bullets, calm) ===== */
+.factor_list {
+    list-style: none;
+    margin: 4px 0 12px;
+    padding: 0;
+    display: grid;
+    gap: 6px;
+    color: #334155;
+}
+
+.factor_list li {
+    line-height: 1.55;
+}
+
+.factor_list li strong {
+    color: #0f172a;
+    font-weight: 600;
+}
+
+/* Table spacing so it doesn’t feel cramped against sections */
+.comfort-table {
+    margin-top: 6px;
+    margin-bottom: 10px;
+}
+
+/* Footer resources: add top cushion from table */
+.resource_links {
+    margin-top: 8px;
+}
+
+/* Overall block spacing at the very bottom */
+.resource_disclaimer {
+    margin-top: 6px;
+}
+
+
+
+/* Comfort table header emphasis */
+.comfort-table thead th {
+    font-weight: 700;
+    /* stronger */
+    color: #0f172a;
+    background: #f3f6fb;
+    /* subtle tint */
+    border-bottom: 1px solid #e1e7f2;
+    font-size: 0.95rem;
+}
+
+
+
+
+/* === Temp comparison mini-graphic === */
+.compare_bar {
+    --min: 45;
+    /* chart domain (°F) */
+    --max: 85;
+    position: relative;
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px 10px 22px;
+    /* bottom room for ticks */
+    background: #fff;
+    border: 1px solid #e7ecf5;
+    box-shadow: inset 0 1px 0 rgba(15, 23, 42, .03);
+}
+
+.compare_bar .bar_bg {
+    height: 14px;
+    border-radius: 999px;
+    background: linear-gradient(90deg,
+            #93c5fd 0%,
+            #60a5fa 18%,
+            #34d399 40%,
+            #facc15 62%,
+            #fb923c 82%,
+            #ef4444 100%);
+    opacity: .9;
+}
+
+/* highlight “You” and “Dog” spans using CSS math on start/end temps */
+.compare_bar .range {
+    position: absolute;
+    left: calc(((var(--start) - var(--min)) / (var(--max) - var(--min))) * 100%);
+    width: calc(((var(--end) - var(--start)) / (var(--max) - var(--min))) * 100%);
+    top: 10px;
+    height: 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .35);
+    outline: 2px solid rgba(17, 24, 39, .8);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, .08);
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+}
+
+.compare_bar .range span {
+    position: absolute;
+    top: -24px;
+    transform: translateX(-50%);
+    padding: 2px 6px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #0f172a;
+    background: #eef2ff;
+    border: 1px solid #dbe3ff;
+}
+
+/* color accents per label */
+.compare_bar .range.you {
+    outline-color: #334155;
+}
+
+.compare_bar .range.you span {
+    background: #e5ecff;
+    border-color: #cfe0ff;
+}
+
+.compare_bar .range.dog {
+    outline-color: #2563eb;
+}
+
+.compare_bar .range.dog span {
+    background: #dbeafe;
+    border-color: #bfdbfe;
+}
+
+/* ticks under the bar */
+.compare_bar .ticks {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 2px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    font-size: 11px;
+    color: #64748b;
+}
+
+.compare_bar .ticks span {
+    justify-self: center;
+}
+
+/* small note text */
+.compare_note {
+    margin: 6px 0 10px;
+    font-size: 12.5px;
+    color: #475569;
+}
+
+
+/* extra breathing room so pills don’t overlap the heading */
+.modal_section_title+.compare_bar {
+    margin-top: 6px;
+}
+
+/* interactive mode tweaks */
+.compare_bar--interactive {
+    margin-top: 8px;
+    /* lift off the title a bit more */
+    padding: 14px 12px 28px;
+    /* more top/btm room */
+}
+
+/* track area for pointer events */
+.compare_track {
+    position: absolute;
+    inset: 0;
+    left: 10px;
+    right: 10px;
+    top: 0;
+    bottom: 22px;
+    /* keep clear of ticks */
+    cursor: grab;
+    /* default */
+    user-select: none;
+    /* avoid text selection while dragging */
+    -webkit-user-select: none;
+    touch-action: none;
+    /* prevent page scrolling on touch-drag */
+    --handle-offset: 0px;
+    /* handled by centering below */
+}
+
+.compare_track:active {
+    cursor: grabbing;
+    /* while dragging */
+}
+
+/* optional: show 'grabbing' when pointer is down anywhere on the bar */
+.compare_bar--interactive:has(.compare_track:active) {
+    cursor: grabbing;
+}
+
+/* handles */
+.handle {
+    position: absolute;
+    top: 7px;
+    /* vertically centered on the bar */
+    transform: translateX(-50%);
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background: #ffffff;
+    border: 2px solid #1f2a56;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, .10), 0 0 0 3px rgba(31, 42, 86, .10);
+    pointer-events: none;
+    /* dragging happens on .compare_track */
+}
+
+.handle--dog {
+    border-color: #2563eb;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, .10), 0 0 0 3px rgba(37, 99, 235, .12);
+}
+
+/* labels above handles */
+.handle_label {
+    position: absolute;
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 2px 6px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #0f172a;
+    background: #eef2ff;
+    border: 1px solid #dbe3ff;
+    white-space: nowrap;
+}
+
+.handle--dog .handle_label {
+    background: #dbeafe;
+    border-color: #bfdbfe;
+}
+
+/* better spacing for the whole block */
+.compare_note {
+    margin-top: 8px;
+}
+
+/* make sure the bar corner radios don’t clip */
+.compare_bar {
+    overflow: visible;
+}
+
+
+/* Give the compare bar extra top breathing room under the heading */
+.modal_section_title+.compare_bar {
+    margin-top: 10px;
+}
+
+/* Nudge handle labels downward (closer to the bar) */
+.compare_bar--interactive .handle_label {
+    top: -22px;
+    /* was -34px in our last tweak */
+}
+
+@media (max-width: 420px) {
+    .compare_bar--interactive .handle_label {
+        top: -24px;
+    }
+}
+
+.compare_bar--interactive {
+    padding-bottom: 34px;
+    padding-top: 12px;
 }
