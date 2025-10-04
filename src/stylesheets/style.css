@@ -1,9 +1,6 @@
 /* --- --- --- --- ---
-fonts
+root 
 --- --- --- --- --- --- */
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&family=Space+Grotesk:wght@300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
-
 :root {
     /* Font */
     --heading-primary: "DM Sans", sans-serif;
@@ -13,112 +10,49 @@ fonts
     --title-dark: #454545;
     --body-light: #ffffff;
     --body-dark: #626a6a;
+    --nav-dark: #434343;
 }
 
-
-/* .space-grotesk-<uniquifier> {
-    font-family: "Space Grotesk", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: <weight>;
-    font-style: normal;
-}
-.ibm-plex-sans-<uniquifier> {
-    font-family: "IBM Plex Sans", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: <weight>;
-    font-style: normal;
-    font-variation-settings:
-        "wdth"100;
-}
-
-
-.dm-sans-<uniquifier> {
+h2 {
     font-family: "DM Sans", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: <weight>;
-    font-style: normal;
-}
-.work-sans-<uniquifier> {
-    font-family: "Work Sans", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: <weight>;
-    font-style: normal;
 }
 
-.poppins-regular {
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-}
-.inter-<uniquifier> {
-    font-family: "Inter", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: <weight>;
-    font-style: normal;
-}
-
-.baloo-2-<uniquifier> {
-    font-family: "Baloo 2", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: <weight>;
-    font-style: normal;
-}
-.lato-regular {
-    font-family: "Lato", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
-
-.rubik-<uniquifier> {
-    font-family: "Rubik", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: <weight>;
-    font-style: normal;
-}
-.open-sans-<uniquifier> {
-    font-family: "Open Sans", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: <weight>;
-    font-style: normal;
-    font-variation-settings:
-        "wdth"100;
-}*/
-
-/* --- --- --- --- ---
-global
---- --- --- --- --- --- */
+/* --------------
+Global reset 
+------------------ */
 * {
     margin: 0;
     padding: 0;
 }
 
-input:focus {
+html {
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+input:focus-visible {
+    outline: 2px solid #4357cb;
+    /* your accent color */
+    outline-offset: 2px;
+}
+
+input:focus:not(:focus-visible) {
     outline: none;
 }
+
 
 /* --- --- --- --- ---
 global
 --- --- --- --- --- --- */
-.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /**/
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    min-height: 100vh;
-    /**/
-    overflow: visible;
-    position: relative;
-    z-index: 7000;
-    /**/
-    background-color: #fefefe;
-    box-shadow: 0px 0px 5px -1px rgba(82, 82, 82, 0.23);
-}
-
 .page_content {
     display: flex;
     flex-direction: column;
@@ -138,128 +72,21 @@ global
     position: relative;
 }
 
-/* ------------ 
-dashboard
------------- */
-.weather_main {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    align-self: center;
-    width: 100%;
-    min-height: fit-content;
-}
-
-.weather_current {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    align-self: center;
-    /* */
-    width: 100%;
-    margin-top: 0.5rem;
-    /**/
-    position: relative;
-    z-index: 80000;
-    /**/
-    /*   background-color: #1d1c28;*/
-    color: #fff;
-    background-color: #fff;
-    color: var(--body-dark);
-}
-
-.conditions_current {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    align-self: center;
-    /**/
-    width: 100%;
-    max-width: 90%;
-    margin: 0.5rem 0rem;
-    /**/
-    position: relative;
-    z-index: 80000;
-    color: #fff;
-    background-color: #fff;
-    color: var(--body-dark);
-}
-
-.conditions_main {
-    display: flex;
-    flex-direction: column;
-    /* Stack on mobile */
-    gap: 1rem;
-    width: 100%;
-    justify-content: center;
-    max-width: 98%;
-}
-
-/* --- --- --- --- ---
-global
---- --- --- --- --- --- */
-.initial_screen_wrapper {
-    background-color: hsl(220, 100%, 99%);
-    background-image: url('https://images.unsplash.com/photo-1520646924857-261be3037bc7?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-    background-size: cover;
-    height: 100vh;
-}
-
-.home_wrapper {
-    background-color: #6d6b8360;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-}
-
-
-/* --- --- --- --- ---
-global
---- --- --- --- --- --- */
-
 .flex-img {
     width: 200px;
     height: auto;
     flex-shrink: 0;
-    /* prevent image from shrinking */
 }
 
 .text-content {
     flex: 1;
-    /* take up remaining space */
     min-width: 200px;
-    /* optional: avoid squishing too small */
 }
 
 
 /* --- --- --- --- ---
 titles, headings
 --- --- --- --- --- --- */
-.title_main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    align-self: center;
-    flex-grow: 0;
-    max-width: 98%;
-
-}
-
-.title_main h1 {
-    font-size: 4rem;
-    font-weight: 400;
-    max-width: 80%;
-    text-align: center;
-    line-height: 1.5;
-    color: var(--title-light);
-    /*   font-family: var(--heading-primary);*/
-}
-
 .body_text.md h3 {
     font-size: 2rem;
     max-width: 50%;
@@ -275,8 +102,6 @@ titles, headings
     font-size: 1.75rem;
     font-weight: 500;
     color: var(--title-dark);
-    /*    
-    font-family: var(--body-primary);*/
     font-family: var(--body-primary);
     font-family: "Bitter", serif;
 }
@@ -300,15 +125,76 @@ titles, headings
     margin-bottom: 0.75rem;
     font-weight: 500;
     color: var(--title-dark);
-    /*     
-    font-family: var(--heading-primary);*/
-
     font-family: "Bitter", serif;
+}
+
+/* About page — list rhythm & headings */
+.body_text h3+ul {
+    margin-top: .35rem;
+}
+
+/* Tighten spacing inside the “What’s New” card and the callout after it */
+.body_text {
+    margin-bottom: 1.25rem;
+}
+
+.body_text:last-child {
+    margin-bottom: 0;
+}
+
+/* Callout (“Coming Soon – Park Visualizations”) */
+.body_text.coming-soon {
+    margin-top: .5rem;
+    margin-bottom: 1.25rem;
+    /* space before the thanks block */
+}
+
+.body_text ul li {
+    line-height: 1.8;
+}
+
+
+/* ===== About page bottom spacing polish ===== */
+
+/* Give the whole About page a defined bottom breathing room */
+.about_page,
+.about_wrapper,
+section.about_section {
+    padding-bottom: clamp(48px, 6vh, 96px);
+}
+
+/* Thanks block + CTA: create a tidy duo */
+.about_thanks {
+    margin-top: clamp(20px, 3vh, 28px);
+    margin-bottom: clamp(14px, 2.5vh, 22px);
+    line-height: 1.25;
+}
+
+.about_thanks h2,
+.about_thanks h3 {
+    margin: 0 0 .35rem;
+}
+
+/* Return button sits close to the thanks text, but not cramped */
+.about_return {
+    margin-top: .5rem;
+}
+
+/* Prevent any extra margin collapsing at the very end */
+.about_container>*:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* Callouts consistency */
+.body_text .info-callout {
+    background: #eef6ff;
+    border-left: 4px solid #3b82f6;
+    border-radius: 12px;
+    padding: 1rem;
 }
 
 .body_text h2 {
     font-size: 1.5rem;
-
     font-weight: 400;
     text-align: center;
     align-self: center;
@@ -318,38 +204,7 @@ titles, headings
     margin-top: 2rem;
     margin-bottom: 1rem;
     color: var(--title-dark);
-    /*     
-    font-family: var(--heading-primary);*/
-
-    font-family: "Bitter", serif;
-}
-
-/* --- --- --- --- ---
-text, links
---- --- --- --- --- --- */
-.location_title {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex-grow: 1;
-    text-align: left;
-    width: 100%;
-    max-width: 90%;
-}
-
-.location_title h2 {
-    position: relative;
-    z-index: 89999;
-    /**/
-    width: 100%;
-    text-align: left;
-    /* */
-    font-size: 2rem;
-    font-weight: 500;
-    font-weight: 400;
-    color: var(--title-light);
-    color: var(--body-dark);
-    font-family: var(--body-primary);
+    font-family: "DM Sans", sans-serif;
 }
 
 .main_text {
@@ -398,7 +253,6 @@ text, links
     color: var(--body-dark);
 }
 
-/* */
 .body_text {
     width: 100%;
     align-self: center;
@@ -417,53 +271,15 @@ text, links
 }
 
 
-/* */
-.current_icon {
-    position: absolute;
-    z-index: 5000;
-    right: 12.5%;
-    width: auto;
-    top: 15%;
-}
-
-/* --- --- --- --- ---
-landing page
---- --- --- --- --- --- */
-.home_button button {
-    height: 3.15rem;
-    width: 100%;
-    max-width: 50%;
-    /**/
-    align-self: center;
-    margin: 0.25rem;
-    font-size: 1.05rem;
-    /**/
-    font-family: var(--heading-primary);
-    font-weight: 400;
-    color: #fff;
-    cursor: pointer;
-    /**/
-    background-color: #4357cb;
-    border: none;
-    border-radius: 12px;
-}
-
-.home_button button:hover {}
-
 
 /* --- --- --- --- ---
 about page
 --- --- --- --- --- --- */
-
-
 .about_content {
     display: flex;
     align-items: flex-start;
-    /* align top edges */
     gap: 15px;
-    /* space between image and text */
     flex-wrap: wrap;
-    /* allow stacking if too narrow */
 }
 
 .title_about {
@@ -486,8 +302,7 @@ about page
     line-height: 1.5;
     width: 100%;
     max-width: 98%;
-    /*   font-family: var(--heading-primary);*/
-    font-family: 'Bitter';
+    font-family: "DM Sans", sans-serif;
     border-bottom: 1px solid #e2e8f0;
     /* light slate gray-blue */
     padding-bottom: 0.5rem;
@@ -498,9 +313,6 @@ about page
     width: 100%;
     align-self: center;
 }
-
-
-
 
 .title_about h3 {
     font-size: 1.25rem;
@@ -523,16 +335,13 @@ about page
     height: 3.15rem;
     width: 100%;
     max-width: 50%;
-    /**/
     align-self: center;
     margin: 0.25rem;
     font-size: 1.05rem;
-    /**/
     font-family: var(--heading-primary);
     font-weight: 300;
     color: #fff;
     cursor: pointer;
-    /**/
     background-color: #4357cb;
     border: none;
     border-radius: 12px;
@@ -550,20 +359,15 @@ buttons
     width: 100%;
 }
 
-
-
 .back_button {
     height: 35px;
     width: 100%;
     max-width: 15%;
-    /**/
     align-self: center;
     margin: 0.5%;
-    /**/
     font-family: 'Lato';
     font-weight: 400;
     color: #2d2d2d;
-    /**/
     background-color: #fafafa;
     border: none;
     border: 0.5px solid #dddddd;
@@ -579,20 +383,6 @@ buttons
 /* -----------------------------------------
    Category Card Component
 ------------------------------------------ */
-
-.category_card-dog {
-    width: 100%;
-    min-height: 250px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: flex-start;
-    align-self: flex-start;
-    max-width: 90%;
-    padding: 0.25rem;
-    margin-top: 1rem;
-}
-
 .category_card {
     display: flex;
     align-items: center;
@@ -604,8 +394,6 @@ buttons
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
     font-size: 1rem;
     font-weight: 500;
-    /*     margin-bottom: 0.25rem;
-      backdrop-filter: blur(10px);*/
 }
 
 .category_card.rev {
@@ -620,28 +408,7 @@ buttons
     align-self: center;
 }
 
-.card_text {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-}
 
-.card_text p {
-    font-size: 1rem;
-    color: var(--title-dark);
-    font-weight: 300;
-    text-align: left;
-    padding: 0.25rem;
-    align-self: center;
-    font-family: var(--body-primary);
-}
-
-.card_icon {
-    padding: 0.25rem;
-    display: flex;
-    align-items: center;
-}
 
 .card_text.sm p {
     text-align: left;
@@ -653,36 +420,12 @@ buttons
 /* --- ---  ---
 hourly 
 --- --- --- --- */
-/* .hourly {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-
-    flex-wrap: wrap;
-    flex: 0 50%;
-    flex-grow: 0;
-
-    width: 100%;
-    max-width: 99%;
-    max-height: 100%;
-    color: #1d1c28;
-    position: relative;
-    z-index: 5000;
-    background-color: #fdfcf720;
-    backdrop-filter: blur(2px);
-}
-*/
-
 .hourly_table {
     align-self: center;
-
     width: 100%;
-
     position: relative;
     z-index: 5000;
     margin-bottom: 0.25rem;
-    /*     box-shadow: 0px 0px 5px 1px rgba(82, 82, 82, 0.23);*/
 }
 
 .hourly_table th {
@@ -711,8 +454,6 @@ hourly
 .hour_conditions {
     font-size: 1rem;
 }
-
-
 
 /* hour card... table > card */
 .hour_card {
@@ -773,10 +514,8 @@ General
     justify-content: center;
     align-items: center;
     height: auto;
-    /* */
     width: 100%;
     max-width: 98%;
-    /* */
 }
 
 .col {
@@ -795,14 +534,11 @@ General
     justify-content: space-evenly;
     align-items: center;
     flex-grow: 1;
-    /* */
     margin: 0.5%;
     height: fit-content;
     width: 100%;
     max-width: 98%;
 }
-
-
 
 .row_flex.rev {
     flex-direction: column-reverse;
@@ -827,10 +563,8 @@ General
     flex-direction: column;
     flex-basis: 100%;
     align-self: center;
-    /* */
     width: 100%;
     max-width: 100%;
-    /* */
     position: relative;
     z-index: 999999;
 }
@@ -842,22 +576,15 @@ General
     height: fit-content;
 }
 
-.full_width {
-    width: 100%;
-    max-width: 100%;
-}
-
 .flex_col-rev {
     display: flex;
     flex-direction: column-reverse;
-    /* */
     height: fit-content;
 }
 
 .flex_row-rev {
     display: flex;
     flex-direction: row-reverse;
-    /* */
     height: fit-content;
     width: 100%;
 }
@@ -953,10 +680,7 @@ General
 
 
 
-
-
 @media (max-width: 740px) {
-
 
     .title-section {
         max-height: 15vh;
@@ -975,7 +699,6 @@ General
         font-size: 0.8rem;
         margin-top: 0.25rem;
     }
-
 
 }
 
@@ -998,14 +721,6 @@ breakpoints
         overflow-x: hidden;
     }
 
-    .location_title h2 {
-        font-size: 2rem;
-        width: 100%;
-        margin: 0.25rem 0rem;
-        max-width: 98%;
-        font-weight: 500;
-    }
-
     .main_text p {
         font-size: 2rem;
         margin: 0.25rem 0rem;
@@ -1014,17 +729,6 @@ breakpoints
         font-weight: 300;
     }
 
-    .current_icon {
-        position: absolute;
-        z-index: 5000;
-        right: 12%;
-        top: 15%;
-        width: auto;
-        /* make sure it only sizes based on the icon itself */
-        max-width: none;
-        /* optional: prevent container from shrinking it */
-        align-self: center;
-    }
 }
 
 @media only screen and (max-width: 650px) {
@@ -1033,51 +737,15 @@ breakpoints
         max-width: 90%;
     }
 
-    .location_title h2 {
-        font-size: 3.5rem;
-        line-height: 1.5;
-        margin: 0.25rem 0rem;
-        font-weight: 500;
-    }
-
     .main_text p {
         font-size: 2.25rem;
         margin: 0.25rem 0rem;
         font-weight: 400;
     }
 
-    .current_icon {
-        position: absolute;
-        z-index: 5000;
-        left: 55%;
-        top: 7.5%;
-        width: auto;
-        /* make sure it only sizes based on the icon itself */
-        max-width: none;
-        /* optional: prevent container from shrinking it */
-        align-self: center;
-    }
 }
 
 @media only screen and (min-width: 740px) {
-
-
-    .about_main {}
-
-    .weather_main {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        /* 
-        align-self: center;
-        width: 100%;
-        min-height: 50vh;*/
-    }
-
-    .weather_current,
-    .conditions_current {
-        flex: 1;
-    }
 
     .hourly {
         display: flex;
@@ -1088,31 +756,12 @@ breakpoints
         max-width: 35%;
     }
 
-    .current_icon {
-        left: 60%;
-        top: 15%;
-    }
-
-    .location_title {
-        justify-content: center;
-        height: auto;
-        flex-grow: 1;
-    }
-
     .main_text {
         display: flex;
         align-content: center;
         justify-content: center;
         height: auto;
         flex-grow: 0.5;
-    }
-
-    .location_title h2 {
-        font-size: 4rem;
-        font-weight: 400;
-        text-align: left;
-        color: var(--body-dark);
-        font-family: var(--body-primary);
     }
 
     .main_text p {
@@ -1123,7 +772,6 @@ breakpoints
         font-family: var(--body-primary);
     }
 
-    /* */
     .body_text {
         max-width: 98%;
         width: 100%;
@@ -1135,8 +783,6 @@ breakpoints
         text-align: left;
         line-height: 2.5;
         width: 100%;
-        /*     color: var(--body-dark);
-          font-family: var(--body-primary);*/
     }
 
     .body_text h2 {
@@ -1144,22 +790,8 @@ breakpoints
         font-weight: 400;
         text-align: left;
         line-height: 1.5;
-        /*
-          color: var(--title-dark);
-        font-family: var(--heading-primary);
-        */
     }
 
-    .title_main h1 {
-        font-size: 5rem;
-        max-width: 80%;
-        font-weight: 500;
-        line-height: 2;
-        text-align: left;
-        width: auto;
-    }
-
-    /* */
     .home_button button {
         align-self: flex-start;
         max-width: 35%;
@@ -1185,9 +817,7 @@ breakpoints
         font-size: 4rem;
         font-weight: 400;
         line-height: 1.5;
-
     }
-
 
     .return_button {
         width: 100%;
@@ -1209,23 +839,14 @@ breakpoints
         max-width: 75%;
     }
 
-
-    /* dashboard */
-
-
-
-
     .row_flex {
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: flex-start;
-        /**/
         height: auto;
-
         width: 100%;
         max-width: 98%;
-        /**/
     }
 
     .row_flex.rev {
@@ -1242,108 +863,27 @@ breakpoints
     }
 
     .section_content {
-
         height: 100%;
         flex-grow: 1;
         border: 0.5px dashed green;
     }
 
-    .conditions_main {
-        flex-direction: row;
-        flex-wrap: wrap;
-        width: 100%;
-        align-self: center;
-        margin: 0 auto;
-    }
-
-    /* */
-    /*     .weather_current {
-  display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        align-self: center;
-     
-        width: 100%;
-        max-width: 75%;
-        margin-top: 0.5rem;
-   
-        position: relative;
-        z-index: 80000;
-    }*/
-
-
-
-    .conditions_current {
-        position: relative;
-        z-index: 8000;
-        /*        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-        align-items: center;
-        align-self: center;
-      
-        width: 100%;
-        min-height: fit-content;*/
-    }
-
-    .hourly {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        align-self: flex-start;
-        /**/
-
-        margin-top: 0.5rem;
-
-        /**/
-        position: relative;
-        z-index: 80000;
-    }
-
-    .paw_cast {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-        align-items: center;
-        /**/
-
-        min-width: 98%;
-        /**/
-        margin-top: 0.5rem;
-        /**/
-        position: relative;
-        z-index: 80000;
-    }
-
     .category_card {
-        /*     justify-content: center;
-        width: fit-content;
-        min-width: 50%;
-        flex-grow: 1;*/
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         align-items: center;
-
         width: 100%;
         margin: 0.5rem 0rem;
         max-width: 39%;
         padding: 0.25rem 0.5rem;
-
         flex: 1 1 100%;
         padding: 1rem;
         flex: 1 1 calc(50% - 0.5rem);
     }
 
     .hourly_table {
-
         min-height: 360px;
-    }
-
-    .card_text {
-        text-align: left;
     }
 
     .card_text.sm p {
@@ -1352,9 +892,6 @@ breakpoints
         font-size: 1.15rem;
         font-weight: 400;
     }
-
-    /* */
-
 
     .hour_card p {
         color: var(--body-dark);
@@ -1373,39 +910,24 @@ breakpoints
         text-align: center;
     }
 
-    .card_text {}
-
-    .card_text p {
-        font-size: 1.15rem;
-        text-align: left;
-        max-width: 92.5%;
-    }
 }
 
 
-@media only screen and (min-width: 1280px) {
 
-    .container {
-        display: block;
-        overflow: visible;
-        /**/
-        margin: 0 auto;
-        height: auto;
+/* Current temp, condition, location sizing on desktop */
+@media (min-width: 1024px) {
 
+    .main_text p:nth-child(1) {
+        font-size: clamp(2.75rem, 4.5vw, 4rem);
+        font-weight: 500;
+    }
+
+    .main_text+.main_text p {
+        font-size: clamp(1.1rem, 2vw, 1.4rem);
+        color: #4b5563;
     }
 
 }
-
-@media only screen and (min-width: 1720px) {
-
-    .container {}
-
-}
-
-/* --- --- --- --- ---
-global
---- --- --- --- --- --- */
-
 
 /* --- --- --- --- ---
 global

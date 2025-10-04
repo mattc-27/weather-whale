@@ -1,7 +1,7 @@
 import React from 'react';
-import { SearchButtonInitial } from '../components/Containers';
-import { PageLayout, SectionLayoutMain, SectionLayoutLg, TextBlock } from '../components/SectionLayouts';
-import { TitleContainer } from '../components/Containers';
+import { TitleContainer, SearchButtonInitial } from '../components/layout-containers/Containers';
+import { PageLayout, SectionLayoutMain, SectionLayoutLg, TextBlock } from '../components/layout-containers/SectionLayouts';
+
 import whale_cloud from '../assets/whale_cloud.png';
 import { useMobile } from '../hooks/useMobile';
 
@@ -114,7 +114,7 @@ export default function About() {
 
                 </SectionLayoutLg>
                 <SectionLayoutLg wrapperStyle={`col content_even items_center body_text full_width`} style={{ flexGrow: '1', flexWrap: 'wrap', padding: '1rem 0rem' }}>
-                    <TextBlock wrapperStyle={`flex_col body_text`} style={{ maxWidth: mobile ? '98%' : '80%' }}>
+                    <TextBlock wrapperStyle={`flex_col body_text about_container`} style={{ maxWidth: mobile ? '98%' : '80%' }}>
                         <h2>🆕 What's New</h2>
 
                         <div
@@ -127,6 +127,14 @@ export default function About() {
 
                                 boxShadow: '0 0 8px rgba(0,0,0,0.04)'
                             }}>
+                            <h3>v1.4.0 – October 2025</h3>
+                            <ul style={{ marginLeft: '1.25rem', marginBottom: '0.75rem' }}>
+                                <li>Style enhancements across homepage & dashboard (cleaner spacing, type scale).</li>
+                                <li>New gradient-banded hourly temperature chart on the main dashboard.</li>
+                                <li>Feature cards now 3-across on desktop, responsive to 2/1 on smaller screens.</li>
+                                <li>Accessibility: clearer icon buttons & tooltips.</li>
+                                <li>Dog Weather Details modal redesigned with clearer layout, icons, and interactive temperature comparison.</li>
+                            </ul>
                             <h3>v1.3.0 – July 2025</h3>
                             <ul style={{ marginLeft: '1.25rem', marginBottom: '0.75rem' }}>
                                 <li>Added temperature range filtering for park analytics</li>
@@ -140,17 +148,35 @@ export default function About() {
                                 <li>Improved mobile spacing and font scale</li>
                             </ul>
                         </div>
+                        <div
+                            className='body_text'
+                            style={{
+                                backgroundColor: '#eef6ff',
+                                borderRadius: '12px',
+                                padding: '1rem',
+                                marginTop: '0.5rem',
+                                borderLeft: '4px solid #3b82f6'
+                            }}
+                        >
+                            <h3 style={{ marginTop: 0 }}>Coming Soon – Park Visualizations</h3>
+                            <ul style={{ marginLeft: '1.25rem', marginBottom: 0 }}>
+                                <li>Forecast bands (feels-like, wind, precip) with day-by-day comparisons.</li>
+                                <li>Historical averages vs. today (temperature, wind, humidity).</li>
+                                <li>Sparklines for recent trends and “extremes” timelines.</li>
+                            </ul>
+                        </div>
+
                     </TextBlock>
-                    <TextBlock wrapperStyle={`flex_col content_center items_center body_text`} style={{ width: '100%' }}>
-                        <div className='flex_col body_text md' style={{ margin: '1%' }}>
+                    <TextBlock wrapperStyle={`flex_col content_center items_center body_text about_container`} style={{ width: '100%' }}>
+                        <div className='flex_col body_text md about_thanks'>
                             <h3 style={{ whiteSpace: 'pre-line' }} >
                                 Thanks for visiting —
                                 <br />and keep an eye on the skies (and the seas)!
                             </h3>
                         </div>
-                        <div className='row items_center content_center' style={{ margin: ' 0%', width: '100%', maxWidth: '98%' }}>
+                        <div className='row items_center content_center about_return' style={{ margin: ' 0%', width: '100%', maxWidth: '98%' }}>
                             <SearchButtonInitial
-                                styleClass={`return_button`}
+                                styleClass={`return_button tn btn-primary`}
                                 text={'Return To Weather Dashboard'}
                                 handleButtonClick={handleButtonClick} />
                         </div>

@@ -1,0 +1,678 @@
+/* =========================================
+   Weather Whale — Dashboard (clean)
+========================================= */
+
+:root {
+    --page-max: 1240px;
+    --page-pad: 16px;
+    --border: #eceff4;
+    --ink: #111827;
+    --ink-muted: #4b5563;
+    --shadow-soft: 0 1px 2px rgba(0, 0, 0, .03);
+    /* Font */
+    --heading-primary: "DM Sans", sans-serif;
+    --body-primary: "Work Sans", sans-serif;
+}
+
+
+/* ---------------- App surface ---------------- */
+.app_container {
+    display: grid;
+    grid-template-columns: 45% 55%;
+    /* ← was 58/42 */
+    gap: 20px;
+    background: #f6f7fb;
+    border-radius: 14px;
+    padding: 5px;
+    min-height: calc(100svh - var(--header-h) - var(--footer-h));
+    width: 100%;
+    max-width: 99.99%;
+}
+
+@media (max-width: 1023.98px) {
+    .app_container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* columns */
+.app_col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 0;
+    /* allow inner scrolling */
+}
+
+.app_col--left {
+    padding: 5px 12px;
+}
+
+.app_col--right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 5px 12px;
+
+}
+
+
+
+
+/* ——— LAYOUT ——— */
+.leftcol {
+    --hero-mobile-min-vh: 52vh;
+    /* increase to make the section taller on mobile */
+    --media-desktop-vh: 44vh;
+    /* 30–40 works well */
+    --media-op-mobile: .22;
+    /* faint bg on mobile */
+    --media-op-desktop: 1;
+    /* full on desktop panel */
+
+    position: relative;
+    display: grid;
+    grid-template-rows: auto;
+    /* mobile: only header in flow */
+    gap: clamp(12px, 2vw, 20px);
+    isolation: isolate;
+    container-type: inline-size;
+}
+
+/* base layout */
+.leftcol {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto;
+    /* mobile: only header in flow */
+    gap: clamp(12px, 2vw, 20px);
+    isolation: isolate;
+    container-type: inline-size;
+    /* key: query by the column width, not viewport */
+}
+
+
+/* Make the header (current_stack) taller on mobile */
+.leftcol .current_stack {
+    min-height: var(--hero-mobile-min-vh);
+}
+
+
+
+
+/* ——— HERO / CURRENT ——— */
+.current_stack {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+    z-index: 999999;
+    flex-grow: 1;
+
+}
+
+
+.location_title {
+    display: flex;
+    justify-content: flex-start;
+    color: var(--title-dark);
+    font-family: var(--heading-primary);
+    text-align: left;
+    width: 100%;
+}
+
+.location_title h2 {
+    margin: 4px 0 0;
+    font-size: clamp(34px, 5vw, 48px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-align: left;
+    font-weight: 400;
+}
+
+.current_primary {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 0.25rem;
+    width: 100%;
+    max-width: 98%;
+    padding: 12px 10px;
+    height: 100%;
+    max-height: 98%;
+    align-self: center;
+}
+
+.current_temp {
+    font-size: clamp(42px, 6vw, 72px);
+    font-size: 5rem;
+    line-height: 1.06;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: var(--title-dark);
+    font-family: var(--heading-primary);
+}
+
+.current_condition {
+    font-size: clamp(16px, 2vw, 18px);
+    color: var(--ink-muted);
+    color: var(--title-dark);
+    font-family: var(--heading-primary);
+    font-size: 2rem;
+    padding-left: 6px;
+    font-weight: 300;
+}
+
+
+
+
+
+/* icon never overlaps */
+.current_icon {
+    position: static;
+    width: clamp(180px, 28vw, 320px);
+    min-width: 180px;
+    height: auto;
+    opacity: .92;
+    position: absolute;
+    top: 12.5%;
+    left: 60%;
+    z-index: 8000;
+}
+
+
+
+/* NEW: six “glass” metric cards under the primary block */
+
+/* --- Left-column glass metrics under the hero --- */
+.left_metrics {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    position: relative;
+    z-index: 999999;
+    width: 100%;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    min-height: var(--hero-mobile-min-vh);
+}
+
+.metrics_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    width: 100%;
+    padding: 5px;
+    height: 100%;
+    max-height: 98%;
+    max-width: 98%;
+    align-self: center;
+}
+
+/* ---------- 2) Metric cards grid & look ---------- */
+
+
+
+.glass_card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    /* label/value | icon */
+    grid-template-rows: auto;
+    align-items: center;
+    padding: clamp(14px, 2vw, 18px) clamp(14px, 2.4vw, 20px);
+    /*     min-height: clamp(112px, 13vw, 150px);*/
+    height: 180px;
+    margin: 0.15rem;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 12px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    background-color: #fafafa98;
+    display: flex;
+}
+
+.glass_card:hover {
+    transform: translateY(-1px);
+    border-color: rgba(12, 18, 28, .12);
+}
+
+/* Text column */
+.card_top {
+    font-family: var(--heading-primary);
+    color: var(--title-dark);
+}
+
+.card_top {
+    display: grid;
+    align-content: center;
+    padding: 0;
+    line-height: 2.5;
+    /* */
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-self: center;
+    flex-direction: column;
+    flex-grow: 1;
+    height: 100%;
+    max-height: 98%;
+}
+
+.card_bottom {
+    justify-self: end;
+    align-self: center;
+    padding: 0;
+    /* */
+    flex-grow: 1;
+    height: 100%;
+    max-height: 98%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+}
+
+.metric_label {
+    letter-spacing: .02em;
+    font-size: 1rem;
+    text-align: left;
+    padding: 0.25rem;
+    align-self: flex-start;
+    flex-grow: 1;
+}
+
+.metric_value {
+    line-height: 1.1;
+    font-weight: 500;
+    font-size: 2.15rem;
+    text-align: left;
+    align-self: flex-start;
+    padding: 0.25rem;
+    flex-grow: 2;
+}
+
+
+/* Photo panel (replaces the inline-style background div) */
+/* One media element, background mode by default (mobile) */
+.leftcol__media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    /* behind content */
+    overflow: hidden;
+    pointer-events: none;
+    border-radius: 16px;
+}
+
+.leftcol__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 35%;
+    opacity: var(--media-op-mobile);
+    filter: saturate(72%) brightness(0.92);
+    transform: translateY(0) scale(1.03);
+    will-change: transform;
+}
+
+.leftcol__scrim {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(to bottom, rgba(255, 255, 255, .55),
+            rgba(255, 255, 255, .25) 40%,
+            rgba(255, 255, 255, 0));
+}
+
+/* Desktop: same element becomes an in-flow panel, 30–40% of viewport height */
+@container (min-width: 900px) {
+    .leftcol {
+        grid-template-rows: auto var(--media-desktop-vh);
+    }
+
+    .leftcol__media {
+        position: relative;
+        inset: auto;
+        z-index: 0;
+        pointer-events: auto;
+        border: 1px solid color-mix(in oklab, #000 8%, transparent);
+        border-radius: 14px;
+    }
+
+    .leftcol__img {
+        object-position: 50% 28%;
+        /* lift focal point to reveal more foreground */
+        opacity: .95;
+    }
+
+    .leftcol__scrim {
+        /* lighten the edge scrim a touch to reveal photo */
+        background:
+            linear-gradient(to right, rgba(0, 0, 0, .14), rgba(0, 0, 0, 0) 42%),
+            linear-gradient(to bottom, rgba(255, 255, 255, 0) 74%, rgba(0, 0, 0, .06));
+    }
+}
+
+/* Optional: tiny parallax, kept subtle */
+@media (prefers-reduced-motion: reduce) {
+    .leftcol__img {
+        transform: none !important;
+    }
+}
+
+
+/* ——— RIGHT: HOURLY STRIP + PAWCAST + D3 TEMP CHART ——— */
+
+/* -------- panel cards on the right stack -------- */
+.panel_card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+    padding: 16px 10px;
+    min-height: 0;
+    flex-grow: 1;
+}
+
+.panel_card {
+    flex-grow: 1;
+    width: 100%;
+    max-width: 98%;
+}
+
+/* Wrapper keeps the panel_card dimensions */
+.panel_card {
+    display: grid;
+    grid-auto-rows: min-content;
+    gap: 12px;
+}
+
+.temp_chart .panel_title {
+    margin: 0 0 4px 0;
+    color: var(--title-dark);
+    font-family: var(--heading-primary);
+}
+
+.panel_title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--title-dark);
+    font-family: var(--heading-primary);
+
+}
+
+
+/* Wrapper keeps the panel_card dimensions */
+.hourly_right {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0.5;
+}
+
+.dog_card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    /* grow to fill */
+    align-self: stretch;
+    /* stretch to panel width */
+    width: 100%;
+    min-height: 0;
+
+}
+
+.chart_card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    /* grow to fill */
+    align-self: stretch;
+    /* stretch to panel width */
+    width: 100%;
+    min-height: 0;
+
+}
+
+
+
+
+/* ——— COMPONENT STYLES ——— */
+
+
+/* hourly rail */
+.hourly_grid_wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    /* grow to fill */
+    align-self: stretch;
+    /* stretch to panel width */
+    width: 100%;
+    min-height: 0;
+
+    /* allow flex child to actually shrink if needed */
+}
+
+.hourly_grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+    align-self: center;
+    max-width: 98%;
+}
+
+.hourly_grid {
+    flex: 1 1 auto;
+    /* take full height of the green area */
+    /* your existing grid/flex styles here */
+    min-height: 0;
+    /* avoids overflow issues in flex containers */
+}
+
+/* Grid layout: 2x2 on mobile; 4x4 on desktop */
+.hourly_grid {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 900px) {
+    .hourly_grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+/* Header with title + pager */
+.hourly_grid_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 0.5;
+    flex: 0 0 auto;
+    margin-bottom: 8px;
+}
+
+.hour_nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hour_nav_btn {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+}
+
+.hour_nav_btn:hover {
+    background: rgba(255, 255, 255, 0.98);
+}
+
+.hour_nav_status {
+    font-size: 12px;
+    color: #64748b;
+    min-width: 32px;
+    text-align: center;
+}
+
+/* Cards (glass look consistent with your left metrics) */
+.hour_card {
+    flex: 1 1 calc(50% - 12px);
+    /* mobile: 2 across */
+    min-width: 150px;
+    /* stop squish */
+    border-radius: 12px;
+    padding: 0;
+    /* button handles inner padding */
+}
+
+@media (min-width: 900px) {
+    .hour_card {
+        flex: 1 1 calc(25% - 12px);
+    }
+}
+
+/* Reuse your .glass_card base; tighten for chips */
+.hour_card.glass_card {
+    --bg: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+/* Inner content button for better tap targets */
+.hour_card_btn {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    gap: 4px 8px;
+    padding: 10px 12px;
+    background: transparent;
+    border: 0;
+    text-align: left;
+    cursor: default;
+}
+
+/* Chip fields */
+.hour_time {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.hour_icon {
+    grid-row: span 2;
+    font-size: 18px;
+    opacity: .8;
+}
+
+.hour_temp {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.hour_precip {
+    font-size: 12px;
+    color: #475569;
+    justify-self: end;
+}
+
+/* Highlight "now" */
+.hour_card_btn[aria-current="true"] {
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
+    border-radius: 10px;
+}
+
+/* Pager: shown only on mobile */
+.hour_nav {
+    display: none;
+    margin-top: 4px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+@media (max-width: 899px) {
+    .hour_nav {
+        display: flex;
+    }
+}
+
+/* hourly chart */
+/* --- Chart wrapper --- */
+.temp_chart {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1 1 auto;
+    align-self: stretch;
+    min-height: 0;
+}
+
+.temp_chart_card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    /* grow to fill */
+    align-self: stretch;
+    /* stretch to panel width */
+    width: 100%;
+    min-height: 0;
+
+}
+
+.temp_chart_card_head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 0;
+
+    padding: 2px;
+}
+
+
+/* Wrapper keeps the panel_card dimensions */
+
+
+.glass_card.is-warm .card_bottom svg {
+    color: #d56c6c;
+}
+
+.glass_card.is-cool .card_bottom svg {
+    color: #8098c9;
+}
+
+.hourly_glass {
+    --bg: rgba(255, 255, 255, 0.65);
+    background: var(--bg);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 12px;
+    padding: 10px 12px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    width: auto;
+    height: 180px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
