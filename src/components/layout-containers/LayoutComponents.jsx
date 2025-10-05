@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
 import { SearchInput } from '../Search';
 
@@ -10,6 +10,9 @@ import logo_d from '../../assets/logos/logo_d.png';
 import logo_b from '../../assets/logos/logo_b.png';
 
 function Header() {
+    const location = useLocation();
+    const isParks = location.pathname.startsWith('/parks'); // ⬅️ any Parks view
+
     return (
         <header>
             <div className="header_wrapper">
@@ -26,9 +29,12 @@ function Header() {
                             <Link className="nav_link" to="/about">About</Link>
                             <Link className="nav_link nav_badge" to="/parks">National Park Conditions</Link>
                         </nav>
-                        <div className="header_search">
-                            <SearchInput wrapperStyle="search_container" />
-                        </div>
+                        {/* ⬇️ Hide the global search on any /parks route */}
+                        {!isParks && (
+                            <div className="header_search">
+                                <SearchInput wrapperStyle="search_container" />
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

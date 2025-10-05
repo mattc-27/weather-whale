@@ -20,8 +20,9 @@ export default function ParkComparisonView() {
 
     return (
         <div style={{ padding: '2rem' }}>
+
             {parkObjects.length === 0 && (
-                <p style={{ fontSize: '1rem', color: '#555' }}>
+                <p style={{ fontSize: '0.8rem', color: '#444', fontFamily: '"Noto Sans JP", sans-serif', textAlign: 'center' }}>
                     Add 1–2 parks from the sidebar to begin comparison.
                 </p>
             )}
