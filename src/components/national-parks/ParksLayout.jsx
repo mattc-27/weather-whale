@@ -4,6 +4,7 @@ import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { ParksProvider, useParks } from '../../context/ParksContext';
 import AnalyticsSidebar from './park-components/AnalyticsSidebar';
 import ParkDetailModal from './park-components/ParkDetailModal';
+import ParkToolsInline from './park-components/ParkToolsInline';
 import { openParkDetails } from '../../util/handlers';
 import '../../stylesheets/parkstyles.css';
 
@@ -18,7 +19,8 @@ export default function ParksLayoutWrapper() {
 function ParksLayout() {
     const mapRef = useRef();
     const [sidebarWidth, setSidebarWidth] = useState(350);
-    const [isSidebarOpen, setSidebarOpen] = useState(false); // 🔄 NEW
+    const [isSidebarOpen, setSidebarOpen] = useState(false);
+    const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 768px)').matches); // ⬅️ NEW
 
     const { state, dispatch, fetchCurrentConditions } = useParks();
     const { showModal, activePark } = state;
@@ -31,33 +33,30 @@ function ParksLayout() {
         if (parksEmpty) fetchCurrentConditions();
     }, [parksEmpty, fetchCurrentConditions]);
 
-    const handleCloseModal = () => {
-        dispatch({ type: 'TOGGLE_MODAL' });
-    };
+    // ⬅️ Keep isMobile in sync with resize
+    useEffect(() => {
+        const mql = window.matchMedia('(max-width: 768px)');
+        const handler = (e) => setIsMobile(e.matches);
+        mql.addEventListener ? mql.addEventListener('change', handler) : mql.addListener(handler);
+        return () => {
+            mql.removeEventListener ? mql.removeEventListener('change', handler) : mql.removeListener(handler);
+        };
+    }, []);
 
-    const handleShowMore = () => {
-        openParkDetails(dispatch, parkData, navigate);
-    };
-
-    const parkData = activePark
-        ? (typeof activePark === 'object' ? activePark : state.parks[activePark])
-        : null;
+    const handleCloseModal = () => dispatch({ type: 'TOGGLE_MODAL' });
 
     const startResizing = (e) => {
         e.preventDefault();
         const startX = e.clientX;
         const startWidth = sidebarWidth;
-
         const onMouseMove = (e) => {
             const newWidth = Math.min(Math.max(200, startWidth + (e.clientX - startX)), 500);
             setSidebarWidth(newWidth);
         };
-
         const onMouseUp = () => {
             window.removeEventListener('mousemove', onMouseMove);
             window.removeEventListener('mouseup', onMouseUp);
         };
-
         window.addEventListener('mousemove', onMouseMove);
         window.addEventListener('mouseup', onMouseUp);
     };
@@ -68,34 +67,23 @@ function ParksLayout() {
         return 'Explore Map';
     }
 
+    const parkData =
+        activePark ? (typeof activePark === 'object' ? activePark : state.parks[activePark]) : null;
+
+
     return (
         <div className="park-page">
-            {/* Sidebar toggle for mobile */}
-            {!isSidebarOpen && (
-                <button
-                    className="sidebar-toggle"
-                    onClick={() => setSidebarOpen(true)}
-                    aria-label="Toggle Sidebar"
-                >
-                    ☰
-                </button>
+            {/* Desktop-only sidebar; hidden on mobile */}
+            {!isMobile && (
+                <div className="sidebar-container">
+                    <AnalyticsSidebar
+                        viewPath={location.pathname}
+                        sidebarWidth={sidebarWidth}
+                        startResizing={startResizing}
+                        closeSidebar={() => setSidebarOpen(false)}
+                    />
+                </div>
             )}
-
-
-            {/* Overlay for mobile sidebar */}
-            {isSidebarOpen && <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />}
-
-            {/* Sidebar container */}
-            <div className={`sidebar-container ${isSidebarOpen ? 'open' : ''}`}>
-                <AnalyticsSidebar
-                    viewPath={location.pathname}
-                    sidebarWidth={sidebarWidth}
-                    startResizing={startResizing}
-                    closeSidebar={() => setSidebarOpen(false)} // <-- NEW
-                />
-            </div>
-
-
             {/* Main Content */}
             <div className="main-content">
                 <div className="analytics-nav">
@@ -109,6 +97,11 @@ function ParksLayout() {
                     </div>
                 </div>
 
+                {/* Mobile-only inline tools */}
+                {isMobile && (
+                    <ParkToolsInline viewPath={location.pathname} />
+                )}
+
                 <Outlet context={{ mapRef }} />
             </div>
 
@@ -117,7 +110,7 @@ function ParksLayout() {
                 <ParkDetailModal
                     parkName={activePark.fullName || activePark.name}
                     data={activePark}
-                    onClose={() => dispatch({ type: 'TOGGLE_MODAL' })}
+                    onClose={handleCloseModal}
                     onShowMore={() => openParkDetails(dispatch, parkData, navigate)}
                 />
             )}

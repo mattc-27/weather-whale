@@ -31,7 +31,7 @@ export default function ParkSearchInput({
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder={placeholder}
-                style={{ width: '100%', padding: '0.5rem', fontSize: '1rem' }}
+                style={{ width: '100%', padding: '0.5rem' }}
             />
             {searchInput && matchedResults.length > 0 && (
                 <ul className="search-results">

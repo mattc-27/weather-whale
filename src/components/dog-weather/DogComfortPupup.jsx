@@ -12,19 +12,27 @@ export default function DogComfortPupup({ handleClose, id }) {
         dogOffset = 10, // dog feels ~10°F warmer than you as a simple rule of thumb
     }) {
         const wrapRef = useRef(null);
-        const [human, setHuman] = useState(initialHuman);
-        const dog = Math.min(max, Math.max(min, human + dogOffset));
+        // NEW: effective bounds for "You"
+        const maxHuman = max - dogOffset;
+        const minHuman = min; // keep simple; adjust if you ever allow negative offsets
 
-        // Helpers
+        const clampHuman = (v) => Math.min(maxHuman, Math.max(minHuman, v));
+
+        // NEW: ensure initial value respects the bound
+        const [human, setHuman] = useState(clampHuman(initialHuman));
+
+        // dog stays a fixed offset and will naturally be ≤ max now
+        const dog = human + dogOffset;
+
         const toPct = (v) => ((v - min) / (max - min)) * 100;
+
         const fromX = (clientX) => {
             const rect = wrapRef.current.getBoundingClientRect();
             const x = Math.min(Math.max(clientX - rect.left, 0), rect.width);
             const v = min + (x / rect.width) * (max - min);
-            return Math.round(v);
+            return Math.round(clampHuman(v)); // NEW: clamp to maxHuman here
         };
 
-        // Drag logic
         useEffect(() => {
             const el = wrapRef.current;
             if (!el) return;
@@ -56,11 +64,12 @@ export default function DogComfortPupup({ handleClose, id }) {
             };
         }, []);
 
-        // Keyboard support
+        // NEW: respect the effective max with keyboard too
         const onKeyDown = (e) => {
-            if (e.key === "ArrowLeft") setHuman((v) => Math.max(min, v - 1));
-            if (e.key === "ArrowRight") setHuman((v) => Math.min(max, v + 1));
+            if (e.key === "ArrowLeft") setHuman((v) => clampHuman(v - 1));
+            if (e.key === "ArrowRight") setHuman((v) => clampHuman(v + 1));
         };
+
 
         return (
             <>
@@ -84,8 +93,8 @@ export default function DogComfortPupup({ handleClose, id }) {
                         ref={wrapRef}
                         className="compare_track"
                         role="slider"
-                        aria-valuemin={min}
-                        aria-valuemax={max}
+                        aria-valuemin={minHuman}
+                        aria-valuemax={maxHuman}
                         aria-valuenow={human}
                         tabIndex={0}
                         onKeyDown={onKeyDown}
@@ -98,6 +107,7 @@ export default function DogComfortPupup({ handleClose, id }) {
                         >
                             <div className="handle_label">You {human}°F</div>
                         </div>
+
 
                         {/* dog handle (offset) */}
                         <div

@@ -210,7 +210,7 @@ export default function Dashboard() {
                                     <div className='card_top'>
                                         <span className="metric_label">Wind</span>
                                         <span className="metric_value">
-                                            {currentConditions.wind_mph} mph {currentConditions.wind_dir}
+                                            {currentConditions.wind_mph} mph {currentConditions.wind_dir000}
                                         </span>
                                     </div>
                                     <div className='card_bottom'>
