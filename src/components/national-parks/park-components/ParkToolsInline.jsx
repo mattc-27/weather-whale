@@ -93,15 +93,28 @@ export default function ParkToolsInline({ viewPath }) {
                 ? renderDetails()
                 : renderMap();
 
+
+    // Replace the return block with this:
     return (
-        <section className="inline-tools">
-            <div className="inline-tools_header">
-                {viewPath === "/parks/compare" && <h3>Add another park</h3>}
-                {viewPath === "/parks/details" && <h3>Find a park</h3>}
-                {viewPath === "/parks" && <h3>Filter by temperature</h3>}
-                <span className="inline-count">{filteredParks.length} park(s) shown</span>
-            </div>
-            <div className="inline-tools_body">{body}</div>
-        </section>
+        <div className="parks-controls filters-sticky">
+            <section className="filters-card">
+                <div className="inline-tools_header">
+                    {viewPath === "/parks/compare" && <h3>Add another park</h3>}
+                    {viewPath === "/parks/details" && <h3>Find a park</h3>}
+                    {viewPath === "/parks" && <h3>Filter by temperature</h3>}
+                    <span className="inline-count">{filteredParks.length} park(s) shown</span>
+                </div>
+
+                <div className="inline-tools_body">
+                    {viewPath === "/parks/compare"
+                        ? renderCompare()
+                        : viewPath === "/parks/details"
+                            ? renderDetails()
+                            : renderMap()}
+                </div>
+            </section>
+        </div>
+
+
     );
 }
