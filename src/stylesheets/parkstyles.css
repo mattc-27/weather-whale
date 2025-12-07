@@ -963,3 +963,138 @@
     align-self: flex-start;
     width: 100%;
 }
+
+/* --- Parks page spacing fixes ------------------------------------------- */
+.parks-controls,
+.parks-map-wrap {
+    margin: 0;
+}
+
+/* Kill accidental double spacing between card and map */
+.parks-controls .filters-card {
+    margin: 0;
+}
+
+.parks-map-wrap {
+    margin-top: .5rem;
+}
+
+/* was too large on mobile */
+
+/* Make the filter area stick right under the header/tabs on mobile */
+.filters-sticky {
+    position: sticky;
+    top: calc(var(--header-h, 64px) + var(--tabs-h, 44px));
+    z-index: 5;
+    background: #fff;
+    /* subtle separation */
+    box-shadow: 0 1px 0 rgba(0, 0, 0, .06);
+}
+
+/* Card compaction for mobile */
+.filters-card {
+    padding: .75rem .9rem;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid var(--border-color, #E6E6E6);
+}
+
+/* Put min/max on a single row when there’s room */
+.filters-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .5rem;
+}
+
+@media (min-width: 360px) {
+    .filters-row {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Inputs compact */
+.filters-card .field input,
+.filters-card .field .input {
+    padding: .55rem .7rem;
+    font-size: 0.95rem;
+}
+
+/* Reset button size */
+.filters-reset {
+    width: 100%;
+    margin-top: .6rem;
+    padding: .6rem .8rem;
+    font-weight: 500;
+    background: #f5f5f5;
+    border: 1px solid var(--border-color, #E6E6E6);
+    border-radius: 10px;
+}
+
+/* Map wrapper pulled up and fills space nicely */
+.parks-map-wrap {
+    /* prevent any legacy large top margins on the map container */
+    padding-top: 0;
+    /* optional: give the map a minimum viewport height so it’s visible immediately */
+    min-height: calc(100dvh - (var(--header-h, 64px) + var(--tabs-h, 44px) + 120px));
+}
+
+/* In case a generic .section adds global spacing, neutralize it here */
+.page--parks .section {
+    margin: 0;
+}
+
+.page--parks .section+.section {
+    margin-top: .75rem;
+}
+
+/* Light, barely-there band */
+.map-section {
+    background: #f7f8fb;
+    /* just a hair darker than white */
+    padding: .75rem 0 1.1rem;
+    box-shadow: inset 0 1px 0 rgba(16, 24, 40, .06);
+    /* super soft divider */
+}
+
+/* Keep centered */
+.map-shell {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* Card frame — white, thin border, faint shadow */
+.map-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 8px;
+    border: 1px solid #e6e9ef;
+    /* light stroke */
+    box-shadow: 0 4px 12px rgba(16, 24, 40, .06);
+}
+
+/* Map area — light gray canvas under the SVG */
+.parks-map {
+    height: clamp(360px, 60vh, 720px);
+    border-radius: 10px;
+    overflow: hidden;
+    background: #f2f4f7;
+    /* gentle contrast to white */
+    box-shadow: inset 0 0 0 1px rgba(16, 24, 40, .04);
+    /* micro edge */
+}
+
+/* Tight gap to filters */
+.parks-map-wrap,
+.map-section {
+    margin-top: .5rem;
+}
+
+/* Remove heavy fade; keep a tiny ease-out to white */
+.map-section::after {
+    content: "";
+    display: block;
+    height: 16px;
+    margin-top: 6px;
+    background: linear-gradient(to bottom, rgba(247, 248, 251, 1), rgba(247, 248, 251, 0));
+}

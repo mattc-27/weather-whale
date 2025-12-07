@@ -72,7 +72,7 @@ function ParksLayout() {
 
 
     return (
-        <div className="park-page">
+        <div className="park-page page--parks">
             {/* Desktop-only sidebar; hidden on mobile */}
             {!isMobile && (
                 <div className="sidebar-container">
@@ -97,12 +97,15 @@ function ParksLayout() {
                     </div>
                 </div>
 
-                {/* Mobile-only inline tools */}
-                {isMobile && (
-                    <ParkToolsInline viewPath={location.pathname} />
-                )}
+                {/* NEW: page body wrapper so we can control spacing */}
+                <div className="parks-body">
+                    {/* Mobile-only inline tools, wrapped/sticky by the component itself */}
+                    {isMobile && <ParkToolsInline viewPath={location.pathname} />}
 
-                <Outlet context={{ mapRef }} />
+                    {/* Route content (MapView, Details, Compare). 
+            MapView will provide its own .parks-map-wrap to sit tight under filters. */}
+                    <Outlet context={{ mapRef }} />
+                </div>
             </div>
 
             {/* Modal */}
