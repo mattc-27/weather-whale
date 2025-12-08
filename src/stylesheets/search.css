@@ -38,8 +38,13 @@ Styles for search component
     align-items: center;
     flex-basis: 100%;
     position: relative;
-    z-index: 8000;
+    z-index: 9999999;
     background-color: #fff;
+}
+
+.search_component {
+    position: relative;
+    z-index: 2;
 }
 
 .search_component input {
@@ -67,42 +72,25 @@ Styles for search component
 }
 
 
-
 /* ----------------------
-
 Dropdown / results
-
 ---------------------- */
-
 .search_results_dropdown {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-self: center;
-    align-items: flex-start;
-    width: 90vw;
-    min-height: 30vh;
-    overflow: scroll;
-    /* */
-    position: absolute;
-    z-index: 8999;
-    top: 90%;
-    left: 0%;
-    /* */
-    margin-top: 0.75rem;
-    padding: 0 0.25rem;
-    /* */
-    background-color: #ffffffd9;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px 1px rgba(82, 82, 82, 0.23);
+    max-height: 50vh;
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #dcdcdc;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    padding: 0.35rem 0.25rem;
 }
 
 .search_result_list {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+
     height: auto;
     color: #2d2d2d;
     font-family: var(--body-primary);
@@ -113,13 +101,15 @@ Dropdown / results
 
 .search_result_list li {
     font-size: 0.9rem;
-    line-height: 1.25;
+    line-height: 1.75;
     text-align: left;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     flex-grow: 1;
     list-style: none;
-    padding-left: 0.5em;
+    padding: 0.25rem;
+
     /* shift text inside */
     text-indent: 0em;
     /* brings first line back */
@@ -129,28 +119,42 @@ Dropdown / results
 global
 --- --- --- --- --- --- */
 
-@media only screen and (min-width: 740px) {
 
-
-    .search_container {
-        align-self: center;
-
-        max-width: 35%;
-        margin-right: 0.25rem;
-
-        flex-shrink: 0;
-        max-width: 300px;
-        width: 100%;
-    }
-
-
-    .search_results_dropdown {
-        margin-top: 2rem;
-        max-width: 45vw;
-    }
-}
 
 /* 
 @media only screen and (min-width: 740px) {}
 
 @media only screen and (min-width: 740px) {} */
+
+/* Remove iOS blue highlight on taps (icons, etc.) */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Input: no blue outline/glow */
+.search_component input {
+    outline: none;
+    box-shadow: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Also cover browsers that use focus-visible */
+.search_component input:focus,
+.search_component input:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Keep an accessible, neutral focus on the whole bar (not blue) */
+.search_component {
+    border: none;
+    /* light default stroke */
+    border-radius: 10px;
+}
+
+.search_component:focus-within {
+    border-color: #cfd5df;
+    /* subtle gray, not blue */
+    box-shadow: 0 0 0 2px rgba(13, 18, 30, .06);
+}

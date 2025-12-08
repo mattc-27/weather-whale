@@ -17,5 +17,15 @@ export default function MapView() {
 
 
 
-  return <ParkMap onParkClick={handleParkClick} />;
+  return (
+    <section className="map-section">
+      <div className="map-shell">
+        <div className="map-card">
+          <div className="parks-map" aria-label="US Parks Map">
+            <ParkMap onParkClick={handleParkClick} />
+          </div>
+        </div>
+      </div>
+    </section>
+  )
 }

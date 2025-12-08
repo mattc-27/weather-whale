@@ -1,0 +1,1512 @@
+/* =========================================
+   Weather Whale — Dashboard (clean)
+   ========================================= */
+
+:root {
+    --page-max: 1240px;
+    --page-pad: 16px;
+    --border: #eceff4;
+    --ink: #111827;
+    --ink-muted: #4b5563;
+    --shadow-soft: 0 1px 2px rgba(0, 0, 0, .03);
+    /* Font */
+    --heading-primary: "DM Sans", sans-serif;
+    --body-primary: "Work Sans", sans-serif;
+}
+
+
+/* ---------------- App surface ---------------- */
+.app_container {
+    display: grid;
+    grid-template-columns: 45% 55%;
+    /* ← was 58/42 */
+    gap: 20px;
+    background: #f6f7fb;
+    border-radius: 14px;
+    padding: 5px;
+    min-height: calc(100svh - var(--header-h) - var(--footer-h));
+    width: 100%;
+    max-width: 98%;
+}
+
+@media (max-width: 1023.98px) {
+    .app_container {
+        grid-template-columns: 1fr;
+        width: 100%;
+    }
+}
+
+
+.current_stack {
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    position: relative;
+    z-index: 999999;
+    flex-grow: 1;
+}
+
+.current_stack {
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    position: relative;
+    z-index: 999999;
+    flex-grow: 2;
+}
+
+.leftcol {
+    --hero-mobile-min-vh: 52vh;
+    /* increase to make the section taller on mobile */
+    --media-desktop-vh: 35vh;
+    /* 30–40 works well */
+    --media-op-mobile: .22;
+    /* faint bg on mobile */
+    --media-op-desktop: 1;
+    /* full on desktop panel */
+
+    position: relative;
+    display: grid;
+    grid-template-rows: auto;
+    /* mobile: only header in flow */
+    gap: clamp(12px, 2vw, 20px);
+    isolation: isolate;
+    container-type: inline-size;
+}
+
+/* Make the header (current_stack) taller on mobile */
+.leftcol .current_stack {
+    min-height: var(--hero-mobile-min-vh);
+}
+
+/* columns */
+.app_col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 0;
+    /* allow inner scrolling */
+}
+
+.app_col--left {
+    padding: 5px 12px;
+
+}
+
+.app_col--right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 5px 12px;
+
+}
+
+.current_col {
+    flex: 1 1 58%;
+}
+
+.side_col {
+    flex: 1 1 42%;
+}
+
+
+
+
+
+/* -------- panel cards on the right stack -------- */
+.panel_card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+    padding: 16px 10px;
+    min-height: 0;
+    flex-grow: 1;
+
+}
+
+.panel_card {
+    flex-grow: 1;
+    width: 100%;
+    max-width: 98%;
+}
+
+/* Wrapper keeps the panel_card dimensions */
+.panel_card {
+    display: grid;
+    grid-auto-rows: min-content;
+    gap: 12px;
+}
+
+
+
+
+/* Inside a right-hand panel, prefer 2 columns for balance */
+.panel_card .conditions_main {
+    grid-template-columns: repeat(2, minmax(360px, 1fr));
+}
+
+@media (max-width: 640px) {
+    .panel_card .conditions_main {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+
+
+
+/* ---------------- Top: current (left col) ---------------- */
+.current_card {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    /* header | flex | summary */
+    min-height: 100%;
+    background: transparent;
+    /* no bg on left */
+    border-radius: 12px;
+}
+
+.current_header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    /* text | icon */
+    gap: 16px;
+    align-items: center;
+}
+
+
+.current_primary {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 0.25rem;
+    position: relative;
+    z-index: 8999;
+    width: 100%;
+    max-width: 98%;
+    padding: 12px 10px;
+    flex-grow: 2;
+    min-height: 500px;
+}
+
+
+/* icon never overlaps */
+.current_icon {
+    position: static;
+    width: clamp(180px, 28vw, 320px);
+    min-width: 180px;
+    height: auto;
+    opacity: .92;
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    z-index: 8000;
+}
+
+.current_temp {
+    font-size: clamp(42px, 6vw, 72px);
+    font-size: 5rem;
+    line-height: 1.06;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: var(--title-dark);
+    font-family: var(--heading-primary);
+}
+
+.current_condition {
+    font-size: clamp(16px, 2vw, 18px);
+    color: var(--ink-muted);
+    color: var(--title-dark);
+    font-family: var(--heading-primary);
+    font-size: 2rem;
+    padding-left: 6px;
+    font-weight: 300;
+}
+
+
+/* summary anchored at bottom */
+.current_summary {
+    border-top: 1px solid #e5e7eb;
+    margin-top: 12px;
+    padding-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.current_summary strong {
+    font-weight: 600;
+    color: var(--ink);
+}
+
+
+
+/* Today/summary row – clean separators, no bullets */
+.current_summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 20px;
+    /* horizontal gaps handled by the separator */
+    align-items: center;
+    justify-content: flex-start;
+    /* keep to the left under the current panel */
+    border-top: 1px solid #e5e7eb;
+    margin-top: 12px;
+    padding: 12px 0 4px;
+    font-size: 15px;
+    list-style: none;
+    font-family: "DM Sans", sans-serif;
+    /* remove default bullets */
+}
+
+.current_summary li {
+    display: inline-flex;
+    gap: 6px;
+    color: #374151;
+    font-family: "DM Sans", sans-serif;
+}
+
+.current_summary strong {
+    color: #111827;
+    font-weight: 600;
+}
+
+
+
+
+
+.location_title {
+    display: flex;
+    justify-content: flex-start;
+    color: var(--title-dark);
+    font-family: var(--heading-primary);
+    text-align: left;
+    width: 100%;
+}
+
+.location_title h2 {
+    margin: 4px 0 0;
+    font-size: clamp(34px, 5vw, 48px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-align: left;
+    font-weight: 400;
+}
+
+
+
+@media (max-width:1023.98px) {
+    .current_header {
+        grid-template-columns: 1fr;
+        text-align: center;
+        justify-items: center;
+    }
+}
+
+
+
+
+
+
+
+/* ---------------- Hourly rail ---------------- */
+
+/* Center the whole block inside the right panel (in case panel is wide) */
+
+
+.hourly_rail_wrap {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+}
+
+
+
+.hourly_rail {
+    /* base visuals */
+    display: grid;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+
+    /* scrolling behavior */
+    grid-auto-flow: column;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    touch-action: pan-x;
+    scroll-snap-type: x mandatory;
+    scrollbar-gutter: stable both-edges;
+    width: 100%;
+    flex-wrap: wrap;
+
+}
+
+/* show 3/5/8 chips per viewport */
+.hourly_rail {
+    --chip-gap: 10px;
+}
+
+
+@media (max-width: 639.98px) {
+
+    /* full-bleed look on phones without page overflow */
+    .hourly_rail_wrap {}
+}
+
+@media (max-width:639px) {
+    .hourly_rail {
+        grid-auto-columns: max(100px, calc((100% - (var(--chip-gap)*(3 - 1))) / 3));
+    }
+}
+
+@media (min-width:640px) and (max-width:1023px) {
+    .hourly_rail {
+        grid-auto-columns: max(110px, calc((100% - (var(--chip-gap)*(5 - 1))) / 5));
+    }
+}
+
+@media (min-width:1024px) {
+    .hourly_rail {
+        grid-auto-columns: max(120px, calc((100% - (var(--chip-gap)*(8 - 1))) / 8));
+    }
+}
+
+/* edge fade only when supported (and not on very small phones) */
+@supports (-webkit-mask-image: linear-gradient(#000, #000)) or (mask-image: linear-gradient(#000, #000)) {
+    .hourly_rail {
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 18px, #000 calc(100% - 18px), transparent);
+        mask-image: linear-gradient(to right, transparent, #000 18px, #000 calc(100% - 18px), transparent);
+    }
+}
+
+@media (max-width:390px) {
+    .hourly_rail {
+        -webkit-mask-image: none;
+        mask-image: none;
+    }
+}
+
+
+
+
+
+
+
+
+/* hourly chips */
+.hour_chip {
+    scroll-snap-align: start;
+    display: grid;
+    grid-template-rows: auto auto auto;
+    justify-items: center;
+    gap: 2px;
+    min-height: 84px;
+    padding: 8px 6px;
+    border: 1px solid #e8ecf5;
+    border-radius: 10px;
+    background: #fafafa;
+    box-shadow: var(--shadow-soft);
+}
+
+.hour_time {
+    font: 600 13px/1.1 system-ui, -apple-system, Segoe UI, Roboto;
+    color: var(--ink);
+}
+
+.hour_icon {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.hour_temp {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--ink);
+}
+
+.hour_precip {
+    font-size: 12px;
+    color: #2563eb;
+}
+
+.hour_chip[aria-current="true"] {
+    background: #eef2ff;
+    border-color: #c7d2fe;
+    box-shadow: inset 0 0 0 1px #c7d2fe;
+}
+
+.hour_chip[aria-current="true"] .hour_time {
+    color: #1d4ed8;
+}
+
+.hourly_hint {
+    text-align: center;
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 6px;
+}
+
+
+/* equal space on both ends */
+
+.hourly_rail {
+    --gap: 12px;
+    --per: 4;
+    /* how many per view */
+    display: grid;
+    grid-auto-flow: column;
+    gap: var(--gap);
+    /* Fit exactly 4 columns inside the container width */
+    grid-auto-columns: calc((100% - (var(--gap) * (var(--per) - 1))) / var(--per));
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    /* padding handled by panel */
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+
+    /* Do NOT allow horizontal overflow in this 4-up mode */
+    overflow: hidden;
+    scroll-snap-type: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+}
+
+/* Hide anything after the 4th chip (keeps DOM simple with CSS only) */
+.hour_chip:nth-child(n+5) {
+    display: none;
+}
+
+
+/* Optional: tone down/hide the “scroll” hint since there’s no scroll here */
+.hourly_hint {
+    display: none;
+}
+
+
+
+
+
+
+
+/* 2) Card shell: more presence */
+.category_card {
+    min-height: clamp(128px, 12vw, 168px);
+    /* ↑ from ~110px */
+    padding: clamp(20px, 2.6vw, 34px) clamp(22px, 3vw, 38px);
+    border-radius: 14px;
+}
+
+/* ---------------- Metric cards ---------------- */
+
+
+.category_card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: clamp(16px, 2.2vw, 28px) clamp(18px, 2.6vw, 32px);
+    min-height: clamp(110px, 12vw, 150px);
+    border: 1px solid #eceff4;
+    border-radius: 14px;
+    background: #fafafa;
+}
+
+.card_text p {
+    margin: 0;
+    font-size: clamp(16px, 1.15vw, 19px);
+    line-height: 1.3;
+
+    font-variant-numeric: tabular-nums;
+    color: var(--title-dark);
+    font-family: var(--heading-primary);
+    font-size: 1.25rem;
+}
+
+.card_icon {
+    display: grid;
+    place-items: center;
+    opacity: .95;
+}
+
+.card_icon svg {
+    width: clamp(22px, 1.8vw, 28px);
+    height: clamp(22px, 1.8vw, 28px);
+}
+
+/* variants + interactions */
+.category_card.card.variant-high .card_icon svg {
+    color: #d56c6c;
+}
+
+.category_card.card.variant-low .card_icon svg {
+    color: #8098c9;
+}
+
+.category_card:hover {
+    transform: translateY(-1px);
+    border-color: #dde3f2;
+    box-shadow: 0 8px 18px rgba(17, 24, 39, .06);
+    transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+}
+
+.category_card:focus-within {
+    outline: 2px solid #4357cb;
+    outline-offset: 2px;
+}
+
+
+
+
+
+
+
+
+
+
+/* 3) Typography & icon scale */
+.card_text p {
+    font-size: clamp(17px, 1.2vw, 20px);
+    line-height: 1.35;
+}
+
+.card_icon svg {
+    width: clamp(26px, 2.1vw, 32px);
+    height: clamp(26px, 2.1vw, 32px);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ---------------- Pawcast (right) ---------------- */
+.category_card-dog {
+    width: 100%;
+    max-width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: var(--shadow-soft);
+}
+
+
+/* ---------------- Optional: top row as flex (if you use it) ---------------- */
+.panel--top {
+    display: flex;
+    gap: 18px;
+    align-items: stretch;
+    min-height: 0;
+}
+
+@media (max-width:1023.98px) {
+    .panel--top {
+        flex-direction: column;
+    }
+}
+
+
+
+/* 1) Use wider tracks by default; center the last row */
+.conditions_main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: 12px;
+
+}
+
+/* XL: comfortable 3-up */
+@media (min-width: 1440px) {
+    .conditions_main {
+   
+    }
+}
+
+
+
+
+@media (prefers-reduced-motion: reduce) {
+    .category_card, .category_card:hover {
+        transition: none;
+        transform: none;
+    }
+}
+
+
+
+.today_row {
+    font-family: "DM Sans", sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.25;
+    margin-left: 1.25rem;
+    font-weight: 300;
+    list-style-position: inside;
+    list-style: none;
+    color: var(--body-primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    align-self: center;  
+}
+
+.today_row li {
+    display: flex;
+    flex-direction: column;
+   
+}
+
+/* dot separator between items */
+.current_summary li+li {
+    position: relative;
+    padding-left: 18px;
+}
+
+.current_summary li+li::before {
+    content: "•";
+    position: absolute;
+    left: 6px;
+    top: 0;
+    color: #9ca3af;
+}
+
+.card_text p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* max 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+
+
+
+
+/* Container: one tidy row, wraps when needed */
+.today_specs {
+    --gap: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gap) calc(var(--gap) + 6px);
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+    color: #1f2937;
+}
+
+/* Each item is a compact chip: icon | label | value */
+.spec {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border: 1px solid #e6eaf2;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .03);
+    white-space: nowrap;
+}
+
+/* Icon + label/value */
+.spec_icon {
+    display: grid;
+    place-items: center;
+    opacity: .8;
+}
+
+.spec_icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+.spec_label {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.spec_value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+}
+
+/* Desktop: remove chip borders, use dot separators for a slimmer inline look */
+@media (min-width: 1024px) {
+    .today_specs {
+        gap: 0 18px;
+        /* tighter horizontal spacing */
+    }
+
+    .spec {
+        padding: 0;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    /* dot separator */
+    .spec+.spec {
+        position: relative;
+        padding-left: 18px;
+    }
+
+    .spec+.spec::before {
+        content: "•";
+        position: absolute;
+        left: 6px;
+        top: -1px;
+        color: #9ca3af;
+    }
+}
+
+/* Very small screens: allow wrapping of long wind strings gracefully */
+@media (max-width: 380px) {
+    .spec {
+        white-space: normal;
+    }
+}
+
+
+
+/* Photo panel */
+.hero_media {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    min-height: 52vh;
+    /* gives that tall “panel” feel */
+    background: var(--hero-bg, #e6eef9);
+    /* dominant color while img loads */
+    border: 1px solid color-mix(in oklab, #000 8%, transparent);
+}
+
+.hero_img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 35%;
+    /* nudge focal point upward (dome stays visible) */
+    display: block;
+}
+
+/* Soft edge fade into the content area + slight contrast boost */
+.hero_scrim {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(to right, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0) 45%),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0) 70%, rgba(0, 0, 0, 0.08));
+    mix-blend-mode: multiply;
+}
+
+
+
+
+/* base layout */
+.leftcol {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto;
+    /* mobile: only header in flow */
+    gap: clamp(12px, 2vw, 20px);
+    isolation: isolate;
+    container-type: inline-size;
+    /* key: query by the column width, not viewport */
+}
+
+/* DESKTOP photo panel
+.leftcol__figure {
+    display: block;
+    border-radius: 14px;
+    overflow: hidden;
+    min-height: 52vh;
+    border: 1px solid color-mix(in oklab, #000 8%, transparent);
+}
+
+.leftcol__figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 35%;
+} */
+
+
+
+
+
+
+/* One media element, background mode by default (mobile) */
+.leftcol__media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    /* behind content */
+    overflow: hidden;
+    pointer-events: none;
+    border-radius: 16px;
+}
+
+.leftcol__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 35%;
+    opacity: var(--media-op-mobile);
+    filter: saturate(72%) brightness(0.92);
+    transform: translateY(0) scale(1.03);
+    will-change: transform;
+}
+
+.leftcol__scrim {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(to bottom, rgba(255, 255, 255, .55),
+            rgba(255, 255, 255, .25) 40%,
+            rgba(255, 255, 255, 0));
+}
+
+/* Desktop: same element becomes an in-flow panel, 30–40% of viewport height */
+@container (min-width: 900px) {
+    .leftcol {
+        grid-template-rows: auto var(--media-desktop-vh);
+    }
+
+    .leftcol__media {
+        position: relative;
+        inset: auto;
+        z-index: 0;
+        pointer-events: auto;
+        border: 1px solid color-mix(in oklab, #000 8%, transparent);
+        border-radius: 14px;
+    }
+
+    .leftcol__img {
+        opacity: var(--media-op-desktop);
+        filter: none;
+        transform: none;
+        will-change: auto;
+        opacity: 90%;
+    }
+
+    .leftcol__scrim {
+        background:
+            linear-gradient(to right, rgba(0, 0, 0, .18), rgba(0, 0, 0, 0) 45%),
+            linear-gradient(to bottom, rgba(255, 255, 255, 0) 70%, rgba(0, 0, 0, .08));
+        mix-blend-mode: multiply;
+    }
+}
+
+/* Optional: tiny parallax, kept subtle */
+@media (prefers-reduced-motion: reduce) {
+    .leftcol__img {
+        transform: none !important;
+    }
+}
+
+
+
+/* --- Left-column glass metrics under the hero --- */
+.left_metrics {
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    z-index: 999999;
+    width: 100%;
+    flex-grow: 1;
+    flex-wrap: wrap;
+}
+
+@media (min-width: 900px) {
+    .left_metrics {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.hourly_glass {
+    --bg: rgba(255, 255, 255, 0.65);
+    background: var(--bg);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 12px;
+    padding: 10px 12px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+
+    width: auto;
+
+    height: 180px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.left_metrics {
+    min-height: var(--hero-mobile-min-vh);
+}
+
+.glass_card {
+    --bg: rgba(255, 255, 255, 0.65);
+    background: var(--bg);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 12px;
+    padding: 10px 12px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+
+    width: 270px;
+    height: 180px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.card_top {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-grow: 0.5;
+    
+    padding: 12px 10px;
+}
+
+.card_bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    
+    padding: 12px 10px;
+}
+
+.metric_label {
+    display: block;
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 4px;
+}
+
+.metric_label {
+    margin: 0;
+    font-size: clamp(16px, 1.15vw, 19px);
+    line-height: 1.3;
+    color: var(--title-dark);
+    font-family: var(--heading-primary);
+    font-size: 1rem;
+    font-weight: 600;
+       margin: 1px;
+}
+
+.metric_value {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.metric_value {
+    margin: 0;
+    font-size: clamp(16px, 1.15vw, 19px);
+    line-height: 1.5;
+    color: var(--title-dark);
+    font-family: var(--heading-primary);
+    font-size: 2rem;
+    font-weight: 500;
+    align-self: flex-start;
+    margin: 1px;
+}
+
+/* --- Chart wrapper --- */
+.temp_chart {
+    display: grid;
+    gap: 8px;
+}
+
+.temp_chart .panel_title {
+    margin: 0 0 4px 0;
+    color: var(--title-dark);
+    font-family: var(--heading-primary);
+
+}
+
+.panel_title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--title-dark);
+    font-family: var(--heading-primary);
+
+}
+
+
+
+
+
+.hourly_right {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0.5;
+    
+}
+
+
+
+.hourly_grid_wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    /* grow to fill */
+    align-self: stretch;
+    /* stretch to panel width */
+    width: 100%;
+    min-height: 0;
+    /* allow flex child to actually shrink if needed */
+}
+
+.hourly_grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+    align-self: center;
+    max-width: 98%;
+
+
+}
+
+.hourly_grid {
+    flex: 1 1 auto;
+    /* take full height of the green area */
+    /* your existing grid/flex styles here */
+    min-height: 0;
+    /* avoids overflow issues in flex containers */
+}
+
+/* Cards (glass look consistent with your left metrics) */
+.hour_card {
+    flex: 1 1 calc(50% - 12px);
+    /* mobile: 2 across */
+    min-width: 150px;
+    /* stop squish */
+    border-radius: 12px;
+    padding: 0;
+    /* button handles inner padding */
+}
+
+@media (min-width: 900px) {
+    .hour_card {
+        flex: 1 1 calc(25% - 12px);
+    }
+
+    /* desktop: 4 across */
+}
+
+/* Reuse your .glass_card base; tighten for chips */
+.hour_card.glass_card {
+    --bg: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+/* Inner content button for better tap targets */
+.hour_card_btn {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    gap: 4px 8px;
+    padding: 10px 12px;
+    background: transparent;
+    border: 0;
+    text-align: left;
+    cursor: default;
+}
+
+/* Chip fields */
+.hour_time {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.hour_icon {
+    grid-row: span 2;
+    font-size: 18px;
+    opacity: .8;
+}
+
+.hour_temp {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.hour_precip {
+    font-size: 12px;
+    color: #475569;
+    justify-self: end;
+}
+
+/* Highlight "now" */
+.hour_card_btn[aria-current="true"] {
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
+    border-radius: 10px;
+}
+
+/* Pager: shown only on mobile */
+.hour_nav {
+    display: none;
+    margin-top: 4px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+@media (max-width: 899px) {
+    .hour_nav {
+        display: flex;
+    }
+}
+
+.hour_nav_btn {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+}
+
+.hour_nav_btn:hover {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.hour_nav_status {
+    font-size: 12px;
+    color: #64748b;
+}
+
+
+
+/* Header with title + pager */
+.hourly_grid_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 0.5;
+    flex: 0 0 auto;
+    margin-bottom: 8px;
+}
+
+.hour_nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hour_nav_btn {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+}
+
+.hour_nav_btn:hover {
+    background: rgba(255, 255, 255, 0.98);
+}
+
+.hour_nav_status {
+    font-size: 12px;
+    color: #64748b;
+    min-width: 32px;
+    text-align: center;
+}
+
+/* Grid layout: 2x2 on mobile; 4x4 on desktop */
+.hourly_grid {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 900px) {
+    .hourly_grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+/* Cards (glass look) */
+.hour_card {
+    border-radius: 12px;
+}
+
+.hour_card.glass_card {
+    --bg: rgba(255, 255, 255, 0.70);
+    background: var(--bg);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+/* Inner button */
+.hour_card_btn {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    gap: 4px 8px;
+    padding: 10px 12px;
+    background: transparent;
+    border: 0;
+    text-align: left;
+    cursor: default;
+}
+
+.hour_time {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.hour_icon {
+    grid-row: span 2;
+    font-size: 18px;
+    opacity: .85;
+}
+
+.hour_temp {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.hour_precip {
+    font-size: 12px;
+    color: #475569;
+    justify-self: end;
+}
+
+/* Highlight "now" */
+.hour_card_btn[aria-current="true"] {
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
+    border-radius: 10px;
+}
+
+
+/* =====================================================
+   Weather Whale — Patch (2025-10-02)
+   - 1) Top header layout/spacing (temp, condition, location, icon)
+   - 2) Metric glass cards layout/look
+   - 3) Show more background photo on desktop
+   ===================================================== */
+
+/* ---------- 1) Current (top) section: responsive grid ---------- */
+.current_stack {
+  display: grid;
+  grid-template-columns: 1fr auto;   /* text | icon */
+  align-items: center;
+  gap: clamp(10px, 2vw, 18px);
+  padding: clamp(8px, 1.2vw, 14px);
+  min-height: auto; /* let content define height */
+}
+
+/* On small screens stack vertically and center */
+@media (max-width: 640px) {
+  .current_stack {
+    grid-template-columns: 1fr;
+    grid-auto-rows: min-content;
+    justify-items: start;
+    align-items: start;
+    row-gap: 6px;
+  }
+}
+
+/* Icon sits to the right on desktop, scales nicely */
+.current_icon {
+  position: static !important;
+  width: clamp(120px, 22vw, 240px);
+  height: auto;
+  opacity: .9;
+  justify-self: end;
+}
+
+/* Text column spacing & sizes */
+.current_primary {
+  margin: 0;
+  padding: 0;
+  min-height: auto;
+  gap: 6px;
+}
+
+.current_temp {
+  font-size: clamp(40px, 8vw, 88px);
+  line-height: 1;
+  font-weight: 500;
+}
+
+.current_condition {
+  font-size: clamp(16px, 2.4vw, 22px);
+  font-weight: 400;
+  margin-top: 2px;
+}
+
+.location_title { margin-top: 6px; }
+.location_title h2 {
+  font-size: clamp(22px, 4.4vw, 42px);
+  line-height: 1.15;
+  margin: 2px 0 0;
+}
+
+/* Keep the summary tucked under the header content */
+.current_summary { margin-top: 8px; }
+
+/* ---------- 2) Metric cards grid & look ---------- */
+
+/* Parent grid for the six cards (add class to container) */
+.metrics_grid {
+  display: grid;
+  gap: clamp(10px, 1.6vw, 16px);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+@media (max-width: 1100px) {
+  .metrics_grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .metrics_grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Card shell */
+.glass_card {
+  display: grid;
+  grid-template-columns: 1fr auto;   /* label/value | icon */
+  grid-template-rows: auto;
+  align-items: center;
+  gap: 6px 10px;
+  padding: clamp(14px, 2vw, 18px) clamp(14px, 2.4vw, 20px);
+  min-height: clamp(112px, 13vw, 150px);
+  height: auto;
+  width: 100%;
+  border-radius: 14px;
+  background: color-mix(in oklab, white 82%, transparent);
+  border: 1px solid rgba(12, 18, 28, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 18px rgba(17, 24, 39, .06);
+  transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.glass_card:hover { transform: translateY(-1px); border-color: rgba(12,18,28,.12); }
+
+/* Text column */
+.card_top {
+  display: grid;
+  gap: 4px;
+  align-content: center;
+  padding: 0;
+}
+
+.metric_label {
+  font-size: clamp(12px, 1.1vw, 13px);
+  letter-spacing: .02em;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.metric_value {
+  font-size: clamp(20px, 2.4vw, 28px);
+  line-height: 1.1;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Icon column */
+.card_bottom {
+  justify-self: end;
+  align-self: center;
+  padding: 0;
+}
+
+.card_bottom svg {
+  width: clamp(28px, 2.8vw, 40px);
+  height: clamp(28px, 2.8vw, 40px);
+  opacity: .9;
+}
+
+/* Optional variants */
+.glass_card.is-warm .card_bottom svg { color: #d56c6c; }
+.glass_card.is-cool .card_bottom svg { color: #8098c9; }
+
+/* ---------- 3) Show more of the background photo on desktop ---------- */
+
+.leftcol {
+  --media-desktop-vh: 44vh; /* was 35vh */
+}
+
+@container (min-width: 900px) {
+  .leftcol__img {
+    object-position: 50% 28%; /* lift focal point to reveal more foreground */
+    opacity: .95;
+  }
+  .leftcol__scrim {
+    /* lighten the edge scrim a touch to reveal photo */
+    background:
+      linear-gradient(to right, rgba(0,0,0,.14), rgba(0,0,0,0) 42%),
+      linear-gradient(to bottom, rgba(255,255,255,0) 74%, rgba(0,0,0,.06));
+  }
+}
