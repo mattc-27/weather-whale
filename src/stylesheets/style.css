@@ -3,8 +3,10 @@ root
 --- --- --- --- --- --- */
 :root {
     /* Font */
-    --heading-primary: "DM Sans", sans-serif;
-    --body-primary: "Work Sans", sans-serif;
+    --heading-primary: "IBM Plex Serif", serif;
+    /* "DM Sans", sans-serif; */
+    --body-primary: "League Spartan", sans-serif;
+    /*"Work Sans", sans-serif;*/
     /* Font */
     --title-light: #fff;
     --title-dark: #454545;

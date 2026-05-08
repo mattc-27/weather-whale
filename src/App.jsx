@@ -14,7 +14,7 @@ import MapView from './components/national-parks/views/MapView';
 import ParkConditionsView from './components/national-parks/views/ParkConditionsView';
 import ParkComparisonView from './components/national-parks/views/ParkComparisonView';
 // import ParkHistoryView from './components/national-parks/views/ParkHistoryView';
-//import ParkChartsView from './components/national-parks/views/ParkChartsView';
+import ParkChartsView from './components/national-parks/views/ParkChartsView';
 //import ParkForecastView from './components/national-parks/views/ParkForecastView';
 
 import './stylesheets/layout.css';
@@ -49,8 +49,9 @@ export default function App() {
                         {/* Optional data-mode subroutes (still Single Park) */}
                         {/*    <Route path="details/forecast" element={<ParkForecastView />} />
                         <Route path="details/history" element={<ParkHistoryView />} />*/}
-                        {/* Charts-only (full-width D3)    <Route path="details/charts" element={<ParkChartsView />} />
+                        {/* Charts-only (full-width D3)   
                         */}
+                         <Route path="details/charts" element={<ParkChartsView />} />
                         {/* Compare */}
                         <Route path="compare" element={<ParkComparisonView />} />
                     </Route>

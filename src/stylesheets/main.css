@@ -10,8 +10,15 @@
     --ink-muted: #4b5563;
     --shadow-soft: 0 1px 2px rgba(0, 0, 0, .03);
     /* Font */
-    --heading-primary: "DM Sans", sans-serif;
-    --body-primary: "Work Sans", sans-serif;
+    --heading-primary: "IBM Plex Serif", serif;
+    /* "DM Sans", sans-serif; */
+    --body-primary: "League Spartan", sans-serif;
+    /*"Work Sans", sans-serif;*/
+    --ui-primary: "League Spartan", sans-serif;
+    --ui-secondary: "Roboto", sans-serif;
+    --body-secondary: "Inter", sans-serif;
+    --serif-primary: "IBM Plex Serif", serif;
+    --serif-secondary: "Roboto Slab", serif;
 }
 
 
@@ -200,13 +207,13 @@
 
 .metrics_grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 0.5fr 1fr;
     gap: 12px;
     width: 100%;
     padding: 5px;
     height: 100%;
     max-height: 98%;
-    max-width: 98%;
+    max-width: 90%;
     align-self: center;
 }
 
@@ -240,8 +247,8 @@
 
 /* Text column */
 .card_top {
-    font-family: var(--heading-primary);
-    color: var(--title-dark);
+    /*     font-family: var(--heading-primary);
+    color: var(--title-dark);*/
 }
 
 .card_top {
@@ -274,6 +281,10 @@
     align-self: center;
 }
 
+.metric_label, .metric_value {
+    font-family: var(--ui-secondary);
+}
+
 .metric_label {
     letter-spacing: .02em;
     font-size: 1rem;
@@ -286,7 +297,7 @@
 .metric_value {
     line-height: 1.1;
     font-weight: 500;
-    font-size: 2.15rem;
+    font-size: 2.5rem;
     text-align: left;
     align-self: flex-start;
     padding: 0.25rem;
@@ -708,8 +719,8 @@
     /* text | icon */
     align-items: center;
     gap: 6px 10px;
-    padding: clamp(12px, 3.2vw, 18px);
-    min-height: clamp(100px, 24vw, 140px);
+    /*     padding: clamp(12px, 3.2vw, 18px);
+    min-height: clamp(100px, 24vw, 140px);*/
     border-radius: 16px;
     background: color-mix(in oklab, white 84%, transparent);
     border: 1px solid rgba(12, 18, 28, .09);
@@ -718,13 +729,21 @@
     box-shadow: 0 8px 18px rgba(17, 24, 39, .06);
     overflow: hidden;
     /* prevent icon spill */
+    width: 98%;
 }
+
+.conditions_card_resize {
+    width: 270px;
+    margin: 0.25rem;
+}
+
 
 /* Text column */
 .metric_label {
-    font-size: clamp(12px, 2.8vw, 14px);
-    color: #667085;
-    font-weight: 600;
+    /*font-size: clamp(12px, 2.8vw, 14px); */
+    color: #2d2d2d;
+    font-weight: 500;
+    font-size: 1.5rem;
 }
 
 .metric_value {
@@ -734,6 +753,7 @@
     font-weight: 600;
     color: #0f172a;
     white-space: nowrap;
+    font-size: 2rem;
     /* keep number + unit together */
 }
 
