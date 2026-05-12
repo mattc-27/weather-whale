@@ -27,7 +27,7 @@ const HourlyRail = lazy(() => import('../components/HourlyRail'))
 
 // context 
 import { fetchWeather } from '../util/weather';
-import { WeatherContext } from '../context/WeatherContext';
+import { WeatherContext } from '../context/legacy_/WeatherContext';
 
 
 export default function Dashboard() {
@@ -173,7 +173,7 @@ export default function Dashboard() {
                         {/* NEW: six “glass” metric cards under the primary block */}
                         <div className="left_metrics">
                             <div className='metrics_grid'>
-                                <div className="glass_card">
+                                <div className="glass_card conditions_card_resize">
                                     <div className='card_top'>
                                         <span className="metric_label">
                                             High
@@ -186,7 +186,7 @@ export default function Dashboard() {
                                         <ArrowUpFromLine size={50} style={{ color: '#eb98a1ff' }} />
                                     </div>
                                 </div>
-                                <div className="glass_card">
+                                <div className="glass_card conditions_card_resize">
                                     <div className='card_top'>
                                         <span className="metric_label">Low</span>
                                         <span className="metric_value">
@@ -197,7 +197,7 @@ export default function Dashboard() {
                                         <ArrowDownFromLine size={50} style={{ color: '#A8DADC' }} />
                                     </div>
                                 </div>
-                                <div className="glass_card">
+                                <div className="glass_card conditions_card_resize">
                                     <div className='card_top'>
                                         <span className="metric_label">Cloud Cover</span>
                                         <span className="metric_value">{currentConditions.cloud}%</span>
@@ -206,7 +206,7 @@ export default function Dashboard() {
                                         <Cloudy size={50} style={{ color: '#9FB1DC' }} />
                                     </div>
                                 </div>
-                                <div className="glass_card">
+                                <div className="glass_card conditions_card_resize">
                                     <div className='card_top'>
                                         <span className="metric_label">Wind</span>
                                         <span className="metric_value">
@@ -217,27 +217,27 @@ export default function Dashboard() {
                                         <Wind size={50} style={{ color: '#C2EEC9' }} />
                                     </div>
                                 </div>
-                                <div className="glass_card">
+                                <div className="glass_card conditions_card_resize">
                                     <div className='card_top'>
                                         <span className="metric_label">
                                             Visibility
                                         </span>
-                                        <span className="metric_value">
-                                            <span className="metric_value">{currentConditions.vis_miles} mi</span>
-                                        </span>
+
+                                        <span className="metric_value">{currentConditions.vis_miles} mi</span>
+
                                     </div>
                                     <div className='card_bottom'>
                                         <Binoculars size={50} style={{ color: '#C7B6FA' }} />
                                     </div>
                                 </div>
-                                <div className="glass_card">
+                                <div className="glass_card conditions_card_resize">
                                     <div className='card_top'>
                                         <span className="metric_label">
                                             Humidity
                                         </span>
-                                        <span className="metric_value">
-                                            <span className="metric_value">{currentConditions.humidity}%</span>
-                                        </span>
+
+                                        <span className="metric_value">{currentConditions.humidity}%</span>
+
                                     </div>
                                     <div className='card_bottom'>
                                         <Droplets size={50} style={{ color: '#9FB1DC' }} />

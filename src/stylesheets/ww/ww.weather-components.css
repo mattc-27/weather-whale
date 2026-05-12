@@ -1,0 +1,1076 @@
+/* Weather dashboard feature components */
+
+/* Today at a glance */
+.today_glance_card,
+.today_timeline_card {
+    padding: 1.05rem 1.15rem;
+}
+
+.today_glance_content {
+    display: grid;
+    grid-template-columns: 1fr minmax(250px, 0.72fr);
+    gap: 1.25rem;
+    align-items: center;
+}
+
+.today_summary {
+    max-width: 36rem;
+    margin: 0;
+    color: var(--ww-muted);
+    font-size: 0.95rem;
+    line-height: 1.55;
+}
+
+.sun_summary_grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    min-height: 70px;
+    border-left: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.sun_summary_item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 0.7rem 0.9rem;
+}
+
+.sun_summary_item+.sun_summary_item {
+    border-left: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.sun_summary_item svg {
+    color: var(--ww-icon-gold);
+    font-size: 1.45rem;
+}
+
+.sun_summary_item span,
+.pawcast_metrics span,
+.pawcast_metrics small,
+.extended_metric_label {
+    display: block;
+    color: var(--ww-subtle);
+    font-size: 0.64rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.sun_summary_item strong {
+    color: var(--ww-text);
+    font-size: 0.95rem;
+    font-weight: 800;
+}
+
+/* Today timeline */
+.today_timeline_card {
+    overflow: hidden;
+}
+
+.timeline_track {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    padding: 0.8rem 0.4rem 0.15rem;
+}
+
+.timeline_track::before {
+    display: none;
+}
+
+.timeline_point {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    min-width: 0;
+}
+
+.timeline_point:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 1.2rem;
+    left: calc(50% + 1.45rem);
+    width: calc(100% - 2.9rem);
+    height: 1px;
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.timeline_point:nth-child(3)::after {
+    width: calc(100% - 3.6rem);
+}
+
+.timeline_point:last-child::before {
+    content: "";
+    position: absolute;
+    top: 1.1rem;
+    left: -0.55rem;
+    width: 4px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.72);
+}
+
+.timeline_icon_wrap {
+    width: 34px;
+    height: 34px;
+    margin-bottom: 0.4rem;
+    display: grid;
+    place-items: center;
+    color: var(--ww-icon-gray);
+    background: transparent;
+    box-shadow: none;
+}
+
+.timeline_icon_wrap img {
+    width: 28px;
+    height: 28px;
+    filter: brightness(1.25) saturate(0.7);
+}
+
+.timeline_icon_wrap svg {
+    font-size: 1.85rem;
+    color: var(--ww-icon-gray);
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
+}
+
+.timeline_point:nth-child(2) .timeline_icon_wrap,
+.timeline_point:nth-child(2) .timeline_icon_wrap svg {
+    color: var(--ww-icon-gold);
+}
+
+.timeline_time {
+    margin: 0.1rem 0 0.18rem;
+    color: var(--ww-subtle);
+    font-size: 0.7rem;
+}
+
+.timeline_point strong {
+    display: block;
+    color: var(--ww-text);
+    font-size: 0.82rem;
+    font-weight: 800;
+}
+
+.timeline_point span {
+    display: block;
+    margin-top: 0.15rem;
+    color: var(--ww-muted);
+    font-size: 0.72rem;
+}
+
+/* Hourly forecast rail */
+.hourly_forecast_card {
+    padding: 1rem 1.1rem;
+    overflow: hidden;
+}
+
+.hourly_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.85rem;
+}
+
+.hourly_toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.18rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.hourly_toggle button {
+    border: 0;
+    border-radius: 999px;
+    padding: 0.35rem 0.65rem;
+    color: var(--ww-muted);
+    background: transparent;
+    font-size: 0.68rem;
+    font-weight: 700;
+}
+
+.hourly_toggle button.active {
+    color: var(--ww-text);
+    background: rgba(255, 255, 255, 0.11);
+}
+
+.hourly_chart_area {
+    position: relative;
+    min-height: 168px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    padding-top: 0.35rem;
+    padding-bottom: 0.5rem;
+}
+
+.hourly_trend_line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 42px;
+    width: 100%;
+    min-width: 780px;
+    height: 86px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hourly_trend_line path {
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke: #5da9ff;
+    filter: drop-shadow(0 0 6px rgba(93, 169, 255, 0.28));
+}
+
+.hourly_rail {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(10, minmax(76px, 1fr));
+    min-width: 780px;
+}
+
+.hourly_item {
+    position: relative;
+    min-height: 158px;
+    padding: 0.25rem 0.7rem 0.35rem;
+    display: grid;
+    grid-template-rows: 1.2rem 3rem 1fr;
+    align-items: start;
+    justify-items: center;
+    text-align: center;
+}
+
+.hourly_item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 12%;
+    bottom: 10%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.075);
+}
+
+.hourly_time {
+    color: var(--ww-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.hourly_icon_wrap {
+    position: relative;
+    z-index: 5;
+    height: 3rem;
+    display: grid;
+    place-items: center;
+    margin-top: 0.9rem;
+    background: transparent;
+    box-shadow: none;
+}
+
+.hourly_icon_wrap::before {
+    display: none;
+}
+
+.hourly_icon_wrap svg {
+    width: 22px;
+    height: 22px;
+    stroke-width: 2.2;
+    color: var(--ww-icon-gray);
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
+}
+
+.hourly_icon_wrap[data-day="true"] svg {
+    color: var(--ww-icon-gold);
+}
+
+.hourly_values {
+    position: relative;
+    z-index: 3;
+    align-self: end;
+    padding-top: 0.85rem;
+}
+
+.hourly_values strong {
+    display: block;
+    color: var(--ww-text);
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.hourly_values small {
+    display: block;
+    margin-top: 0.32rem;
+    color: var(--ww-muted);
+    font-size: 0.72rem;
+}
+
+/* Pawcast */
+.pawcast_card {
+    padding: 1rem 1.1rem;
+}
+
+.pawcast_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.85rem;
+}
+
+.pawcast_title {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.pawcast_title svg {
+    width: 18px;
+    height: 18px;
+}
+
+.pawcast_title h2 {
+    margin: 0;
+    font-size: 1rem;
+    letter-spacing: -0.02em;
+}
+
+.pawcast_badge {
+    width: max-content;
+    padding: 0.32rem 0.55rem;
+    border-radius: 999px;
+    color: var(--ww-good);
+    background: var(--ww-good-soft);
+    font-size: 0.66rem;
+    font-weight: 850;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+.pawcast_body {
+    display: grid;
+    grid-template-columns: 86px minmax(0, 1fr) minmax(170px, 0.38fr);
+    gap: 1rem;
+    align-items: center;
+}
+
+.pawcast_icon_block {
+    display: grid;
+    place-items: center;
+}
+
+.pawcast_icon_block svg {
+    width: 64px;
+    height: 64px;
+}
+
+.pawcast_title svg,
+.pawcast_icon_block svg {
+    color: #5da9ff;
+    fill: rgba(93, 169, 255, 0.18);
+}
+
+.pawcast_copy p {
+    max-width: 34rem;
+    margin: 0;
+    color: var(--ww-muted);
+    font-size: 0.92rem;
+    line-height: 1.55;
+}
+
+.pawcast_cta {
+    margin-top: 0.7rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    padding: 0.42rem 0.7rem;
+    color: var(--ww-text);
+    background: rgba(255, 255, 255, 0.055);
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.pawcast_metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pawcast_metrics>div {
+    padding: 0.7rem 0.9rem;
+    text-align: center;
+}
+
+.pawcast_metrics>div+div {
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pawcast_metrics strong {
+    display: block;
+    margin-top: 0.22rem;
+    color: var(--ww-text);
+    font-size: 1.25rem;
+    font-weight: 750;
+    letter-spacing: -0.04em;
+}
+
+.pawcast_metrics small {
+    margin-top: 0.12rem;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 600;
+}
+
+/* Pawcast modal */
+.pawcast_modal_overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    background: rgba(1, 8, 10, 0.68);
+    backdrop-filter: blur(8px);
+    animation: pawcastFadeIn 140ms ease-out both;
+}
+
+.pawcast_modal {
+    width: min(880px, 94vw);
+    max-height: min(86vh, 980px);
+    overflow: auto;
+    border-radius: 22px;
+    border: 1px solid var(--ww-border);
+    color: var(--ww-text);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025)), rgba(8, 18, 21, 0.96);
+    box-shadow: var(--ww-shadow);
+    padding: clamp(1rem, 2vw, 1.4rem);
+    animation: pawcastScaleIn 160ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.pawcast_modal_header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.9rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--ww-border);
+}
+
+.pawcast_modal_header h2 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 1.45rem;
+    letter-spacing: -0.04em;
+}
+
+.pawcast_modal_header h2 svg,
+.pawcast_compare_section h3 svg {
+    color: var(--ww-icon-gold);
+}
+
+.pawcast_modal_close {
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    border: 1px solid var(--ww-border);
+    color: var(--ww-text);
+    background: var(--ww-surface-soft);
+    display: grid;
+    place-items: center;
+}
+
+.pawcast_modal_close svg {
+    width: 18px;
+    height: 18px;
+}
+
+.pawcast_modal_summary {
+    display: grid;
+    grid-template-columns: 0.7fr 1fr 1.6fr;
+    gap: 0.75rem;
+    margin-bottom: 1.1rem;
+}
+
+.pawcast_modal_summary>div {
+    padding: 0.9rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.065);
+}
+
+.pawcast_modal_summary span {
+    display: block;
+    margin-bottom: 0.3rem;
+    color: var(--ww-subtle);
+    font-size: 0.68rem;
+    font-weight: 850;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.pawcast_modal_summary strong {
+    display: block;
+    color: var(--ww-text);
+    font-size: 1rem;
+    line-height: 1.35;
+}
+
+.pawcast_compare_section,
+.pawcast_comfort_section,
+.pawcast_resources {
+    margin-top: 1.25rem;
+}
+
+.pawcast_compare_section h3,
+.pawcast_comfort_section h3,
+.pawcast_resources h3 {
+    margin: 0 0 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 1rem;
+}
+
+.pawcast_compare_bar {
+    position: relative;
+    padding: 1.5rem 0.8rem 1.1rem;
+    border-radius: 16px;
+    border: 1px solid var(--ww-border);
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.pawcast_compare_gradient {
+    height: 14px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #81bff7 0%, #47d38f 36%, #f0d84d 58%, #f59b3d 76%, #ef5656 100%);
+}
+
+.pawcast_marker {
+    position: absolute;
+    top: 0.35rem;
+    transform: translateX(-50%);
+}
+
+.pawcast_marker span {
+    display: block;
+    padding: 0.18rem 0.5rem;
+    border-radius: 999px;
+    color: #081012;
+    background: #dcecff;
+    font-size: 0.7rem;
+    font-weight: 850;
+    white-space: nowrap;
+}
+
+.pawcast_marker--you {
+    left: 38%;
+}
+
+.pawcast_marker--dog {
+    left: 58%;
+}
+
+.pawcast_marker::after {
+    content: "";
+    display: block;
+    width: 12px;
+    height: 12px;
+    margin: 0.18rem auto 0;
+    border-radius: 999px;
+    background: #fff;
+    border: 2px solid #1f2a56;
+}
+
+.pawcast_marker--dog::after {
+    border-color: #3b82f6;
+}
+
+.pawcast_compare_section p,
+.pawcast_resources p {
+    margin: 0.65rem 0 0;
+    color: var(--ww-muted);
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.pawcast_comfort_table {
+    overflow: hidden;
+    border-radius: 16px;
+    border: 1px solid var(--ww-border);
+}
+
+.pawcast_table_row {
+    display: grid;
+    grid-template-columns: 0.7fr 1.2fr 2fr;
+    gap: 0.75rem;
+    padding: 0.75rem 0.85rem;
+    color: var(--ww-muted);
+    border-bottom: 1px solid var(--ww-border);
+}
+
+.pawcast_table_row:last-child {
+    border-bottom: 0;
+}
+
+.pawcast_table_head {
+    color: var(--ww-text);
+    font-weight: 850;
+    background: rgba(255, 255, 255, 0.055);
+}
+
+.pawcast_resources {
+    display: grid;
+    gap: 0.45rem;
+}
+
+.pawcast_resources a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.45rem 0;
+    color: var(--ww-muted);
+    font-size: 0.9rem;
+}
+
+.pawcast_resources a:hover {
+    color: var(--ww-text);
+}
+
+.pawcast_resources a svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Hourly trend chart */
+.hourly_trend_card {
+    padding: 1.15rem 1.25rem 1.25rem;
+    overflow: hidden;
+}
+
+.trend_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+}
+
+.trend_header h2 {
+    margin: 0;
+    font-size: 1rem;
+    letter-spacing: -0.02em;
+}
+
+.trend_legend {
+    display: flex;
+    align-items: center;
+    gap: 0.95rem;
+    color: var(--ww-muted);
+    font-size: 0.72rem;
+}
+
+.trend_legend span {
+    position: relative;
+    padding-left: 1.2rem;
+}
+
+.trend_legend span::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0.85rem;
+    height: 2px;
+    transform: translateY(-50%);
+    border-radius: 999px;
+}
+
+.legend_temp::before {
+    background: #5da9ff;
+    box-shadow: 0 0 8px rgba(93, 169, 255, 0.35);
+}
+
+.legend_feels::before {
+    background: transparent;
+    border-top: 2px dashed rgba(210, 220, 224, 0.55);
+}
+
+.trend_chart_wrap {
+    height: 300px;
+    overflow: hidden;
+    border-radius: 14px;
+    background:
+        radial-gradient(circle at 50% 36%, rgba(93, 169, 255, 0.08), transparent 28rem),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0));
+}
+
+.trend_chart {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.trend_grid_line {
+    stroke: rgba(255, 255, 255, 0.08);
+    stroke-width: 1;
+}
+
+.trend_axis_label {
+    fill: rgba(220, 226, 226, 0.64);
+    font-size: 13px;
+    font-weight: 750;
+}
+
+.trend_area {
+    fill: url(#tempAreaGradient);
+    opacity: 0.95;
+}
+
+.trend_temp_line {
+    fill: none;
+    stroke-width: 4.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 10px rgba(93, 169, 255, 0.34));
+}
+
+.trend_feels_line {
+    fill: none;
+    stroke: rgba(210, 220, 224, 0.48);
+    stroke-width: 3.2;
+    stroke-dasharray: 9 9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.trend_sun_line {
+    stroke: rgba(246, 198, 91, 0.48);
+    stroke-width: 1.4;
+    stroke-dasharray: 4 7;
+}
+
+.trend_sun_dot {
+    fill: var(--ww-icon-gold);
+    stroke: rgba(8, 18, 21, 0.96);
+    stroke-width: 4;
+}
+
+.trend_sun_label,
+.trend_sun_time {
+    paint-order: stroke;
+    stroke: rgba(8, 18, 21, 0.9);
+    stroke-width: 4px;
+    stroke-linejoin: round;
+}
+
+.trend_sun_label {
+    font-size: 13px;
+    font-weight: 850;
+}
+
+.trend_sun_time {
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.trend_temp_line {
+    stroke: #5da9ff;
+}
+
+.trend_area {
+    opacity: 0.9;
+}
+
+.trend_sun_label,
+.trend_sun_time {
+    fill: #f6c65b;
+}
+
+/* Extended metrics */
+.extended_metrics_card {
+    padding: 0;
+    overflow: hidden;
+}
+
+.extended_metrics_grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.extended_metric_item {
+    position: relative;
+    min-width: 0;
+    padding: 0.9rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+.extended_metric_item:not(:last-child)::after,
+.daily_forecast_item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 20%;
+    bottom: 20%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.075);
+}
+
+.extended_metric_icon {
+    color: var(--ww-icon-gray);
+    display: grid;
+    place-items: center;
+}
+
+.extended_metric_icon svg {
+    width: 22px;
+    height: 22px;
+    stroke-width: 2;
+}
+
+.metric-blue .extended_metric_icon {
+    color: var(--ww-accent-primary);
+}
+
+.metric-gold .extended_metric_icon {
+    color: var(--ww-accent-solar);
+}
+
+.metric-neutral .extended_metric_icon {
+    color: var(--ww-accent-neutral);
+}
+
+.extended_metric_label {
+    margin: 0;
+}
+
+.extended_metric_value {
+    margin: 0.15rem 0 0.05rem;
+    color: var(--ww-text);
+    font-size: 1rem;
+    font-weight: 850;
+    letter-spacing: -0.03em;
+}
+
+.extended_metric_value span {
+    color: var(--ww-muted);
+    font-size: 0.72rem;
+    font-weight: 650;
+}
+
+.extended_metric_detail {
+    margin: 0;
+    color: var(--ww-muted);
+    font-size: 0.72rem;
+}
+
+/* Daily forecast */
+.daily_forecast_card {
+    padding: 1rem 1.1rem 1.2rem;
+}
+
+.daily_forecast_header {
+    margin-bottom: 0.75rem;
+}
+
+.daily_forecast_header h2 {
+    margin: 0;
+    font-size: 1rem;
+    letter-spacing: -0.02em;
+}
+
+.daily_forecast_strip {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(140px, 1fr));
+    gap: 0;
+}
+
+.daily_forecast_item {
+    position: relative;
+    min-height: 96px;
+    padding: 0.65rem 1rem;
+    display: grid;
+    place-items: center;
+    text-align: center;
+}
+
+.daily_forecast_item:not(:last-child)::after {
+    top: 12%;
+    bottom: 12%;
+}
+
+.daily_day {
+    margin: 0;
+    color: var(--ww-muted);
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+.daily_icon_wrap {
+    height: 38px;
+    display: grid;
+    place-items: center;
+    margin: 0.35rem 0;
+}
+
+.daily_weather_icon {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+}
+
+.daily_weather_icon svg {
+    width: 25px;
+    height: 25px;
+    stroke-width: 2.3;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.28));
+}
+
+.daily_weather_icon--sun svg,
+.daily_weather_icon--cloud svg,
+.daily_weather_icon--snow svg {
+    color: var(--ww-icon-gold);
+}
+
+.daily_weather_icon--rain .daily_cloud {
+    color: var(--ww-icon-gray);
+}
+
+.daily_weather_icon--rain .daily_drops {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    right: -1px;
+    bottom: -2px;
+    color: var(--ww-icon-blue);
+}
+
+.daily_temps {
+    display: flex;
+    justify-content: center;
+    gap: 0.35rem;
+    align-items: baseline;
+}
+
+.daily_temps strong {
+    color: var(--ww-text);
+    font-size: 0.94rem;
+    font-weight: 850;
+}
+
+.daily_temps span {
+    color: var(--ww-muted);
+    font-size: 0.84rem;
+    font-weight: 650;
+}
+
+.daily_forecast_item small {
+    display: block;
+    margin-top: 0.2rem;
+    color: var(--ww-icon-blue);
+    font-size: 0.68rem;
+    font-weight: 750;
+}
+
+@keyframes pawcastFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes pawcastScaleIn {
+    from {
+        opacity: 0.96;
+        transform: translateY(8px) scale(0.985);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 860px) {
+    .extended_metrics_grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .extended_metric_item:nth-child(2n)::after {
+        display: none;
+    }
+}
+
+@media (max-width: 760px) {
+    .today_glance_content {
+        grid-template-columns: 1fr;
+    }
+
+    .sun_summary_grid {
+        border-left: 0;
+    }
+
+    .timeline_track {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .timeline_point::after,
+    .timeline_point::before {
+        display: none;
+    }
+
+    .pawcast_body {
+        grid-template-columns: 1fr;
+    }
+
+    .pawcast_icon_block {
+        justify-content: start;
+    }
+
+    .pawcast_metrics {
+        border-left: 0;
+    }
+
+    .pawcast_modal_summary,
+    .pawcast_table_row {
+        grid-template-columns: 1fr;
+    }
+
+    .pawcast_table_head {
+        display: none;
+    }
+}
+
+@media (max-width: 560px) {
+
+    .daily_forecast_strip,
+    .extended_metrics_grid {
+        grid-template-columns: 1fr;
+    }
+
+    .daily_forecast_item::after,
+    .extended_metric_item::after {
+        display: none;
+    }
+}

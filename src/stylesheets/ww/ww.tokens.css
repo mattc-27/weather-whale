@@ -1,0 +1,73 @@
+/* WeatherWhale design tokens */
+:root {
+    color-scheme: dark;
+
+    --ww-bg: #071012;
+    --ww-bg-2: #0b171a;
+    --ww-surface: rgba(13, 25, 29, 0.82);
+    --ww-surface-strong: rgba(12, 21, 25, 0.94);
+    --ww-surface-soft: rgba(255, 255, 255, 0.055);
+
+    --ww-border: rgba(255, 255, 255, 0.12);
+    --ww-border-strong: rgba(255, 255, 255, 0.2);
+
+    --ww-text: #f4f7f6;
+    --ww-muted: rgba(244, 247, 246, 0.72);
+    --ww-subtle: rgba(244, 247, 246, 0.52);
+
+    --ww-accent: #f6c65b;
+    --ww-accent-soft: rgba(246, 198, 91, 0.16);
+    --ww-accent-primary: #5da9ff;
+    --ww-accent-primary-soft: rgba(93, 169, 255, 0.16);
+    --ww-accent-solar: #f6c65b;
+    --ww-accent-neutral: rgba(205, 214, 216, 0.72);
+    --ww-good: #a8d672;
+    --ww-good-soft: rgba(168, 214, 114, 0.16);
+    --ww-danger: #ff8a8a;
+
+    --ww-icon-blue: #5da9ff;
+    --ww-icon-gold: #f6c65b;
+    --ww-icon-gray: rgba(205, 214, 216, 0.72);
+
+    --ww-radius-sm: 10px;
+    --ww-radius-md: 14px;
+    --ww-radius-lg: 18px;
+    --ww-radius-xl: 28px;
+
+    --ww-shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
+    --ww-shadow-soft: 0 12px 32px rgba(0, 0, 0, 0.24);
+
+    --ww-max: 1180px;
+    --ww-pad: clamp(1rem, 2vw, 1.5rem);
+    --ww-font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+[data-theme="light"] {
+    color-scheme: light;
+
+    --ww-bg: #f4f7fb;
+    --ww-bg-2: #eef3f8;
+    --ww-surface: rgba(255, 255, 255, 0.78);
+    --ww-surface-strong: rgba(255, 255, 255, 0.96);
+    --ww-surface-soft: rgba(15, 23, 42, 0.055);
+
+    --ww-border: rgba(15, 23, 42, 0.12);
+    --ww-border-strong: rgba(15, 23, 42, 0.2);
+
+    --ww-text: #1f2937;
+    --ww-muted: rgba(31, 41, 55, 0.72);
+    --ww-subtle: rgba(31, 41, 55, 0.54);
+
+    --ww-accent: #2563eb;
+    --ww-accent-soft: rgba(37, 99, 235, 0.12);
+    --ww-good: #2f7d4e;
+    --ww-good-soft: rgba(47, 125, 78, 0.12);
+    --ww-danger: #b91c1c;
+
+    --ww-icon-blue: #2563eb;
+    --ww-icon-gold: #b9791f;
+    --ww-icon-gray: rgba(71, 85, 105, 0.72);
+
+    --ww-shadow: 0 24px 80px rgba(15, 23, 42, 0.14);
+    --ww-shadow-soft: 0 12px 32px rgba(15, 23, 42, 0.1);
+}

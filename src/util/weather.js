@@ -287,3 +287,4 @@ const getDogComfort = (temp_f, conditionText, cloudCover) => {
             adjustedFeelsLike: feelsLike.toFixed(1)
         };
 };
+

@@ -1,78 +1,172 @@
-import React, { useState, useEffect, createContext } from 'react';
-import { Backgrounds } from '../assets/Backgrounds';
-import { getRandomItem } from '../util/weather';
+import React, {
+    createContext,
+    useCallback,
+    useEffect,
+    useMemo,
+    useState,
+} from "react";
 
+import { Backgrounds } from "../assets/Backgrounds";
+import { getRandomItem } from "../services/weather";
 
-
-const WeatherContext = createContext();
+const WeatherContext = createContext(null);
 
 function WeatherProvider({ children }) {
+    const [weather, setWeather] = useState(null);
+    const [background, setBackground] = useState("");
 
-    const [location, setLocation] = useState({});
-    const [currentConditions, setCurrentConditions] = useState('');
-    const [currentAqi, setCurrentAqi] = useState('');
-    const [background, setBackground] = useState('');
+    const [theme, setTheme] = useState(() => {
+        return localStorage.getItem("wwTheme") || "dark";
+    });
 
+    const [units, setUnits] = useState("imperial");
+    const [recentSearches, setRecentSearches] = useState(() => {
+        try {
+            return JSON.parse(localStorage.getItem("weatherRecentSearches")) ?? [];
+        } catch {
+            return [];
+        }
+    });
+
+
+    // location selection
+    const [selectedLocation, setSelectedLocation] = useState(() => {
+        const saved = localStorage.getItem("wwSelectedLocation");
+        return saved ? JSON.parse(saved) : null;
+    });
+
+    const saveSelectedLocation = useCallback((location) => {
+        setSelectedLocation(location);
+        localStorage.setItem("wwSelectedLocation", JSON.stringify(location));
+    }, []);
+
+
+    const saveWeather = useCallback((nextWeather) => {
+        setWeather(nextWeather);
+
+        try {
+            localStorage.setItem("weatherConditions", JSON.stringify(nextWeather));
+        } catch {
+            // localStorage failure should not break weather rendering
+        }
+    }, []);
+
+    const addRecentSearch = useCallback((searchItem) => {
+        if (!searchItem) return;
+
+        setRecentSearches((prev) => {
+            const normalized = {
+                label: searchItem.label ?? searchItem.name ?? searchItem.query,
+                query: searchItem.query,
+                timestamp: Date.now(),
+            };
+
+            const next = [
+                normalized,
+                ...prev.filter((item) => item.query !== normalized.query),
+            ].slice(0, 6);
+
+            try {
+                localStorage.setItem("weatherRecentSearches", JSON.stringify(next));
+            } catch {
+                // localStorage failure should not break search
+            }
+
+            return next;
+        });
+    }, []);
+
+    const getBackground = useCallback((response) => {
+        const country = response?.country ?? response?.location?.country;
+        const region = response?.region ?? response?.location?.region;
+        const name = response?.name ?? response?.location?.name;
+
+        if (!country) return "";
+
+        let selectedImage = null;
+
+        if (country !== "United States of America") {
+            const locationImages = Backgrounds.countries.find(
+                (item) => item.country === country
+            );
+
+            selectedImage = getRandomItem(locationImages?.images ?? []);
+        } else {
+            const locationImages = Backgrounds.images.find(
+                (item) => item.region === region
+            );
+
+            const cityImages = locationImages?.names?.find(
+                (item) => item.name === name
+            );
+
+            selectedImage = getRandomItem(
+                cityImages?.images ?? locationImages?.images ?? []
+            );
+        }
+
+        const nextBackground = selectedImage?.value
+            ? `url(${selectedImage.value})`
+            : "";
+
+        setBackground(nextBackground);
+        return nextBackground;
+    }, []);
+
+
+    const updateTheme = useCallback((nextTheme) => {
+        setTheme(nextTheme);
+        localStorage.setItem("wwTheme", nextTheme);
+        document.documentElement.setAttribute("data-theme", nextTheme);
+    }, []);
 
     useEffect(() => {
-        //const userData = JSON.parse(localStorage.getItem('userDetails'))
-        // console.log(location);
-        localStorage.setItem('weatherConditions', JSON.stringify(currentConditions));
-        //  console.log(currentConditions)
-    }, [currentConditions])
+        document.documentElement.setAttribute("data-theme", theme);
+    }, [theme]);
+
+    const value = useMemo(
+        () => ({
+            weather,
+            setWeather: saveWeather,
+
+            background,
+            setBackground,
+            getBackground,
+
+            units,
+            setUnits,
+
+            recentSearches,
+            addRecentSearch,
+
+            theme,
+            setTheme: updateTheme,
+
+            selectedLocation,
+            setSelectedLocation: saveSelectedLocation,
+
+        }),
+        [
+            weather,
+            saveWeather,
+            background,
+            getBackground,
+            units,
+            recentSearches,
+            addRecentSearch,
+            theme,
+            updateTheme,
 
 
-    function getBackground(response) {
-
-        // const search = response.searchLocation;
-
-        if (response.country !== 'United States of America') {
-            const locationImages = Backgrounds.countries.find(({ country }) => country === response.country)
-            const currentImage = getRandomItem(locationImages.images)
-            //     setBackground(`${currentImage.value}`)
-            setBackground(`url(${currentImage.value})`)
-        } else {
-            const locationImages = Backgrounds.images.find(({ region }) => region === response.region)
-            if (locationImages.names === undefined) {
-                const currentImage = getRandomItem(locationImages.images)
-                //    setBackground(`${currentImage.value}`)
-                setBackground(`url(${currentImage.value})`)
-
-            } else {
-                const currentCity = locationImages.names.find(({ name }) => name === response.name)
-                if (currentCity === undefined) {
-                    const currentImage = getRandomItem(locationImages.images)
-                    //     setBackground(`url(${currentImage.value})`)
-                    setBackground(`${currentImage.value}`)
-
-                } else {
-                    const result = getRandomItem(currentCity.images)
-                    setBackground(`url(${result.value})`)
-                    //      setBackground(`${result.value}`)
-
-
-                }
-            }
-        }
-        console.log(background)
-    }
+        ]
+    );
 
 
     return (
-        <WeatherContext.Provider value={{
-            location,
-            setLocation,
-            setCurrentConditions,
-            currentConditions,
-            currentAqi,
-            setCurrentAqi,
-            getBackground,
-            setBackground,
-            background
-        }}>
+        <WeatherContext.Provider value={value}>
             {children}
         </WeatherContext.Provider>
-    )
+    );
 }
 
 export { WeatherContext, WeatherProvider };

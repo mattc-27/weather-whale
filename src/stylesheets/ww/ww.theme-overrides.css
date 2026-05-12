@@ -1,0 +1,153 @@
+/* Theme-specific finish pass. Import this last. */
+
+/* Icon color consistency */
+.condition_metric--blue {
+    --condition-icon-color: var(--ww-icon-blue);
+}
+
+.condition_metric--gray {
+    --condition-icon-color: var(--ww-icon-gray);
+}
+
+.condition_metric--yellow {
+    --condition-icon-color: var(--ww-icon-gold);
+}
+
+.condition_metric_icon,
+.condition_metric_icon svg {
+    color: var(--condition-icon-color);
+}
+
+.sun_summary_item svg,
+.condition_metric--yellow .condition_metric_icon,
+.condition_metric--yellow .condition_metric_icon svg,
+.extended_metric_item:nth-child(5) .extended_metric_icon,
+.timeline_point:nth-child(2) .timeline_icon_wrap,
+.timeline_point:nth-child(2) .timeline_icon_wrap svg,
+.hourly_icon_wrap[data-day="true"] svg,
+.daily_weather_icon--sun svg,
+.daily_weather_icon--cloud svg,
+.daily_weather_icon--snow svg {
+    color: var(--ww-icon-gold);
+}
+
+.timeline_icon_wrap,
+.timeline_icon_wrap svg,
+.hourly_icon_wrap svg,
+.extended_metric_icon {
+    color: var(--ww-icon-gray);
+}
+
+.daily_weather_icon--rain .daily_cloud {
+    color: var(--ww-icon-gray);
+}
+
+.daily_weather_icon--rain .daily_drops {
+    color: var(--ww-icon-blue);
+}
+
+/* Remove icon bubble backgrounds across modes */
+.timeline_icon_wrap,
+.hourly_icon_wrap {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.timeline_icon_wrap::before,
+.hourly_icon_wrap::before {
+    display: none !important;
+}
+
+/* Light mode component finish */
+[data-theme="light"] .sun_summary_grid,
+[data-theme="light"] .sun_summary_item+.sun_summary_item,
+[data-theme="light"] .pawcast_metrics,
+[data-theme="light"] .pawcast_metrics>div+div {
+    border-color: rgba(15, 23, 42, 0.1);
+}
+
+[data-theme="light"] .timeline_point:not(:last-child)::after,
+[data-theme="light"] .extended_metric_item:not(:last-child)::after,
+[data-theme="light"] .daily_forecast_item:not(:last-child)::after,
+[data-theme="light"] .hourly_item:not(:last-child)::after {
+    background: rgba(15, 23, 42, 0.1);
+}
+
+[data-theme="light"] .timeline_point:last-child::before {
+    background: rgba(15, 23, 42, 0.42);
+}
+
+[data-theme="light"] .hourly_toggle {
+    background: rgba(15, 23, 42, 0.06);
+    border-color: rgba(15, 23, 42, 0.1);
+}
+
+[data-theme="light"] .hourly_toggle button.active {
+    background: rgba(15, 23, 42, 0.1);
+}
+
+[data-theme="light"] .hourly_trend_line path {
+    stroke: var(--ww-icon-gold);
+}
+
+[data-theme="light"] .trend_chart_wrap {
+    background:
+        radial-gradient(circle at 50% 36%, rgba(37, 99, 235, 0.08), transparent 28rem),
+        rgba(255, 255, 255, 0.35);
+}
+
+[data-theme="light"] .trend_grid_line {
+    stroke: rgba(15, 23, 42, 0.09);
+}
+
+[data-theme="light"] .trend_axis_label {
+    fill: rgba(31, 41, 55, 0.58);
+}
+
+[data-theme="light"] .trend_feels_line {
+    stroke: rgba(71, 85, 105, 0.38);
+}
+
+[data-theme="light"] .legend_feels::before {
+    border-top-color: rgba(71, 85, 105, 0.44);
+}
+
+[data-theme="light"] .trend_sun_dot {
+    stroke: rgba(255, 255, 255, 0.92);
+}
+
+[data-theme="light"] .trend_sun_label,
+[data-theme="light"] .trend_sun_time {
+    stroke: rgba(255, 255, 255, 0.86);
+}
+
+[data-theme="light"] .pawcast_title svg,
+[data-theme="light"] .pawcast_icon_block svg {
+    color: var(--ww-icon-gray);
+    fill: rgba(71, 85, 105, 0.08);
+}
+
+[data-theme="light"] .pawcast_badge {
+    color: var(--ww-good);
+    background: var(--ww-good-soft);
+}
+
+[data-theme="light"] .pawcast_cta {
+    color: var(--ww-text);
+    background: rgba(15, 23, 42, 0.055);
+    border-color: rgba(15, 23, 42, 0.1);
+}
+
+[data-theme="light"] .pawcast_modal_overlay {
+    background: rgba(15, 23, 42, 0.34);
+}
+
+[data-theme="light"] .pawcast_modal {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 252, 0.96));
+}
+
+[data-theme="light"] .pawcast_modal_summary>div,
+[data-theme="light"] .pawcast_compare_bar {
+    background: rgba(255, 255, 255, 0.58);
+    border-color: rgba(15, 23, 42, 0.12);
+}

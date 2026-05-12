@@ -93,6 +93,7 @@ function ParksLayout() {
                     <div className="analytics-nav-link-container">
                         <Link to="/parks" className={`analytics-nav-link ${location.pathname === '/parks' ? 'active' : ''}`}>Map</Link>
                         <Link to="details" className={`analytics-nav-link ${location.pathname.includes('/parks/details') ? 'active' : ''}`}>Conditions</Link>
+                        <Link to="details/charts" className={`analytics-nav-link ${location.pathname.includes('/parks/details') ? 'active' : ''}`}>Charts</Link>
                         <Link to="compare" className={`analytics-nav-link ${location.pathname.includes('/parks/compare') ? 'active' : ''}`}>Compare</Link>
                     </div>
                 </div>
