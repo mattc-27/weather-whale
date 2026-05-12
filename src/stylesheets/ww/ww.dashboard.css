@@ -1,0 +1,407 @@
+/* Dashboard shell, atmospheric background, hero, current conditions */
+.dashboard_shell {
+    position: relative;
+    min-height: calc(100vh - 80px);
+    color: var(--ww-text);
+    padding: 0 1rem 3rem;
+}
+
+.dashboard_backdrop,
+.dashboard_shell::before,
+.dashboard_shell::after {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+}
+
+.dashboard_backdrop {
+    z-index: -3;
+    background:
+        linear-gradient(180deg, rgba(2, 7, 9, 0.16) 0%, rgba(2, 7, 9, 0.82) 34%, rgba(2, 7, 9, 0.98) 100%),
+        var(--dashboard-bg-image);
+    background-size: cover;
+    background-position: center top;
+    filter: saturate(0.9);
+}
+
+.dashboard_shell::before {
+    content: "";
+    z-index: -2;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(62, 99, 112, 0.24), transparent 38rem),
+        linear-gradient(180deg, rgba(1, 8, 10, 0.2), rgba(1, 8, 10, 1) 58%);
+}
+
+.dashboard_shell::after {
+    content: "";
+    z-index: -1;
+    background: linear-gradient(180deg, rgba(1, 8, 10, 0) 0%, rgba(1, 8, 10, 0.28) 24%, rgba(1, 8, 10, 0.88) 43%, rgba(1, 8, 10, 1) 100%);
+}
+
+.dashboard_inner {
+    position: relative;
+    z-index: 2;
+    width: min(100%, var(--ww-max));
+    margin: 0 auto;
+    display: grid;
+    gap: 1rem;
+}
+
+.dashboard_stack {
+    display: grid;
+    gap: 1rem;
+}
+
+.dashboard_top_stage {
+    position: relative;
+    display: grid;
+    margin-top: 1rem;
+    padding-bottom: 46px;
+}
+
+.hero_weather_panel {
+    position: relative;
+    min-height: 430px;
+    margin-top: 1.25rem;
+    padding: 1.45rem 1.55rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden !important;
+    color: #f7faf9;
+    border-radius: var(--ww-radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background-image:
+        linear-gradient(90deg, rgba(2, 8, 10, 0.9) 0%, rgba(2, 8, 10, 0.72) 32%, rgba(2, 8, 10, 0.34) 68%, rgba(2, 8, 10, 0.16) 100%),
+        var(--dashboard-bg-image);
+    background-size: cover, cover;
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
+    background-origin: border-box;
+    background-clip: padding-box;
+    box-shadow:
+        0 28px 80px rgba(0, 0, 0, 0.36),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.hero_weather_panel::after {
+    content: "";
+    position: absolute;
+    left: -1px;
+    right: -1px;
+    bottom: -72px;
+    height: 150px;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(1, 8, 10, 0.22), rgba(1, 8, 10, 0.96) 68%, rgba(1, 8, 10, 1));
+}
+
+.hero_location_row {
+    position: relative;
+    z-index: 30;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.hero_location_group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.hero_location {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.86rem;
+}
+
+.hero_change_btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    padding: 0.35rem 0.6rem;
+    color: rgba(255, 255, 255, 0.88);
+    background: rgba(0, 0, 0, 0.24);
+    font-size: 0.74rem;
+}
+
+.hero_time_badge {
+    min-width: 70px;
+    padding: 0.5rem 0.58rem;
+    border-radius: 12px;
+    text-align: right;
+    color: rgba(255, 255, 255, 0.88);
+    background: rgba(0, 0, 0, 0.28);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hero_time_badge span,
+.hero_time_badge small {
+    display: block;
+}
+
+.hero_time_badge span {
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.hero_time_badge small {
+    margin-top: 0.08rem;
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 0.72rem;
+}
+
+.hero_weather_body {
+    position: relative;
+    z-index: 2;
+    min-height: 290px;
+    display: grid;
+    align-content: center;
+}
+
+.hero_temp_row {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.hero_temp {
+    color: #f7faf9;
+    font-size: clamp(6.4rem, 10vw, 8.8rem);
+    font-weight: 300;
+    line-height: 0.86;
+    letter-spacing: -0.045em;
+}
+
+.hero_condition_icon {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.28));
+    transform: translateY(0.25rem);
+}
+
+.hero_condition_text {
+    margin-top: 0.65rem;
+    color: rgba(255, 255, 255, 0.94);
+    font-size: 1.08rem;
+    font-weight: 650;
+}
+
+.hero_weather_meta {
+    margin-top: 0.6rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    color: rgba(255, 255, 255, 0.74);
+    font-size: 0.88rem;
+}
+
+.hero_inline_search {
+    position: absolute;
+    top: calc(100% + 0.55rem);
+    left: 0;
+    z-index: 9999;
+    width: min(360px, calc(100vw - 2rem));
+}
+
+.current_conditions_grid {
+    position: absolute;
+    left: 2rem;
+    right: 2rem;
+    bottom: 0;
+    z-index: 10;
+    min-height: 96px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    overflow: hidden;
+    border-radius: var(--ww-radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.075);
+    background: rgba(7, 16, 19, 0.78);
+    backdrop-filter: blur(22px);
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.condition_metric {
+    position: relative;
+    min-width: 0;
+    padding: 1rem 1.15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+}
+
+.condition_metric:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 22%;
+    bottom: 22%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.condition_metric_icon,
+.condition_metric_icon svg {
+    color: var(--condition-icon-color, var(--ww-icon-gold));
+    font-size: 1.35rem;
+    line-height: 1;
+}
+
+.condition_metric--blue {
+    --condition-icon-color: var(--ww-icon-blue);
+}
+
+.condition_metric--gray {
+    --condition-icon-color: var(--ww-icon-gray);
+}
+
+.condition_metric--yellow {
+    --condition-icon-color: var(--ww-icon-gold);
+}
+
+.condition_metric_label {
+    margin: 0;
+    color: var(--ww-subtle);
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.condition_metric_value {
+    margin: 0.2rem 0 0.08rem;
+    color: var(--ww-text);
+    font-size: 1.02rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.condition_metric_value span {
+    color: var(--ww-muted);
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.condition_metric_detail {
+    margin: 0;
+    color: var(--ww-muted);
+    font-size: 0.78rem;
+}
+
+[data-theme="light"] .dashboard_backdrop {
+    background:
+        linear-gradient(180deg, rgba(248, 250, 252, 0.28) 0%, rgba(248, 250, 252, 0.78) 48%, rgba(238, 243, 248, 1) 100%),
+        var(--dashboard-bg-image);
+    background-size: cover;
+    background-position: center top;
+}
+
+[data-theme="light"] .dashboard_shell::before {
+    background:
+        radial-gradient(circle at 50% 0%, rgba(96, 165, 250, 0.12), transparent 38rem),
+        linear-gradient(180deg, rgba(248, 250, 252, 0.18), rgba(238, 243, 248, 0.95) 62%);
+}
+
+[data-theme="light"] .dashboard_shell::after {
+    background: linear-gradient(180deg, rgba(248, 250, 252, 0) 0%, rgba(248, 250, 252, 0.24) 34%, rgba(238, 243, 248, 0.96) 72%);
+}
+
+[data-theme="light"] .hero_weather_panel {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.5);
+    background-image:
+        linear-gradient(90deg, rgba(15, 23, 42, 0.72) 0%, rgba(15, 23, 42, 0.48) 38%, rgba(15, 23, 42, 0.18) 100%),
+        var(--dashboard-bg-image);
+    background-size: cover, cover;
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
+    background-origin: border-box;
+    background-clip: padding-box;
+    box-shadow:
+        0 24px 80px rgba(15, 23, 42, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+[data-theme="light"] .hero_weather_panel::after {
+    background: linear-gradient(180deg, rgba(238, 243, 248, 0.02), rgba(238, 243, 248, 0.75) 72%, rgba(238, 243, 248, 1));
+}
+
+[data-theme="light"] .hero_location,
+[data-theme="light"] .hero_weather_meta,
+[data-theme="light"] .hero_condition_text {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+[data-theme="light"] .hero_temp {
+    color: rgba(255, 255, 255, 0.96);
+}
+
+[data-theme="light"] .current_conditions_grid {
+    background: rgba(255, 255, 255, 0.88);
+    border-color: rgba(15, 23, 42, 0.1);
+    box-shadow:
+        0 18px 50px rgba(15, 23, 42, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="light"] .condition_metric:not(:last-child)::after {
+    background: rgba(15, 23, 42, 0.12);
+}
+
+@media (max-width: 760px) {
+    .dashboard_shell {
+        padding: 0 0.75rem 2rem;
+    }
+
+    .dashboard_top_stage {
+        padding-bottom: 0;
+    }
+
+    .hero_weather_panel {
+        min-height: 390px;
+        padding: 1rem;
+    }
+
+    .hero_temp {
+        font-size: clamp(4.5rem, 20vw, 6rem);
+    }
+
+    .current_conditions_grid {
+        position: relative;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        margin-top: 0.75rem;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .condition_metric:nth-child(2)::after {
+        display: none;
+    }
+}
+
+@media (max-width: 520px) {
+    .current_conditions_grid {
+        grid-template-columns: 1fr;
+    }
+
+    .condition_metric {
+        justify-content: flex-start;
+    }
+
+    .condition_metric::after {
+        display: none;
+    }
+}

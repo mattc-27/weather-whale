@@ -1,0 +1,50 @@
+/* Shared UI primitives */
+.weather_card {
+    border: 1px solid rgba(255, 255, 255, 0.075);
+    border-radius: var(--ww-radius-lg);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015)),
+        rgba(8, 18, 21, 0.78);
+    backdrop-filter: blur(20px);
+    box-shadow:
+        0 14px 34px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.section_eyebrow {
+    margin: 0 0 0.35rem;
+    color: var(--ww-subtle);
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+}
+
+.dashboard_error {
+    padding: 0.85rem 1rem;
+    border: 1px solid rgba(255, 138, 138, 0.28);
+    border-radius: var(--ww-radius-md);
+    color: var(--ww-danger);
+    background: rgba(255, 138, 138, 0.08);
+}
+
+.empty_dashboard_state {
+    padding: 1.25rem;
+}
+
+.empty_dashboard_state button {
+    border: 1px solid var(--ww-border);
+    border-radius: 999px;
+    padding: 0.65rem 0.9rem;
+    color: var(--ww-text);
+    background: var(--ww-surface-soft);
+}
+
+[data-theme="light"] .weather_card {
+    background: rgba(255, 255, 255, 0.86);
+    border-color: rgba(15, 23, 42, 0.1);
+    color: var(--ww-text);
+    box-shadow:
+        0 14px 38px rgba(15, 23, 42, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}

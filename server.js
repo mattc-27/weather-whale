@@ -84,6 +84,58 @@ app.get(`/api/weather/:searchUrl`, async (req, res) => {
     }
 });
 
+
+// weather preview for homepage
+app.get("/api/weather-preview/:searchUrl", async (req, res) => {
+    const { searchUrl } = req.params;
+
+    try {
+        const response = await fetch(
+            `http://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=${encodeURIComponent(
+                searchUrl
+            )}&aqi=no`
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            return res.status(response.status).json({
+                error: data?.error?.message || "Unable to fetch weather preview",
+            });
+        }
+
+        res.json({
+            location: {
+                name: data.location?.name,
+                region: data.location?.region,
+                country: data.location?.country,
+                localTime: data.location?.localtime,
+            },
+            current: {
+                tempF: Math.round(data.current?.temp_f),
+                feelsLikeF: Math.round(data.current?.feelslike_f),
+                conditionText: data.current?.condition?.text,
+                conditionIcon: data.current?.condition?.icon,
+                windMph: Math.round(data.current?.wind_mph),
+                windDir: data.current?.wind_dir,
+                humidity: data.current?.humidity,
+                isDay: data.current?.is_day === 1,
+            },
+        });
+    } catch (error) {
+        console.error(error.message);
+
+        res.status(500).json({
+            error: "Unable to fetch weather preview",
+        });
+    }
+});
+
+
+
+
+// park weather
+
 app.get(`/api/list-park-history`, async (req, res) => {
 
     try {
@@ -426,81 +478,81 @@ app.get('/api/park-conditions-history', async (req, res) => {
 
 // -------- 4) forecast (hourly for ~3 days) --------
 app.get('/api/park-conditions-forecast', async (req, res) => {
-  const parks = (req.query.parks || '')
-    .split(',')
-    .map(s => s.trim().toLowerCase())
-    .filter(Boolean);
+    const parks = (req.query.parks || '')
+        .split(',')
+        .map(s => s.trim().toLowerCase())
+        .filter(Boolean);
 
-  if (!parks.length) return res.status(400).json({ error: 'parks required' });
+    if (!parks.length) return res.status(400).json({ error: 'parks required' });
 
-  try {
-    // Step 1: list forecast subfolders
-    const listUrl = `https://storage.googleapis.com/storage/v1/b/national-park-conditions-dev/o?prefix=forecast/&delimiter=/`;
-    const listRes = await fetch(listUrl);
-    const listJson = await listRes.json();
-    const prefixes = listJson.prefixes || [];
+    try {
+        // Step 1: list forecast subfolders
+        const listUrl = `https://storage.googleapis.com/storage/v1/b/national-park-conditions-dev/o?prefix=forecast/&delimiter=/`;
+        const listRes = await fetch(listUrl);
+        const listJson = await listRes.json();
+        const prefixes = listJson.prefixes || [];
 
-    // Step 2: pick the most recent timestamp
-    const latestFolder = prefixes
-      .map(p => p.replace('forecast/', '').replace('/', ''))
-      .filter(Boolean)
-      .sort()
-      .reverse()[0];
+        // Step 2: pick the most recent timestamp
+        const latestFolder = prefixes
+            .map(p => p.replace('forecast/', '').replace('/', ''))
+            .filter(Boolean)
+            .sort()
+            .reverse()[0];
 
-    if (!latestFolder) {
-      return res.status(404).json({ error: 'No forecast folders found' });
-    }
-
-    const results = [];
-
-    // Step 3: fetch each requested park’s file
-    for (const park of parks) {
-      const fileName = `${park}_${latestFolder}.json`;
-      const fileUrl = `https://storage.googleapis.com/national-park-conditions-dev/forecast/${latestFolder}/${fileName}`;
-
-      try {
-        const response = await fetch(fileUrl);
-        if (!response.ok) {
-          console.warn(`Forecast file not found: ${fileUrl}`);
-          continue;
+        if (!latestFolder) {
+            return res.status(404).json({ error: 'No forecast folders found' });
         }
 
-        const raw = await response.json();
+        const results = [];
 
-        // Normalize hourly rows
-        const hourly = raw.forecast.forecastday.flatMap(day =>
-          day.hour.map(h => ({
-            datetime: h.time,
-            temp: h.temp_f,
-            precip: h.precip_in,
-            cloud: h.cloud,
-            condition: h.condition?.text || '',
-          }))
-        );
+        // Step 3: fetch each requested park’s file
+        for (const park of parks) {
+            const fileName = `${park}_${latestFolder}.json`;
+            const fileUrl = `https://storage.googleapis.com/national-park-conditions-dev/forecast/${latestFolder}/${fileName}`;
 
-        results.push({
-          park,
-          fullName: raw.fullName,
-          parkCode: raw.parkCode,
-          elevation: raw.elevation,
-          hourly,
-          daily: raw.forecast.forecastday.map(d => ({
-            date: d.date,
-            max: d.day.maxtemp_f,
-            min: d.day.mintemp_f,
-            condition: d.day.condition?.text || '',
-          })),
-        });
-      } catch (e) {
-        console.error(`Error fetching forecast for ${park}:`, e);
-      }
+            try {
+                const response = await fetch(fileUrl);
+                if (!response.ok) {
+                    console.warn(`Forecast file not found: ${fileUrl}`);
+                    continue;
+                }
+
+                const raw = await response.json();
+
+                // Normalize hourly rows
+                const hourly = raw.forecast.forecastday.flatMap(day =>
+                    day.hour.map(h => ({
+                        datetime: h.time,
+                        temp: h.temp_f,
+                        precip: h.precip_in,
+                        cloud: h.cloud,
+                        condition: h.condition?.text || '',
+                    }))
+                );
+
+                results.push({
+                    park,
+                    fullName: raw.fullName,
+                    parkCode: raw.parkCode,
+                    elevation: raw.elevation,
+                    hourly,
+                    daily: raw.forecast.forecastday.map(d => ({
+                        date: d.date,
+                        max: d.day.maxtemp_f,
+                        min: d.day.mintemp_f,
+                        condition: d.day.condition?.text || '',
+                    })),
+                });
+            } catch (e) {
+                console.error(`Error fetching forecast for ${park}:`, e);
+            }
+        }
+
+        res.set('Cache-Control', 'public, max-age=600'); // cache 10 min
+        res.json({ folder: latestFolder, data: results });
+    } catch (e) {
+        res.status(500).json({ error: String(e) });
     }
-
-    res.set('Cache-Control', 'public, max-age=600'); // cache 10 min
-    res.json({ folder: latestFolder, data: results });
-  } catch (e) {
-    res.status(500).json({ error: String(e) });
-  }
 });
 
 

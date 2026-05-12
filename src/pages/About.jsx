@@ -1,189 +1,209 @@
-import React from 'react';
-import { TitleContainer, SearchButtonInitial } from '../components/layout-containers/Containers';
-import { PageLayout, SectionLayoutMain, SectionLayoutLg, TextBlock } from '../components/layout-containers/SectionLayouts';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+    CloudSun,
+    Compass,
+    ExternalLink,
+    Github,
+    Leaf,
+    PawPrint,
+    Sparkles,
+    Waves,
+} from "lucide-react";
 
-import whale_cloud from '../assets/whale_cloud.png';
-import { useMobile } from '../hooks/useMobile';
+import whaleCloud from "../assets/whale_cloud.png";
+import "../stylesheets/about/ww.about.css";
 
 export default function About() {
-
-    const mobile = useMobile(); // default 740px
-
-    const handleButtonClick = () => {
-        // Navigate to the Weather page with the inputted location
-        navigate(`/search`);
-    }
-
-    const imgMobile = {
-        position: 'absolute',
-        zIndex: '5000',
-        height: '180px',
-        width: '180px',
-        top: '50%',
-        right: '5%',
-        borderRadius: '5px',
-        boxShadow: '0px 0px 5px 1px rgba(82, 82, 82, 0.23)'
-    }
-    const imgWeb = {
-        position: 'unset',
-        height: '250px',
-        width: '250px',
-        alignSelf: 'center',
-        borderRadius: '5px',
-        boxShadow: '0px 0px 5px 1px rgba(82, 82, 82, 0.23)'
-    }
+    const navigate = useNavigate();
 
     return (
+        <main className="about_page">
+            <section className="about_hero">
+                <div className="about_hero_copy">
+                    <p className="section_eyebrow">About Weather Whale</p>
 
-        <PageLayout wrapperStyle={`page_content`} >
-            <SectionLayoutMain wrapperStyle={`about_main`} style={{ height: 'auto', padding: '1rem 0rem' }}>
-                <SectionLayoutLg wrapperStyle={`row content_even items_center body_text full_width`} style={{ flexGrow: '1', flexWrap: 'wrap', position: 'relative', zIndex: '999999' }}>
-                    <TitleContainer title={`About Weather Whale`} wrapperStyle={`title_about`} />
-                    <TextBlock wrapperStyle={`flex_col body_text`} style={{ position: 'relative', zIndex: '999999', maxWidth: mobile ? '98%' : '49%' }}>
-                        <h2>About the Project</h2>
-                        <p style={{ whiteSpace: 'pre-line' }}  >
-                            Weather Whale started as a small project — something simple to practice with, build and improve over time, share.
-                            Under the hood, it's a straightfoward app built with React.js and pulls basic weather info for cities you search.
-                            An uncluttered take on weather — just what you need, no fog.
-                        </p>
-                        <h2>Why the Name?</h2>
-                        <p style={{ whiteSpace: 'pre-line' }}  >
-                            Weather Whale got its name from a memory of spotting a cloud shaped like a whale — and because whales are just awesome creatures.
-                        </p>
-                        {/* */}
-                        <div
-                            className='body_text'
-                            style={{
-                                backgroundColor: '#f4f6fb',
-                                padding: '1rem',
-                                margin: '1rem 0',
-                                borderRadius: '12px',
-                                boxShadow: '0 0 10px rgba(0,0,0,0.05)',
-                                fontSize: '0.95rem',
-                                width: '100%'
+                    <h1>Weather, translated into atmosphere.</h1>
 
-                            }}>
-                            <TextBlock wrapperStyle={`flex_row`} style={{ alignItems: 'center', justifyContent: 'flex-start', width: '100%' }}>
-                                <h3 style={{ fontSize: '0.75rem', flexGrow: '1' }}>🛠️ Built with:</h3>
-                                <p style={{ fontSize: '0.75rem', flexGrow: '1' }}> React.js • Express.js • OpenWeatherMap API</p>
-                            </TextBlock>
-                            <TextBlock wrapperStyle={`flex_row`} style={{ alignItems: 'center', justifyContent: 'flex-start', width: '100%' }}>
-                                <h3 style={{ fontSize: '0.75rem', flexGrow: '1' }}>📈 Exploring:</h3>
-                                <p style={{ fontSize: '0.75rem', flexGrow: '1' }}> D3.js, weather trend visualization, mobile optimization</p>
-                            </TextBlock>
-                        </div>
-                        {/* */}
-                        <h2>What’s Next</h2>
+                    <p>
+                        Weather Whale started as a small weather project and has grown into
+                        an experiment in making forecasts feel calmer, more useful, and more
+                        connected to the rhythm of the day.
+                    </p>
+
+                    <div className="about_hero_actions">
+                        <button className="ww_primary_btn" type="button" onClick={() => navigate("/search")}>
+                            Open forecast
+                        </button>
+
+                        <Link className="about_secondary_btn" to="/">
+                            Return home
+                        </Link>
+                    </div>
+                </div>
+
+                <div className="about_image_panel">
+                    <img src={whaleCloud} alt="A whale-shaped cloud" />
+                </div>
+            </section>
+
+            <section className="about_grid">
+                <article className="about_card about_card_large">
+                    <div className="about_icon">
+                        <Waves />
+                    </div>
+
+                    <h2>Why “Weather Whale”?</h2>
+
+                    <p>
+                        The name came from a memory of seeing a cloud shaped like a whale.
+                        It felt playful, atmospheric, and a little strange in the right way.
+                        The project keeps that spirit: useful weather information, but with
+                        more room for feeling, place, and interpretation.
+                    </p>
+                </article>
+
+                <article className="about_card">
+                    <div className="about_icon">
+                        <CloudSun />
+                    </div>
+
+                    <h2>What it does now</h2>
+
+                    <p>
+                        The current forecast dashboard shows local conditions, hourly
+                        changes, daily outlook, Pawcast dog-walk comfort, and trend charts
+                        without the clutter common in weather apps.
+                    </p>
+                </article>
+
+                <article className="about_card">
+                    <div className="about_icon">
+                        <Sparkles />
+                    </div>
+
+                    <h2>Where it’s going</h2>
+
+                    <p>
+                        The next direction is more ambient: time-of-day states, condition
+                        prose, and small activity suggestions shaped by weather, light,
+                        wind, and comfort.
+                    </p>
+                </article>
+            </section>
+
+            <section className="about_section about_split">
+                <div>
+                    <p className="section_eyebrow">Design direction</p>
+                    <h2>Less dashboard. More environmental rhythm.</h2>
+                </div>
+
+                <div className="about_prose">
+                    <p>
+                        Weather Whale is moving toward a quieter weather experience: one
+                        that helps you understand not just what the forecast says, but what
+                        the day might feel like.
+                    </p>
+
+                    <p>
+                        Instead of overwhelming users with every possible metric at once,
+                        the goal is to surface the right details at the right moment — a
+                        walk before the wind picks up, open windows after sunset, or a
+                        slower indoor evening when conditions turn rough.
+                    </p>
+                </div>
+            </section>
+
+            <section className="about_pillars">
+                <article>
+                    <Compass />
+                    <h3>Oriented by time</h3>
+                    <p>Morning, midday, and evening should each feel distinct.</p>
+                </article>
+
+                <article>
+                    <PawPrint />
+                    <h3>Built for real routines</h3>
+                    <p>Dog walks, errands, windows open, coffee outside, staying in.</p>
+                </article>
+
+                <article>
+                    <Leaf />
+                    <h3>Calm by default</h3>
+                    <p>Weather should inform without feeling noisy or alarmist.</p>
+                </article>
+            </section>
+
+            <section className="about_section about_conservation">
+                <div>
+                    <p className="section_eyebrow">A note on whales</p>
+                    <h2>The real ones matter, too.</h2>
+                </div>
+
+                <p>
+                    Since the project borrows the whale for its name, it feels right to
+                    mention the real ones. Whales play an important role in ocean health
+                    and face threats from climate change, ship traffic, noise, and
+                    pollution.
+                </p>
+
+                <a
+                    href="https://us.whales.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Learn about Whale and Dolphin Conservation
+                    <ExternalLink />
+                </a>
+            </section>
+
+            <section className="about_section about_changelog">
+                <div className="about_section_header">
+                    <div>
+                        <p className="section_eyebrow">Project notes</p>
+                        <h2>Recent direction</h2>
+                    </div>
+
+                    <Github aria-hidden="true" />
+                </div>
+
+                <div className="about_release_list">
+                    <article>
+                        <span>Current redesign</span>
+                        <h3>Atmospheric dashboard system</h3>
                         <p>
-                            The site is intentionally minimal by design, but I'm exploring ways to add data visualizations (with tools like <a href="https://github.com/d3/d3">d3.js</a>) to help you spot patterns, trends, and get a little more out of the forecasts.
-                            Like everything here, it’ll grow over time — one update, one wave at a time.
+                            New dark/light theme foundation, cinematic forecast dashboard,
+                            Pawcast modal, trend visualizations, and refined weather metrics.
                         </p>
-                    </TextBlock>
-                    <img
-                        style={mobile ? imgMobile : imgWeb}
-                        src={whale_cloud}
-                    />
-                </SectionLayoutLg>
-                <SectionLayoutLg wrapperStyle={`col content_even items_center body_text full_width`} style={{ flexGrow: '1', flexWrap: 'wrap', padding: '1rem 0rem' }}>
-                    <TextBlock wrapperStyle={`flex_col body_text`} style={{ maxWidth: mobile ? '98%' : '80%' }}>
+                    </article>
 
-                        <div style={{
-                            backgroundColor: '#e8f4f8',
-                            padding: '1.25rem',
-                            margin: '1rem 0',
-                            borderRadius: '12px',
-                            borderLeft: '4px solid #2b7a78',
-                            fontFamily: 'var(--body-primary)',
-                            color: 'var(--body-dark)'
-                        }}>
-                            <h2 style={{ marginTop: 0 }}>🐋 A Quick Note on Whale Conservation</h2>
-                            <p>
-                                Since we borrowed the whale for our name, it felt right to mention the real ones too. Whales play a huge role in ocean health and face serious threats from climate change, ship traffic, and pollution.
-                                <br /><br />
-                                If you're curious, take a moment to learn more through the <a href="https://us.whales.org/" target="_blank" rel="noopener noreferrer">Whale and Dolphin Conservation</a>.
-                            </p>
-                        </div>
-
-                        {/*   <h2>🐋 A Quick Note on Whale Conservation:</h2>
+                    <article>
+                        <span>Next phase</span>
+                        <h3>Ambient homepage and state-based experience</h3>
                         <p>
-                            Since we borrowed the whale for our name, it felt right to mention the real ones too. Whales play a huge role in ocean health, and they face serious challenges from climate change, ship traffic, and pollution. Even small acts of awareness help.
-                            If you're curious, take a little time to learn about conservation efforts at the <a href="https://us.whales.org/"> Whale and Dolphin Conservation.</a>
+                            Homepage refresh, environmental copy system, time-of-day sections,
+                            and eventual motion/scroll-based interactions.
                         </p>
-                        */}
-                    </TextBlock>
+                    </article>
 
-                </SectionLayoutLg>
-                <SectionLayoutLg wrapperStyle={`col content_even items_center body_text full_width`} style={{ flexGrow: '1', flexWrap: 'wrap', padding: '1rem 0rem' }}>
-                    <TextBlock wrapperStyle={`flex_col body_text about_container`} style={{ maxWidth: mobile ? '98%' : '80%' }}>
-                        <h2>🆕 What's New</h2>
+                    <article>
+                        <span>Later</span>
+                        <h3>Park and outdoor condition layers</h3>
+                        <p>
+                            National park views may return as a quieter outdoor-planning layer
+                            once the core experience is fully aligned.
+                        </p>
+                    </article>
+                </div>
+            </section>
 
-                        <div
-                            className='body_text'
-                            style={{
-                                backgroundColor: '#f9f9f9',
-                                borderRadius: '12px',
-                                padding: '1rem',
-                                marginBottom: '1rem',
+            <section className="about_closing">
+                <p>Thanks for visiting.</p>
 
-                                boxShadow: '0 0 8px rgba(0,0,0,0.04)'
-                            }}>
-                            <h3>v1.4.0 – October 2025</h3>
-                            <ul style={{ marginLeft: '1.25rem', marginBottom: '0.75rem' }}>
-                                <li>Style enhancements across homepage & dashboard (cleaner spacing, type scale).</li>
-                                <li>New gradient-banded hourly temperature chart on the main dashboard.</li>
-                                <li>Feature cards now 3-across on desktop, responsive to 2/1 on smaller screens.</li>
-                                <li>Accessibility: clearer icon buttons & tooltips.</li>
-                                <li>Dog Weather Details modal redesigned with clearer layout, icons, and interactive temperature comparison.</li>
-                            </ul>
-                            <h3>v1.3.0 – July 2025</h3>
-                            <ul style={{ marginLeft: '1.25rem', marginBottom: '0.75rem' }}>
-                                <li>Added temperature range filtering for park analytics</li>
-                                <li>Enhanced responsive layout across all views</li>
-                                <li>Updated About page with clearer sections</li>
-                            </ul>
-
-                            <h3>v1.2.2 – June 2025</h3>
-                            <ul style={{ marginLeft: '1.25rem' }}>
-                                <li>Redesigned park search layout</li>
-                                <li>Improved mobile spacing and font scale</li>
-                            </ul>
-                        </div>
-                        <div
-                            className='body_text'
-                            style={{
-                                backgroundColor: '#eef6ff',
-                                borderRadius: '12px',
-                                padding: '1rem',
-                                marginTop: '0.5rem',
-                                borderLeft: '4px solid #3b82f6'
-                            }}
-                        >
-                            <h3 style={{ marginTop: 0 }}>Coming Soon – Park Visualizations</h3>
-                            <ul style={{ marginLeft: '1.25rem', marginBottom: 0 }}>
-                                <li>Forecast bands (feels-like, wind, precip) with day-by-day comparisons.</li>
-                                <li>Historical averages vs. today (temperature, wind, humidity).</li>
-                                <li>Sparklines for recent trends and “extremes” timelines.</li>
-                            </ul>
-                        </div>
-
-                    </TextBlock>
-                    <TextBlock wrapperStyle={`flex_col content_center items_center body_text about_container`} style={{ width: '100%' }}>
-                        <div className='flex_col body_text md about_thanks'>
-                            <h3 style={{ whiteSpace: 'pre-line' }} >
-                                Thanks for visiting —
-                                <br />and keep an eye on the skies (and the seas)!
-                            </h3>
-                        </div>
-                        <div className='row items_center content_center about_return' style={{ margin: ' 0%', width: '100%', maxWidth: '98%' }}>
-                            <SearchButtonInitial
-                                styleClass={`return_button tn btn-primary`}
-                                text={'Return To Weather Dashboard'}
-                                handleButtonClick={handleButtonClick} />
-                        </div>
-                    </TextBlock>
-                </SectionLayoutLg>
-
-            </SectionLayoutMain>
-        </PageLayout>
+                <button className="ww_primary_btn" type="button" onClick={() => navigate("/search")}>
+                    Open Weather Whale
+                </button>
+            </section>
+        </main>
     );
 }

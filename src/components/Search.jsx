@@ -1,125 +1,188 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from "react";
+import { CiLocationOn, CiSearch } from "react-icons/ci";
+import ReactGA from "react-ga4";
 
-import { CiSearch, CiLocationOn } from "react-icons/ci";
-import ReactGA from 'react-ga4';
-import { usStates } from '../data/us-states.js';
-
-// import ReactGA from 'react-ga4';
-
-export function SearchInput({ wrapperStyle }) {
-
-    const navigate = useNavigate();
-
+export function SearchInput({
+    value = "",
+    onChange,
+    onSubmit,
+    placeholder = "Search a city or postal code",
+    wrapperStyle = "search_container",
+    inputId = "weather-search",
+}) {
+    const [inputValue, setInputValue] = useState(value);
     const [predictions, setPredictions] = useState([]);
-    const [searchInput, setSearchInput] = useState({ p: '' });
+    const [isOpen, setIsOpen] = useState(false);
 
-
-    // NEW: refs + dropdown position
     const wrapRef = useRef(null);
-    const [ddPos, setDdPos] = useState({ top: 0, left: 0, width: 0, ready: false });
-
-    const computeDropdownPos = () => {
-        const el = wrapRef.current;
-        if (!el) return;
-        // position under the whole input container area
-        const box = el.getBoundingClientRect();
-        setDdPos({
-            top: box.bottom + 6,                 // 6px gap under input
-            left: box.left,
-            width: box.width,
-            ready: true,
-        });
-    };
 
     useEffect(() => {
-        computeDropdownPos();
-        window.addEventListener("resize", computeDropdownPos);
-        window.addEventListener("scroll", computeDropdownPos, { passive: true });
-        return () => {
-            window.removeEventListener("resize", computeDropdownPos);
-            window.removeEventListener("scroll", computeDropdownPos);
-        };
+        setInputValue(value);
+    }, [value]);
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (!wrapRef.current?.contains(event.target)) {
+                setIsOpen(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    const clearInput = () => setSearchInput({ p: "" });
+    function getPlacesService() {
+        if (!window.google?.maps?.places?.AutocompleteService) {
+            return null;
+        }
 
-    const handleChange = (e) => {
-        const val = e.target.value;
-        setSearchInput((prev) => ({ ...prev, [e.target.name]: val }));
-        const svc = new window.google.maps.places.AutocompleteService();
-        svc.getPlacePredictions({ input: val }, (preds, status) => {
-            if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-                setPredictions(preds || []);
+        return new window.google.maps.places.AutocompleteService();
+    }
+
+    function getGeocoder() {
+        if (!window.google?.maps?.Geocoder) {
+            return null;
+        }
+
+        return new window.google.maps.Geocoder();
+    }
+
+    function handleInputChange(event) {
+        const nextValue = event.target.value;
+
+        setInputValue(nextValue);
+        onChange?.(nextValue);
+
+        if (!nextValue.trim()) {
+            setPredictions([]);
+            setIsOpen(false);
+            return;
+        }
+
+        const service = getPlacesService();
+
+        if (!service) {
+            setPredictions([]);
+            setIsOpen(false);
+            return;
+        }
+
+        service.getPlacePredictions({ input: nextValue }, (preds, status) => {
+            const okStatus = window.google?.maps?.places?.PlacesServiceStatus?.OK;
+
+            if (status === okStatus) {
+                setPredictions(preds ?? []);
+                setIsOpen(true);
             } else {
                 setPredictions([]);
+                setIsOpen(false);
             }
         });
-        // reposition while typing in case layout shifts
-        computeDropdownPos();
-    };
+    }
 
+    function handleManualSubmit(event) {
+        event.preventDefault();
 
-    const handleClick = (prediction) => {
-        const geocoder = new window.google.maps.Geocoder();
+        const trimmed = inputValue.trim();
+        if (!trimmed) return;
+
+        ReactGA.event({
+            category: "Search",
+            action: "Manual weather search",
+            label: trimmed,
+        });
+
+        onSubmit?.({
+            label: trimmed,
+            query: trimmed,
+            source: "manual",
+        });
+
+        setIsOpen(false);
+    }
+
+    function handlePredictionClick(prediction) {
+        const geocoder = getGeocoder();
+
+        if (!geocoder) {
+            onSubmit?.({
+                label: prediction.description,
+                query: prediction.description,
+                source: "prediction-fallback",
+            });
+            setIsOpen(false);
+            return;
+        }
+
         geocoder.geocode({ placeId: prediction.place_id }, (results, status) => {
-            if (status === window.google.maps.GeocoderStatus.OK && results.length > 0) {
-                const location = results[0].geometry.location;
-                const queryVariable = `${location.lat()},${location.lng()}`;
+            const okStatus = window.google?.maps?.GeocoderStatus?.OK;
 
-                const q = encodeURIComponent(queryVariable);
+            if (status === okStatus && results?.length > 0) {
+                const location = results[0].geometry.location;
+                const query = `${location.lat()},${location.lng()}`;
+
                 ReactGA.event({
-                    category: 'Search',
-                    action: 'Place selected',
+                    category: "Search",
+                    action: "Place selected",
                     label: prediction.description || prediction.place_id,
                 });
 
-                //console.log(q)
-                navigate(`/search?q=${q}`);
-                clearInput();
+                onSubmit?.({
+                    label: prediction.description,
+                    query,
+                    placeId: prediction.place_id,
+                    source: "google-place",
+                });
+
+                setInputValue("");
+                onChange?.("");
+                setPredictions([]);
+                setIsOpen(false);
             }
         });
-    };
+    }
 
-    const showDropdown = searchInput.p.length > 0 && predictions.length > 0 && ddPos.ready;
-
-
+    const showDropdown = isOpen && predictions.length > 0;
 
     return (
-
         <div className={wrapperStyle} ref={wrapRef}>
-            <div className="search_component">
-                <CiSearch size={"1rem"} color={"#0a0a0a"} id="searchIcon" />
+            <form className="search_component" onSubmit={handleManualSubmit}>
+                <label htmlFor={inputId} className="sr_only">
+                    Search weather location
+                </label>
+
+                <CiSearch size="1rem" id="searchIcon" aria-hidden="true" />
+
                 <input
-                    onChange={handleChange}
+                    id={inputId}
                     type="text"
-                    value={searchInput.p}
+                    value={inputValue}
                     name="p"
-                    placeholder="Search a city or postal code"
-                    onFocus={computeDropdownPos}
+                    placeholder={placeholder}
+                    onChange={handleInputChange}
+                    onFocus={() => {
+                        if (predictions.length > 0) setIsOpen(true);
+                    }}
+                    autoComplete="off"
                 />
-            </div>
+
+                <button type="submit" className="search_submit">
+                    Search
+                </button>
+            </form>
 
             {showDropdown && (
-                <ul
-                    className="search_results_dropdown"
-                    style={{
-                        position: "fixed",
-                        top: ddPos.top,
-                        left: ddPos.left,
-                        width: ddPos.width,
-                        zIndex: 2147483647,
-                    }}
-                >
+                <ul className="search_results_dropdown">
                     <div className="search_result_list">
                         {predictions.map((prediction) => (
-                            <li
-                                key={prediction.place_id}
-                                onClick={() => handleClick(prediction)}
-                                style={{ cursor: "pointer" }}
-                            >
-                                <CiLocationOn size={20} color={"#2d2d2d"} style={{ alignSelf: "center" }} />
-                                {prediction.description}
+                            <li key={prediction.place_id}>
+                                <button
+                                    type="button"
+                                    onClick={() => handlePredictionClick(prediction)}
+                                >
+                                    <CiLocationOn size={20} aria-hidden="true" />
+                                    <span>{prediction.description}</span>
+                                </button>
                             </li>
                         ))}
                     </div>
@@ -128,4 +191,3 @@ export function SearchInput({ wrapperStyle }) {
         </div>
     );
 }
-

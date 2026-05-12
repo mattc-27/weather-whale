@@ -27,7 +27,7 @@ const HourlyRail = lazy(() => import('../components/HourlyRail'))
 
 // context 
 import { fetchWeather } from '../util/weather';
-import { WeatherContext } from '../context/WeatherContext';
+import { WeatherContext } from '../context/legacy_/WeatherContext';
 
 
 export default function Dashboard() {
