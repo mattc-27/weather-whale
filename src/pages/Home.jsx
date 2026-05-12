@@ -1,58 +1,102 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { PageLayout, SectionLayoutLg } from '../components/layout-containers/SectionLayouts';
-import { TitleContainer, SearchButtonInitial } from '../components/layout-containers/Containers';
+import {
+    PageLayout,
+    SectionLayoutLg,
+} from "../components/layout-containers/SectionLayouts";
 
-//import { SearchButtonInitial } from '../components/Containers';
-import FeatureHighlights from '../components/FeatureHighlights';
-import { Search, Map } from 'lucide-react';
+import {
+    AtmosphericHero,
+    EditorialSection,
+    FutureVisionSection,
+} from "../components/home/HomeSections";
 
-import '../stylesheets/home-styles.css';
+import { fetchWeatherPreview } from "../services/weatherPreview";
+
+import "../stylesheets/home/ww.home.css";
+
+const DEFAULT_AMBIENT_LOCATION = {
+    label: "Monterey, California",
+    query: "Monterey, CA",
+};
 
 export default function Home() {
-
     const navigate = useNavigate();
-    const [query, setQuery] = useState({ q: '' });
 
-    const clearInput = () => {
-        setSearchInput({ p: '' });
-    };
+    const [preview, setPreview] = useState(null);
+    const [activeLocation, setActiveLocation] = useState(
+        DEFAULT_AMBIENT_LOCATION
+    );
 
-    const handleGoToSearch = () => navigate('/search');
-    const handleGoToParks = () => navigate('/parks'); // adjust route if different
+    useEffect(() => {
+        let cancelled = false;
 
+        async function loadPreview(location) {
+            try {
+                const data = await fetchWeatherPreview(location.query);
+
+                if (!cancelled) {
+                    setPreview(data);
+                    setActiveLocation(location);
+                }
+            } catch (error) {
+                console.error("Failed to load homepage weather preview:", error);
+            }
+        }
+
+        function loadFallback() {
+            loadPreview(DEFAULT_AMBIENT_LOCATION);
+        }
+
+        if (!navigator.geolocation) {
+            loadFallback();
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const coordsQuery = `${position.coords.latitude},${position.coords.longitude}`;
+
+                loadPreview({
+                    label: "Current location",
+                    query: coordsQuery,
+                });
+            },
+            () => {
+                loadFallback();
+            },
+            {
+                enableHighAccuracy: false,
+                timeout: 5000,
+                maximumAge: 1000 * 60 * 10,
+            }
+        );
+
+        return () => {
+            cancelled = true;
+        };
+    }, []);
 
     return (
-        <PageLayout wrapperStyle={`full_width home_wrapper hero_overlay`}>
-            {/* HERO */}
-            <SectionLayoutLg wrapperStyle="full_width home_wrapper hero_overlay initial_screen_wrapper">
-                <div className="hero_stack ">
-                    <TitleContainer
-                        title="Welcome to Weather Whale"
-                        wrapperStyle="title_main"
-                    />
-                    <p className="hero_tagline">
-                        Smart forecasts with local insights—for you and your adventures.
-                    </p>
-                    <div className="hero_ctas">
-                        <SearchButtonInitial
-                            styleClass="cta_btn cta_btn--lg cta_btn--primary"
-                            style={{}}
-                            text={<><Search size={18} /> Search Your City</>}
-                            handleButtonClick={handleGoToSearch}
-                        />
-                        <SearchButtonInitial
-                            styleClass="cta_btn cta_btn--lg cta_btn--emerald"
-                            style={{}}
-                            text={<><Map size={18} /> National Park Conditions</>}
-                            handleButtonClick={handleGoToParks}
-                        />
-                    </div>
-                </div>
+        <PageLayout wrapperStyle="ww_home">
+            <AtmosphericHero
+                preview={preview}
+                onSearch={() =>
+                    navigate(`/search?q=${encodeURIComponent(activeLocation.query)}`)
+                }
+            />
+
+            <SectionLayoutLg wrapperStyle="ww_editorial_stage">
+                <EditorialSection
+                    eyebrow="Less noise. Better insights."
+                    title="A calmer way to understand the forecast."
+                    body="A forecast should help you understand more than temperature and percentages. Weather Whale interprets conditions in human terms so you can better understand how the day will actually feel outside."
+                />
             </SectionLayoutLg>
-            <SectionLayoutLg wrapperStyle="full_width feature_section">
-                <FeatureHighlights />   {/* will sit below the hero and fill the empty space */}
+
+            <SectionLayoutLg wrapperStyle="ww_editorial_stage">
+                <FutureVisionSection />
             </SectionLayoutLg>
         </PageLayout>
     );
